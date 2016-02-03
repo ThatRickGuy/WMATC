@@ -1,0 +1,7 @@
+bin/
+/bin/
+/packages/
+!packages/repositories.config
+obj/
+/obj/
+*.user
