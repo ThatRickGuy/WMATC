@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - WMATC</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("WMATC", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink(Session["SelectedEvent"]==null?" ": Session["SelectedEvent"].ToString(), "Index", "Events")</li>
+                    <li>@Html.ActionLink(Session["SelectedTeam"] == null ? " " : Session["SelectedTeam"].ToString(), "Index", "Rounds")</li>
+                    <li>@Html.ActionLink(Session["SelectedRound"] == null ? " " : Session["SelectedRound"].ToString(), "Index", "Rounds")</li>
+                    <li>@Html.ActionLink(Session["SelectedRoundTeamMatchup"] == null ? " " : Session["SelectedRoundTeamMatchup"].ToString(), "Index", "RoundTeamMatchup")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1" style="min-width:125px;">
+            <nav class="navbar navbar-inverse" style="margin-bottom: 0px">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <h4 style="color:#cccccc; margin-left:5px">Setup</h4>
+                    </div>
+                </div>
+            </nav>
+            <nav class="navbar navbar-inverse" style="margin-bottom: 0px">
+                <div class="container-fluid">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Events", "Index","Events")</li>
+                    </ul>
+                </div>
+            </nav>
+            <nav class="navbar navbar-inverse" style="margin-bottom: 0px">
+                <div class="container-fluid">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Teams", "Index", "Teams")</li>
+                    </ul>
+                </div>
+            </nav>
+            <nav class="navbar navbar-inverse" style="margin-bottom: 0px">
+                <div class="container-fluid">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Players", "Index", "Players")</li>
+                    </ul>
+                </div>
+            </nav>
+
+            <nav class="navbar navbar-inverse" style="margin-bottom: 0px">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <h4 style="color:#cccccc; margin-left:5px">Reporting</h4>
+                    </div>
+                </div>
+            </nav>
+            <nav class="navbar navbar-inverse" style="margin-bottom: 0px">
+                <div class="container-fluid">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Rounds", "Index", "Rounds")</li>
+                    </ul>
+                </div>
+            </nav>
+            <nav class="navbar navbar-inverse" style="margin-bottom: 0px">
+                <div class="container-fluid">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Team Matchups", "Index", "RoundTeamMatchups")</li>
+                    </ul>
+                </div>
+            </nav>
+            <nav class="navbar navbar-inverse" style="margin-bottom: 0px">
+                <div class="container-fluid">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Matchups", "Index", "Matchups")</li>
+                    </ul>
+                </div>
+            </nav>
+
+            <nav class="navbar navbar-inverse" style="margin-bottom: 0px">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <h4 style="color:#cccccc; margin-left:5px">Publish</h4>
+                    </div>
+                </div>
+            </nav>
+            <nav class="navbar navbar-inverse">
+                <div class="container-fluid">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Push", "Index", "Push")</li>
+                    </ul>
+                </div>
+            </nav>
+            </div>
+            <div class="container body-content col-md-5">
+                @RenderBody()
+                <hr />
+                <footer>
+                    <p>&copy; @DateTime.Now.Year - WM ATC</p>
+                </footer>
+            </div>
+        </div>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+</body>
+</html>

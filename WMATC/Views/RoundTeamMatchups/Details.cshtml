@@ -1,0 +1,42 @@
+﻿@model WMATC.Models.RoundTeamMatchup
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>RoundTeamMatchup</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Round.Scenario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Round.Scenario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Team1.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Team1.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Team2.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Team2.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.RoundTeamMatchupId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
