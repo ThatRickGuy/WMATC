@@ -16,10 +16,35 @@ namespace WMATC.Controllers
 
         // GET: RoundTeamMatchups
         [Authorize(Roles = "canEdit")]
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
-            var roundTeamMatchups = db.RoundTeamMatchups.Include(r => r.Round).Include(r => r.Team1).Include(r => r.Team2);
-            return View(roundTeamMatchups.ToList());
+
+            if (Session["SelectedEventId"] == null) return Redirect("Events");
+            if (Session["SelectedRoundId"] == null) return Redirect("Rounds");
+
+            ActionResult rView = null;
+
+            if (id != null)
+            {
+                Session["SelectedRoundTeamMatchupId"] = id;
+                var q = (from p in db.RoundTeamMatchups where p.RoundTeamMatchupId == id select p.Team1.Name + " vs. " + p.Team2.Name).FirstOrDefault();
+                Session["SelectedRoundTeamMatchup"] = q ;
+            }
+            if (Session["SelectedEventId"] == null)
+            {
+                rView = Redirect("Events");
+            }
+            else if (Session["SelectedRoundId"] == null)
+            {
+                rView = Redirect("Rounds");
+            }
+            else 
+            {
+                var roundTeamMatchups = db.RoundTeamMatchups.Include(r => r.Round).Include(r => r.Team1).Include(r => r.Team2);
+                rView = View(roundTeamMatchups.ToList());
+            }
+
+            return rView;          
         }
 
         // GET: RoundTeamMatchups/Details/5

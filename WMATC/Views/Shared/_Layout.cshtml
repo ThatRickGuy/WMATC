@@ -30,9 +30,9 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink(Session["SelectedEvent"]==null?" ": Session["SelectedEvent"].ToString(), "Index", "Events")</li>
-                    <li>@Html.ActionLink(Session["SelectedTeam"] == null ? " " : Session["SelectedTeam"].ToString(), "Index", "Rounds")</li>
+                    <li>@Html.ActionLink(Session["SelectedTeam"] == null ? " " : Session["SelectedTeam"].ToString(), "Index", "Teams")</li>
                     <li>@Html.ActionLink(Session["SelectedRound"] == null ? " " : Session["SelectedRound"].ToString(), "Index", "Rounds")</li>
-                    <li>@Html.ActionLink(Session["SelectedRoundTeamMatchup"] == null ? " " : Session["SelectedRoundTeamMatchup"].ToString(), "Index", "RoundTeamMatchup")</li>
+                    <li>@Html.ActionLink(Session["SelectedRoundTeamMatchup"] == null ? " " : Session["SelectedRoundTeamMatchup"].ToString(), "Index", "RoundTeamMatchups")</li>
                 </ul>
             </div>
         </div>
@@ -107,7 +107,7 @@
             <nav class="navbar navbar-inverse">
                 <div class="container-fluid">
                     <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Push", "Index", "Push")</li>
+                        <li>@Html.ActionLink("Push", "Index", "Publish")</li>
                     </ul>
                 </div>
             </nav>
@@ -116,7 +116,7 @@
                 @RenderBody()
                 <hr />
                 <footer>
-                    <p>&copy; @DateTime.Now.Year - WM ATC</p>
+                    <p>&copy; @DateTime.Now.Year - RingDev</p>
                 </footer>
             </div>
         </div>

@@ -1,0 +1,174 @@
+﻿@model WMATC.ViewModels.PublishViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+    div.LeftBox {
+        border-radius: 10px 0px 0px 10px;
+        border-bottom: 2px solid gray;
+        border-left: 2px solid gray;
+        border-top: 2px solid gray;
+        float: left;
+    }
+
+    div.RightBox {
+        border-radius: 0px 10px 10px 0px;
+        border-bottom: 2px solid gray;
+        border-right: 2px solid gray;
+        border-top: 2px solid gray;
+        float: Right;
+    }
+
+    div.WinnerBackground {
+        background: #D1F1D1;
+    }
+
+    div.LoserBackground {
+        background: #F1D1D1;
+    }
+
+    div.RingLeft {
+        float: left;
+        width: 12px;
+        height: 12px;
+        border-radius: 6px;
+        border: 1px solid gray;
+        margin-left: -10px;
+        background-color: #DDDDDD;
+        cursor: pointer;
+    }
+
+    div.RingRight {
+        float: Right;
+        width: 12px;
+        height: 12px;
+        border-radius: 6px;
+        border: 1px solid gray;
+        margin-Right: -10px;
+        background-color: #DDDDDD;
+        cursor: pointer;
+    }
+
+    span.ListLinkLeft {
+        float: left;
+        font-size: 9pt;
+        margin-left: -10px;
+        cursor: pointer;
+    }
+
+    span.ListLinkRight {
+        float: right;
+        font-size: 9pt;
+        margin-right: -10px;
+        cursor: pointer;
+    }
+</style>
+<script type="text/javascript">
+		<!--
+			function toggle_visibility(id) {
+			   var e = document.getElementById(id);
+			   if(e.style.display == 'block')
+				  e.style.display = 'none';
+			   else
+				  e.style.display = 'block';
+			}
+		//-->
+</script>
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<h1>
+    @Model.EventTitle
+</h1>
+<h3>
+    @Model.EventDate
+</h3>
+<br />
+
+@foreach (var round in Model.Rounds)
+{
+    <h2>
+        @round.Sequence
+        . @round.Scenario
+    </h2>
+
+    int iMatchup = 0;
+    foreach (var teamMatchup in round.TeamMatchups)
+    {
+        iMatchup++;
+        string siMatchup = "Matchups" + iMatchup;
+
+        <div id="MatchupBar" style="width:504px;">
+            <div id="Team1" class="LeftBox WinnerBackground" style="width:250px; height:55px;" onclick="toggle_visibility('@siMatchup');">
+                <!--https://en.wikipedia.org/wiki/Flags_of_the_U.S._states-->
+                <div id="Team1Flag" style="float:left;
+											margin:10px;">
+                    <img src="@teamMatchup.Team1ImageURL" alt="@teamMatchup.Team1Name" width=50px height=33px>
+                </div>
+                <div id="Team1Name" style="margin:18px 0px 0px 0px;
+											font-weight:bold;">
+                    @teamMatchup.Team1Name
+                </div>
+            </div>
+            <div id="Team2" class="RightBox LoserBackground" style="width:250px; height:55px;" onclick="toggle_visibility('@iMatchup');">
+                <div id="Team2Flag" style="float:right;
+											margin:10px;">
+                    <img src="@teamMatchup.Team2ImageURL" alt="@teamMatchup.Team2Name" width=50px height=33px>
+                </div>
+                <div id="Team2Name" style="float:right;margin:18px 0px 0px 0px;
+											font-weight:bold;">
+                    @teamMatchup.Team2Name
+                </div>
+            </div>
+            <div id="@siMatchup" style="clear:both;
+									  width:350px;
+									  margin:0px 0px 75px 75px;
+									  display:none">
+            @foreach (var matchup in teamMatchup.Matchups)
+        {
+                <div id="Matchup">
+                    <div id="MatchupPlayer1" class="LeftBox @matchup.Player1IsWinner" style="width:173px">
+                        <div id="MatchupPlayer1Faction" style="float:left;
+														 margin:3px;">
+                            <img src="@matchup.Player1ImageURL" alt="@matchup.Player1Name" width=33px height=33px
+                                 style="float:left;">
+                            <div class="RingLeft" onclick="toggle_visibility('ListDisplay');">
+                            </div>
+                            <span class="ListLinkLeft" onclick="toggle_visibility('ListDisplay');">
+                                @matchup.Player1ListNumber
+                            </span>
+                        </div>
+                        <div id="MatchupPlayer1Name" style="margin:10px 0px 0px 0px;
+											font-weight:bold;">
+                            @matchup.Player1Name
+                        </div>
+                    </div>
+                    <div id="MatchupPlayer2" class="RightBox @matchup.Player2IsWinner" style="width:173px">
+                        <div id="MatchupPlayer2Faction" style="float:right;
+																margin:3px;">
+                            <img src="@matchup.Player2ImageURL" alt="@matchup.Player2Name" width=33px height=33px
+                                 style="float:Right;">
+
+                            <div class="RingRight" onclick="toggle_visibility('ListDisplay');">
+                            </div>
+                            <span class="ListLinkRight" onclick="toggle_visibility('ListDisplay');">
+                                @matchup.Player2ListNumber
+                            </span>
+                        </div>
+                        <div id="MatchupPlayer2Name" style="float:right;margin:10px 0px 0px 0px;
+											font-weight:bold;">
+                            @matchup.Player2Name
+                        </div>
+                    </div>
+                </div>
+            }
+
+            </div>
+        </div>
+    }
+}

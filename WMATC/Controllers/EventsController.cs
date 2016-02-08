@@ -35,6 +35,11 @@ namespace WMATC.Controllers
                         Session["SelectedTeamId"] = null;
                     }
                 }
+                Session["SelectedRound"] = null;
+                Session["SelectedRoundId"] = null;
+                Session["SelectedRoundTeamMatchupId"] = null;
+                Session["SelectedRoundTeamMatchupId"] = null;
+
             }
             return View(db.Events.ToList());
         }

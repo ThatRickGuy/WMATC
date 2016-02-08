@@ -18,12 +18,19 @@ namespace WMATC.Controllers
         [Authorize(Roles = "canEdit")]
         public ActionResult Index(int? id)
         {
+
+            if (Session["SelectedEventId"] == null) return Redirect("Events");
             var teams = db.Teams.Include(t => t.Event);
 
             if (id != null) 
             {
                 Session["SelectedTeamId"] = id;
                 Session["SelectedTeam"] = (from p in db.Teams where p.TeamId == id select p.Name).FirstOrDefault();
+
+                Session["SelectedRoundId"] = null;
+                Session["SelectedRound"] = null;
+                Session["SelectedRoundTeamMatchupId"] = null;
+                Session["SelectedRoundTeamMatchup"] = null;
             }
             if (Session["SelectedEventId"] != null)
             {

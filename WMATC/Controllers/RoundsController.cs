@@ -16,10 +16,31 @@ namespace WMATC.Controllers
 
         // GET: Rounds
         [Authorize(Roles = "canEdit")]
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
-            var rounds = db.Rounds.Include(r => r.Event);
-            return View(rounds.ToList());
+            ActionResult rView = null;
+
+            if (id != null)
+            {
+                Session["SelectedRoundId"] = id;
+                Session["SelectedRound"] = (from p in db.Rounds where p.RoundId == id select p.Sequence + ". " + p.Scenario).FirstOrDefault();
+
+                Session["SelectedTeam"] = null;
+                Session["SelectedTeamId"] = null;
+                Session["SelectedRoundTeamMatchupId"] = null;
+                Session["SelectedRoundTeamMatchup"] = null;
+            }
+            if (Session["SelectedEventId"] == null)
+            {
+                rView = Redirect("Events");
+            }
+            else
+            {
+                var rounds = db.Rounds.Include(r => r.Event);
+                rView = View(rounds.ToList());
+            }
+
+            return rView;
         }
 
         // GET: Rounds/Details/5

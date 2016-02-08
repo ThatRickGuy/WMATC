@@ -26,10 +26,10 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Round.Scenario)
+            @Html.DisplayFor(modelItem => item.RoundTeamMatchupViewModel.Round )
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Team1.Name)
+            @Html.ActionLink(item.RoundTeamMatchupViewModel.Matchup, "Index", new { id = item.RoundTeamMatchupId }) 
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Team2.Name)

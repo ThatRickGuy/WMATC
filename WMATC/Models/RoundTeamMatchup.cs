@@ -10,6 +10,10 @@ namespace WMATC.Models
 {
     public class RoundTeamMatchup
     {
+        public RoundTeamMatchup()
+        {
+            RoundTeamMatchupViewModel = new ViewModel(this);
+        }
         [Required]
         [Key]
         public int RoundTeamMatchupId { get; set; }
@@ -25,5 +29,19 @@ namespace WMATC.Models
         public int Team2Id { get; set; }
         [ForeignKey("Team2Id")]
         public Team Team2 { get; set; }
+
+        [NotMapped]
+        public ViewModel RoundTeamMatchupViewModel { get; set; }
+
+        public class ViewModel
+        {
+            public ViewModel(RoundTeamMatchup Parent)
+            {
+                _Parent = Parent;
+            }
+            private RoundTeamMatchup _Parent;
+            public string Round { get { return _Parent.Round.Sequence + ". " + _Parent.Round.Scenario; } }
+            public string Matchup { get { return _Parent.Team1.Name + " vs. " + _Parent.Team2.Name;  } }
+        }
     }
 }

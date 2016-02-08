@@ -18,7 +18,13 @@ namespace WMATC.Controllers
         [Authorize(Roles = "canEdit")]
         public ActionResult Index()
         {
-            var matchups = db.Matchups.Include(m => m.Player1).Include(m => m.Player2).Include(m => m.RoundTeamMatchup).Include(m => m.Winner);
+            if (Session["SelectedEventId"] == null) return Redirect("Events");
+            if (Session["SelectedRoundId"] == null) return Redirect("Rounds");
+            if (Session["SelectedRoundTeamMatchupId"] == null) return Redirect("RoundTeamMatchups");
+            int SelectedRoundTeamMatchupId = -1;
+            int.TryParse(Session["SelectedRoundTeamMatchupId"].ToString(), out SelectedRoundTeamMatchupId);
+
+            var matchups = (from p in db.Matchups where p.RoundTeamMatchupId == SelectedRoundTeamMatchupId select p).Include(m => m.Player1).Include(m => m.Player2).Include(m => m.RoundTeamMatchup).Include(m => m.Winner);
             return View(matchups.ToList());
         }
 
@@ -42,10 +48,16 @@ namespace WMATC.Controllers
         [Authorize(Roles = "canEdit")]
         public ActionResult Create()
         {
-            ViewBag.Player1Id = new SelectList(db.Players, "PlayerId", "Name");
-            ViewBag.Player2Id = new SelectList(db.Players, "PlayerId", "Name");
-            ViewBag.RoundTeamMatchupId = new SelectList((from p in db.RoundTeamMatchups select new ViewModels.KeyValuePair() { Key = p.RoundTeamMatchupId, Value =  "<span id=" + p.Team1.TeamId + ">"+ p.Team1.Name + "</span> vs <span id=" + p.Team2.TeamId + ">" + p.Team2.Name + "</span>"}).ToList(), "Key", "Value");
-            ViewBag.WinnerId = new SelectList(db.Players, "PlayerId", "Name");
+            int SelectedRoundTeamMatchupId=-1;
+            int.TryParse(Session["SelectedRoundTeamMatchupId"].ToString (), out SelectedRoundTeamMatchupId);
+            var Team1Id = (from p in db.RoundTeamMatchups where p.RoundTeamMatchupId == SelectedRoundTeamMatchupId select p.Team1.TeamId).FirstOrDefault ();
+            var Team2Id = (from p in db.RoundTeamMatchups where p.RoundTeamMatchupId == SelectedRoundTeamMatchupId select p.Team2.TeamId).FirstOrDefault();
+                        
+            ViewBag.Player1Id = new SelectList(from p in db.Players where p.TeamId == Team1Id select p, "PlayerId", "Name");
+            ViewBag.Player2Id = new SelectList(from p in db.Players where p.TeamId == Team2Id select p, "PlayerId", "Name");
+            var players = (from p in db.Players where p.TeamId == Team1Id || p.TeamId == Team2Id select p).ToList ();
+            players.Add(new Player());
+            ViewBag.WinnerId = new SelectList(players, "PlayerId", "Name");
             return View();
         }
 
@@ -57,17 +69,47 @@ namespace WMATC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "MatchupId,RoundTeamMatchupId,Player1Id,Player2Id,WinnerId,Player1List,Player2List")] Matchup matchup)
         {
+            int SelectedRoundTeamMatchupId = -1;
+            int.TryParse(Session["SelectedRoundTeamMatchupId"].ToString(), out SelectedRoundTeamMatchupId);
+
             if (ModelState.IsValid)
             {
+                matchup.RoundTeamMatchupId = SelectedRoundTeamMatchupId;
+                if (matchup.WinnerId == 0) matchup.WinnerId = null;
                 db.Matchups.Add(matchup);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            
+            var Team1Id = (from p in db.RoundTeamMatchups where p.RoundTeamMatchupId == SelectedRoundTeamMatchupId select p.Team1.TeamId).FirstOrDefault();
+            var Team2Id = (from p in db.RoundTeamMatchups where p.RoundTeamMatchupId == SelectedRoundTeamMatchupId select p.Team2.TeamId).FirstOrDefault();
 
-            ViewBag.Player1Id = new SelectList(db.Players, "PlayerId", "Name", matchup.Player1Id);
-            ViewBag.Player2Id = new SelectList(db.Players, "PlayerId", "Name", matchup.Player2Id);
+            ViewBag.Player1Id = new SelectList(from p in db.Players where p.TeamId == Team1Id select p, "PlayerId", "Name", matchup.Player1Id);
+            ViewBag.Player2Id = new SelectList(from p in db.Players where p.TeamId == Team2Id select p, "PlayerId", "Name", matchup.Player2Id);
             ViewBag.RoundTeamMatchupId = new SelectList(db.RoundTeamMatchups, "RoundTeamMatchupId", "RoundTeamMatchupId", matchup.RoundTeamMatchupId);
-            ViewBag.WinnerId = new SelectList(db.Players, "PlayerId", "Name", matchup.WinnerId);
+
+            List<Models.Player> players = new List<Player>() ;
+            
+            if (matchup.Player1Id > 0  && matchup.Player2Id > 0)
+            {
+                players = (from p in db.Players where p.PlayerId == matchup.Player1Id || p.PlayerId == matchup.Player2Id select p).ToList();
+            }
+            if (matchup.Player1Id > 0 && matchup.Player2Id == 0)
+            {
+                players = (from p in db.Players where p.PlayerId == matchup.Player1Id || p.TeamId == matchup.RoundTeamMatchup.Team2Id select p).ToList();
+            }
+            if (matchup.Player1Id == 0 && matchup.Player2Id > 0)
+            {
+                players = (from p in db.Players where p.TeamId == matchup.RoundTeamMatchup.Team1Id || p.PlayerId == matchup.Player2Id select p).ToList();
+            }
+            if (matchup.Player1Id == 0 && matchup.Player2Id == 0)
+            {
+                players = (from p in db.Players where p.TeamId == Team1Id || p.TeamId == Team2Id select p).ToList();
+            }
+            players.Insert (0,new Player());
+            ViewBag.WinnerId = new SelectList(players, "PlayerId", "Name", matchup.WinnerId);
+
+
             return View(matchup);
         }
 
@@ -84,10 +126,35 @@ namespace WMATC.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Player1Id = new SelectList(db.Players, "PlayerId", "Name", matchup.Player1Id);
-            ViewBag.Player2Id = new SelectList(db.Players, "PlayerId", "Name", matchup.Player2Id);
+            int SelectedRoundTeamMatchupId = -1;
+            int.TryParse(Session["SelectedRoundTeamMatchupId"].ToString(), out SelectedRoundTeamMatchupId);
+            var Team1Id = (from p in db.RoundTeamMatchups where p.RoundTeamMatchupId == SelectedRoundTeamMatchupId select p.Team1.TeamId).FirstOrDefault();
+            var Team2Id = (from p in db.RoundTeamMatchups where p.RoundTeamMatchupId == SelectedRoundTeamMatchupId select p.Team2.TeamId).FirstOrDefault();
+
+            ViewBag.Player1Id = new SelectList(from p in db.Players where p.TeamId == Team1Id select p, "PlayerId", "Name", matchup.Player1Id);
+            ViewBag.Player2Id = new SelectList(from p in db.Players where p.TeamId == Team2Id select p, "PlayerId", "Name", matchup.Player2Id);
             ViewBag.RoundTeamMatchupId = new SelectList(db.RoundTeamMatchups, "RoundTeamMatchupId", "RoundTeamMatchupId", matchup.RoundTeamMatchupId);
-            ViewBag.WinnerId = new SelectList(db.Players, "PlayerId", "Name", matchup.WinnerId);
+
+            List<Models.Player> players = new List<Player>();
+            if (matchup.Player1Id > 0 && matchup.Player2Id > 0)
+            {
+                players = (from p in db.Players where p.PlayerId == matchup.Player1Id || p.PlayerId == matchup.Player2Id select p).ToList();
+            }
+            if (matchup.Player1Id > 0 && matchup.Player2Id == 0)
+            {
+                players = (from p in db.Players where p.PlayerId == matchup.Player1Id || p.TeamId == matchup.RoundTeamMatchup.Team2Id select p).ToList();
+            }
+            if (matchup.Player1Id == 0 && matchup.Player2Id > 0)
+            {
+                players = (from p in db.Players where p.TeamId == matchup.RoundTeamMatchup.Team1Id || p.PlayerId == matchup.Player2Id select p).ToList();
+            }
+            if (matchup.Player1Id == 0 && matchup.Player2Id == 0)
+            {
+                players = (from p in db.Players where p.TeamId == Team1Id || p.TeamId == Team2Id select p).ToList();
+            }
+            players.Insert(0, new Player());
+            ViewBag.WinnerId = new SelectList(players, "PlayerId", "Name", matchup.WinnerId);
+
             return View(matchup);
         }
 
@@ -99,16 +166,43 @@ namespace WMATC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "MatchupId,RoundTeamMatchupId,Player1Id,Player2Id,WinnerId,Player1List,Player2List")] Matchup matchup)
         {
+            int SelectedRoundTeamMatchupId = -1;
+            int.TryParse(Session["SelectedRoundTeamMatchupId"].ToString(), out SelectedRoundTeamMatchupId);
             if (ModelState.IsValid)
             {
+                matchup.RoundTeamMatchupId = SelectedRoundTeamMatchupId;
+                if (matchup.WinnerId == 0) matchup.WinnerId = null;
                 db.Entry(matchup).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Player1Id = new SelectList(db.Players, "PlayerId", "Name", matchup.Player1Id);
-            ViewBag.Player2Id = new SelectList(db.Players, "PlayerId", "Name", matchup.Player2Id);
+            var Team1Id = (from p in db.RoundTeamMatchups where p.RoundTeamMatchupId == SelectedRoundTeamMatchupId select p.Team1.TeamId).FirstOrDefault();
+            var Team2Id = (from p in db.RoundTeamMatchups where p.RoundTeamMatchupId == SelectedRoundTeamMatchupId select p.Team2.TeamId).FirstOrDefault();
+
+            ViewBag.Player1Id = new SelectList(from p in db.Players where p.TeamId == Team1Id select p, "PlayerId", "Name", matchup.Player1Id);
+            ViewBag.Player2Id = new SelectList(from p in db.Players where p.TeamId == Team2Id select p, "PlayerId", "Name", matchup.Player2Id);
             ViewBag.RoundTeamMatchupId = new SelectList(db.RoundTeamMatchups, "RoundTeamMatchupId", "RoundTeamMatchupId", matchup.RoundTeamMatchupId);
-            ViewBag.WinnerId = new SelectList(db.Players, "PlayerId", "Name", matchup.WinnerId);
+
+            List<Models.Player> players = new List<Player>();
+            if (matchup.Player1Id > 0 && matchup.Player2Id > 0)
+            {
+                players = (from p in db.Players where p.PlayerId == matchup.Player1Id || p.PlayerId == matchup.Player2Id select p).ToList();
+            }
+            if (matchup.Player1Id > 0 && matchup.Player2Id == 0)
+            {
+                players = (from p in db.Players where p.PlayerId == matchup.Player1Id || p.TeamId == matchup.RoundTeamMatchup.Team2Id select p).ToList();
+            }
+            if (matchup.Player1Id == 0 && matchup.Player2Id > 0)
+            {
+                players = (from p in db.Players where p.TeamId == matchup.RoundTeamMatchup.Team1Id || p.PlayerId == matchup.Player2Id select p).ToList();
+            }
+            if (matchup.Player1Id == 0 && matchup.Player2Id == 0)
+            {
+                players = (from p in db.Players where p.TeamId == Team1Id || p.TeamId == Team2Id select p).ToList();
+            }
+            players.Insert(0, new Player());
+            ViewBag.WinnerId = new SelectList(players, "PlayerId", "Name", matchup.WinnerId);
+
             return View(matchup);
         }
 

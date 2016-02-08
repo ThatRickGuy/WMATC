@@ -5,3 +5,5 @@ bin/
 obj/
 /obj/
 *.user
+*.exe
+WMATC/bin/Newtonsoft.Json.xml
