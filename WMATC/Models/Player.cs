@@ -14,9 +14,12 @@ namespace WMATC.Models
         [Key]
         public int PlayerId { get; set; }
         public string Name { get; set; }
-        [Url]
-        public string ImgURL { get; set; }
+        public int? FactionId { get; set; }
+        [ForeignKey("FactionId")]
+        public virtual Faction Faction { get; set; }
+        public string Caster1 { get; set; }
         public string List1 { get; set; }
+        public string Caster2 { get; set; }
         public string List2 { get; set; }
         public int TeamId { get; set; }
         [ForeignKey("TeamId")]

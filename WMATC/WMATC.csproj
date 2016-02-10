@@ -80,6 +80,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -208,13 +210,18 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201602071832485_Initial.cs" />
-    <Compile Include="Migrations\201602071832485_Initial.Designer.cs">
-      <DependentUpon>201602071832485_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201602100326197_initial.cs" />
+    <Compile Include="Migrations\201602100326197_initial.Designer.cs">
+      <DependentUpon>201602100326197_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602100400299_initial2.cs" />
+    <Compile Include="Migrations\201602100400299_initial2.Designer.cs">
+      <DependentUpon>201602100400299_initial2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Event.cs" />
+    <Compile Include="Models\Faction.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Matchup.cs" />
@@ -297,11 +304,6 @@
     <Content Include="Views\Teams\Details.cshtml" />
     <Content Include="Views\Teams\Edit.cshtml" />
     <Content Include="Views\Teams\Index.cshtml" />
-    <Content Include="Views\Players\Create.cshtml" />
-    <Content Include="Views\Players\Delete.cshtml" />
-    <Content Include="Views\Players\Details.cshtml" />
-    <Content Include="Views\Players\Edit.cshtml" />
-    <Content Include="Views\Players\Index.cshtml" />
     <Content Include="Views\Rounds\Create.cshtml" />
     <Content Include="Views\Rounds\Delete.cshtml" />
     <Content Include="Views\Rounds\Details.cshtml" />
@@ -318,6 +320,11 @@
     <Content Include="Views\Matchups\Edit.cshtml" />
     <Content Include="Views\Matchups\Index.cshtml" />
     <Content Include="Views\Publish\Index.cshtml" />
+    <Content Include="Views\Players\Create.cshtml" />
+    <Content Include="Views\Players\Delete.cshtml" />
+    <Content Include="Views\Players\Details.cshtml" />
+    <Content Include="Views\Players\Edit.cshtml" />
+    <Content Include="Views\Players\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -331,8 +338,11 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201602071832485_Initial.resx">
-      <DependentUpon>201602071832485_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201602100326197_initial.resx">
+      <DependentUpon>201602100326197_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602100400299_initial2.resx">
+      <DependentUpon>201602100400299_initial2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

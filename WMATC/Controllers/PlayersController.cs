@@ -18,7 +18,6 @@ namespace WMATC.Controllers
         [Authorize(Roles = "canEdit")]
         public ActionResult Index()
         {
-
             if (Session["SelectedEventId"] == null) return Redirect("Events");
             if (Session["SelectedTeamId"] == null) return Redirect("Teams");
 
@@ -26,7 +25,7 @@ namespace WMATC.Controllers
             if (Session["SelectedEvent"] != null)
             {
                 int EventID;
-                int.TryParse(Session["SelectedEventID"].ToString (), out EventID);
+                int.TryParse(Session["SelectedEventID"].ToString(), out EventID);
                 players = from p in players where p.Team.EventId == EventID select p;
 
                 if (Session["SelectedTeam"] != null)
@@ -37,7 +36,6 @@ namespace WMATC.Controllers
                 }
 
             }
-            
             return View(players.ToList());
         }
 
@@ -61,8 +59,7 @@ namespace WMATC.Controllers
         [Authorize(Roles = "canEdit")]
         public ActionResult Create()
         {
-            
-            var teams = from p in db.Teams select p ;
+            var teams = from p in db.Teams select p;
             if (Session["SelectedEvent"] != null)
             {
                 int EventID;
@@ -79,17 +76,18 @@ namespace WMATC.Controllers
             }
 
             ViewBag.TeamId = new SelectList(teams.ToList(), "TeamId", "Name");
-
+            ViewBag.FactionId = new SelectList(db.Faction, "FactionId", "Title");
+            
             return View();
         }
 
         // POST: Players/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "canEdit")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PlayerId,Name,ImgURL,List1,List2,TeamId")] Player player)
+        [Authorize(Roles = "canEdit")]
+        public ActionResult Create([Bind(Include = "PlayerId,Name,FactionId,Caster1,List1,Caster2,List2,TeamId")] Player player)
         {
             if (ModelState.IsValid)
             {
@@ -97,7 +95,6 @@ namespace WMATC.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
             var teams = from p in db.Teams select p;
             if (Session["SelectedEvent"] != null)
             {
@@ -114,7 +111,7 @@ namespace WMATC.Controllers
 
             }
 
-            ViewBag.TeamId = new SelectList(teams.ToList(), "TeamId", "Name", player.TeamId);
+            ViewBag.FactionId = new SelectList(db.Faction, "FactionId", "Title", player.FactionId);
             return View(player);
         }
 
@@ -131,7 +128,6 @@ namespace WMATC.Controllers
             {
                 return HttpNotFound();
             }
-
             var teams = from p in db.Teams select p;
             if (Session["SelectedEvent"] != null)
             {
@@ -148,16 +144,18 @@ namespace WMATC.Controllers
             }
 
             ViewBag.TeamId = new SelectList(teams.ToList(), "TeamId", "Name", player.TeamId);
+            ViewBag.FactionId = new SelectList(db.Faction, "FactionId", "Title", player.FactionId);
+            
             return View(player);
         }
 
         // POST: Players/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "canEdit")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PlayerId,Name,ImgURL,List1,List2,TeamId")] Player player)
+        [Authorize(Roles = "canEdit")]
+        public ActionResult Edit([Bind(Include = "PlayerId,Name,FactionId,Caster1,List1,Caster2,List2,TeamId")] Player player)
         {
             if (ModelState.IsValid)
             {
@@ -165,7 +163,6 @@ namespace WMATC.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
             var teams = from p in db.Teams select p;
             if (Session["SelectedEvent"] != null)
             {
@@ -182,6 +179,8 @@ namespace WMATC.Controllers
             }
 
             ViewBag.TeamId = new SelectList(teams.ToList(), "TeamId", "Name", player.TeamId);
+            ViewBag.FactionId = new SelectList(db.Faction, "FactionId", "Title", player.FactionId);
+            
             return View(player);
         }
 

@@ -32,6 +32,8 @@ namespace WMATC.Models
 
         public System.Data.Entity.DbSet<WMATC.Models.Event> Events { get; set; }
 
+        public System.Data.Entity.DbSet<WMATC.Models.Faction> Faction { get; set; }
+
         public System.Data.Entity.DbSet<WMATC.Models.Team> Teams { get; set; }
 
         public System.Data.Entity.DbSet<WMATC.Models.Player> Players { get; set; }
