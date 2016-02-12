@@ -27,23 +27,14 @@ namespace WMATC.Controllers
             if (id != null)
             {
                 Session["SelectedRoundTeamMatchupId"] = id;
-                var q = (from p in db.RoundTeamMatchups where p.RoundTeamMatchupId == id select p.Team1.Name + " vs. " + p.Team2.Name).FirstOrDefault();
-                Session["SelectedRoundTeamMatchup"] = q ;
-            }
-            if (Session["SelectedEventId"] == null)
-            {
-                rView = Redirect("Events");
-            }
-            else if (Session["SelectedRoundId"] == null)
-            {
-                rView = Redirect("Rounds");
-            }
-            else 
-            {
-                var roundTeamMatchups = db.RoundTeamMatchups.Include(r => r.Round).Include(r => r.Team1).Include(r => r.Team2);
-                rView = View(roundTeamMatchups.ToList());
+                Session["SelectedRoundTeamMatchup"] = (from p in db.RoundTeamMatchups where p.RoundTeamMatchupId == id select p.Team1.Name + " vs. " + p.Team2.Name).FirstOrDefault();
             }
 
+            int RoundID = 0;
+            int.TryParse(Session["SelectedRoundId"].ToString(), out RoundID);
+            var roundTeamMatchups = (from p in db.RoundTeamMatchups where p.RoundId == RoundID select p).Include(r => r.Round).Include(r => r.Team1).Include(r => r.Team2);
+            rView = View(roundTeamMatchups.ToList());
+            
             return rView;          
         }
 
@@ -67,9 +58,17 @@ namespace WMATC.Controllers
         [Authorize(Roles = "canEdit")]
         public ActionResult Create()
         {
-            ViewBag.RoundId = new SelectList(db.Rounds, "RoundId", "Scenario");
-            ViewBag.Team1Id = new SelectList(db.Teams, "TeamId", "Name");
-            ViewBag.Team2Id = new SelectList(db.Teams, "TeamId", "Name");
+            if (Session["SelectedEventId"] == null) return Redirect("Events");
+            if (Session["SelectedRoundId"] == null) return Redirect("Rounds");
+
+            int RoundID = 0;
+            int.TryParse(Session["SelectedRoundId"].ToString(), out RoundID);
+            int EventID = 0;
+            int.TryParse(Session["SelectedEventId"].ToString(), out EventID);
+
+            ViewBag.RoundId = new SelectList((from p in db.Rounds where p.RoundId == RoundID select p).ToList(), "RoundId", "Scenario");
+            ViewBag.Team1Id = new SelectList((from p in db.Teams where p.EventId == EventID select p).ToList(), "TeamId", "Name");
+            ViewBag.Team2Id = new SelectList((from p in db.Teams where p.EventId == EventID select p).ToList(), "TeamId", "Name");
             return View();
         }
 
@@ -87,10 +86,17 @@ namespace WMATC.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            if (Session["SelectedEventId"] == null) return Redirect("Events");
+            if (Session["SelectedRoundId"] == null) return Redirect("Rounds");
 
-            ViewBag.RoundId = new SelectList(db.Rounds, "RoundId", "Scenario", roundTeamMatchup.RoundId);
-            ViewBag.Team1Id = new SelectList(db.Teams, "TeamId", "Name", roundTeamMatchup.Team1Id);
-            ViewBag.Team2Id = new SelectList(db.Teams, "TeamId", "Name", roundTeamMatchup.Team2Id);
+            int RoundID = 0;
+            int.TryParse(Session["SelectedRoundId"].ToString(), out RoundID);
+            int EventID = 0;
+            int.TryParse(Session["SelectedEventId"].ToString(), out EventID);
+
+            ViewBag.RoundId = new SelectList((from p in db.Rounds where p.RoundId == RoundID select p).ToList(), "RoundId", "Scenario");
+            ViewBag.Team1Id = new SelectList((from p in db.Teams where p.EventId == EventID select p).ToList(), "TeamId", "Name");
+            ViewBag.Team2Id = new SelectList((from p in db.Teams where p.EventId == EventID select p).ToList(), "TeamId", "Name");
             return View(roundTeamMatchup);
         }
 
@@ -107,9 +113,18 @@ namespace WMATC.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.RoundId = new SelectList(db.Rounds, "RoundId", "Scenario", roundTeamMatchup.RoundId);
-            ViewBag.Team1Id = new SelectList(db.Teams, "TeamId", "Name", roundTeamMatchup.Team1Id);
-            ViewBag.Team2Id = new SelectList(db.Teams, "TeamId", "Name", roundTeamMatchup.Team2Id);
+
+            if (Session["SelectedEventId"] == null) return Redirect("Events");
+            if (Session["SelectedRoundId"] == null) return Redirect("Rounds");
+
+            int RoundID = 0;
+            int.TryParse(Session["SelectedRoundId"].ToString(), out RoundID);
+            int EventID = 0;
+            int.TryParse(Session["SelectedEventId"].ToString(), out EventID);
+
+            ViewBag.RoundId = new SelectList((from p in db.Rounds where p.RoundId == RoundID select p).ToList(), "RoundId", "Scenario");
+            ViewBag.Team1Id = new SelectList((from p in db.Teams where p.EventId == EventID select p).ToList(), "TeamId", "Name");
+            ViewBag.Team2Id = new SelectList((from p in db.Teams where p.EventId == EventID select p).ToList(), "TeamId", "Name");
             return View(roundTeamMatchup);
         }
 
@@ -127,9 +142,18 @@ namespace WMATC.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.RoundId = new SelectList(db.Rounds, "RoundId", "Scenario", roundTeamMatchup.RoundId);
-            ViewBag.Team1Id = new SelectList(db.Teams, "TeamId", "Name", roundTeamMatchup.Team1Id);
-            ViewBag.Team2Id = new SelectList(db.Teams, "TeamId", "Name", roundTeamMatchup.Team2Id);
+
+             if (Session["SelectedEventId"] == null) return Redirect("Events");
+            if (Session["SelectedRoundId"] == null) return Redirect("Rounds");
+
+            int RoundID = 0;
+            int.TryParse(Session["SelectedRoundId"].ToString(), out RoundID);
+            int EventID = 0;
+            int.TryParse(Session["SelectedEventId"].ToString(), out EventID);
+
+            ViewBag.RoundId = new SelectList((from p in db.Rounds where p.RoundId == RoundID select p).ToList(), "RoundId", "Scenario");
+            ViewBag.Team1Id = new SelectList((from p in db.Teams where p.EventId == EventID select p).ToList(), "TeamId", "Name");
+            ViewBag.Team2Id = new SelectList((from p in db.Teams where p.EventId == EventID select p).ToList(), "TeamId", "Name");
             return View(roundTeamMatchup);
         }
 

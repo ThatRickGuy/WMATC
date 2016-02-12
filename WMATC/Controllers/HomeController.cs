@@ -16,14 +16,14 @@ namespace WMATC.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Warmachine/Hordes - Americas Team Championship.";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Contact Information.";
 
             return View();
         }
