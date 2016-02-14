@@ -207,13 +207,20 @@ box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
 			}
 		//-->
 </script>
-<h1>
-    @Model.EventTitle
-</h1>
-<h3>
-    @Model.EventDate.ToShortDateString().ToString()
-</h3>
-<br />
+<div style="margin:25px;">
+    <div style="float:left; width:35%;">
+        <img src="@Model.EventImageURL" style="height:100px; width:auto;" />
+    </div>
+    <div style="float:left; width:65%;">
+        <h1>
+            @Model.EventTitle
+        </h1>
+        <h3>
+            @Model.EventDate.ToShortDateString().ToString()
+        </h3>
+    </div>
+</div>
+<br style="clear:left;" />
 
 @{int iMatchup = 0; }
 @foreach (var round in Model.Rounds)
@@ -242,7 +249,7 @@ box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
                 <div id="Team1" class="LeftBox @Team1Background" style="width:250px; height:55px;" onclick="toggle_visibility('@siMatchup');">
                     <div id="Team1Flag" style="float:left;
 											    margin:10px;">
-                        <img src="@teamMatchup.Team1ImageURL" alt="@teamMatchup.Team1Name" width=50px height=33px>
+                        <img src="@teamMatchup.Team1ImageURL" alt="@teamMatchup.Team1Name" style="width:auto; height:33px">
                     </div>
 
                     <div style="margin:3px;float:right;">
@@ -258,7 +265,7 @@ box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
                 <div id="Team2" class="RightBox @Team2Background" style="width:250px; height:55px;" onclick="toggle_visibility('@siMatchup');">
                     <div id="Team2Flag" style="float:right;
 											    margin:10px;">
-                        <img src="@teamMatchup.Team2ImageURL" alt="@teamMatchup.Team2Name" width=50px height=33px>
+                        <img src="@teamMatchup.Team2ImageURL" alt="@teamMatchup.Team2Name" style="width:auto; height:33px">
                     </div>
                     <div id="Team2Name" style="float:right;margin:18px 0px 0px 0px;
 											    font-weight:bold;">
@@ -289,8 +296,7 @@ box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
                                     @matchup.Player1ListNumber
                                 </span>
                             </div>
-                            <div id="MatchupPlayer1Name" style="margin:10px 0px 0px 0px;
-											font-weight:bold;">
+                            <div id="MatchupPlayer1Name" style="margin:0px 0px 0px 0px; font-weight:bold; max-width:125px; max-height:35px; overflow:hidden;">
                                 @matchup.Player1Name
                             </div>
                         </div>
@@ -306,8 +312,7 @@ box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
                                     @matchup.Player2ListNumber
                                 </span>
                             </div>
-                            <div id="MatchupPlayer2Name" style="float:right;margin:10px 0px 0px 0px;
-											font-weight:bold;">
+                            <div id="MatchupPlayer2Name" style="float:right;margin:0px 0px 0px 0px; font-weight:bold; max-width:125px; max-height:35px; overflow:hidden;">
                                 @matchup.Player2Name
                             </div>
                         </div>

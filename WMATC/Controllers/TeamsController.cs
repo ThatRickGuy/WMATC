@@ -25,7 +25,6 @@ namespace WMATC.Controllers
             if (id != null) 
             {
                 Session["SelectedTeamId"] = id;
-                Session["SelectedTeam"] = (from p in db.Teams where p.TeamId == id select p.Name).FirstOrDefault();
 
                 Session["SelectedRoundId"] = null;
                 Session["SelectedRound"] = null;

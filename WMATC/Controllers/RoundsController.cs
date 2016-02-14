@@ -36,7 +36,9 @@ namespace WMATC.Controllers
             }
             else
             {
-                var rounds = db.Rounds.Include(r => r.Event);
+                int EventID;
+                int.TryParse(Session["SelectedEventId"].ToString(), out EventID);
+                var rounds = (from p in db.Rounds where p.EventId== EventID select p ).Include(r => r.Event);
                 rView = View(rounds.ToList());
             }
 

@@ -16,10 +16,16 @@ namespace WMATC.Controllers
 
         // GET: Players
         [Authorize(Roles = "canEdit")]
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
             if (Session["SelectedEventId"] == null) return Redirect("Events");
-            if (Session["SelectedTeamId"] == null) return Redirect("Teams");
+            if (Session["SelectedTeamId"] == null && id == null) return Redirect("Teams");
+
+            if (id != null)
+            {
+                Session["SelectedTeamId"] = id;
+                Session["SelectedTeam"] = (from p in db.Teams where p.TeamId == id select p.Name).FirstOrDefault();
+            }
 
             var players = db.Players.Include(p => p.Team);
             if (Session["SelectedEvent"] != null)
@@ -28,12 +34,13 @@ namespace WMATC.Controllers
                 int.TryParse(Session["SelectedEventID"].ToString(), out EventID);
                 players = from p in players where p.Team.EventId == EventID select p;
 
-                if (Session["SelectedTeam"] != null)
+                if (id == null)
                 {
-                    int TeamID;
-                    int.TryParse(Session["SelectedTeamID"].ToString(), out TeamID);
-                    players = from p in players where p.TeamId == TeamID select p;
+                    int tempTeamID;
+                    int.TryParse(Session["SelectedTeamID"].ToString(), out tempTeamID);
+                    id = tempTeamID;
                 }
+                players = from p in players where p.TeamId == id select p;
 
             }
             return View(players.ToList());

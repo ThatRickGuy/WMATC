@@ -29,10 +29,11 @@
             @Html.DisplayFor(modelItem => item.Event.Title)
         </td>
         <td>
-            @Html.ActionLink(item.Name, "Index", new { id = item.TeamId })
+            
+            @Html.ActionLink(item.Name, "Index", "Players", new { id = item.TeamId }, null)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ImgURL)
+            <img src="@item.ImgURL" style="height:32px; width:auto;"/>
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.TeamId }) |

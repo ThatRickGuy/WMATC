@@ -21,6 +21,7 @@ namespace WMATC.ViewModels
             var MyEvent = (from p in db.Events where p.EventId == EventID select p).First();
             this.EventDate = MyEvent.EventDate;
             this.EventTitle = MyEvent.Title;
+            this.EventImageURL = MyEvent.ImageURL;
 
             this.Rounds = (from p in db.Rounds where p.EventId == MyEvent.EventId orderby p.Sequence select new RoundViewModel() { Sequence = p.Sequence, Scenario = p.Scenario, RoundID = p.RoundId }).ToList<RoundViewModel>();
             foreach (RoundViewModel Round in Rounds)
@@ -82,6 +83,7 @@ namespace WMATC.ViewModels
             }
         }
 
+        public string EventImageURL;
         public string EventTitle;
         public DateTime EventDate;
         public List<RoundViewModel> Rounds;

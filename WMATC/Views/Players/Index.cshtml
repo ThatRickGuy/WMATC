@@ -12,10 +12,10 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Faction.Title)
+            Faction
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Team.Name)
+            Team
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Name)
@@ -36,7 +36,7 @@
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
+    <tr >
         <td>
             @Html.DisplayFor(modelItem => item.Faction.Title)
         </td>
@@ -50,13 +50,17 @@
             @Html.DisplayFor(modelItem => item.Caster1)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.List1)
+            <div style="height:100px;overflow: scroll;">
+                @Html.DisplayFor(modelItem => item.List1)
+            </div>
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Caster2)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.List2)
+            <div style="height:100px;overflow: scroll;">
+                @Html.DisplayFor(modelItem => item.List2)
+            </div>
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.PlayerId }) |

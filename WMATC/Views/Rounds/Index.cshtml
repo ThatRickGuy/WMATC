@@ -29,7 +29,7 @@
             @Html.DisplayFor(modelItem => item.Event.Title)
         </td>
         <td>
-            @Html.ActionLink(item.Sequence.ToString(), "Index", new { id = item.RoundId })
+            @Html.ActionLink(item.Sequence.ToString(), "Index", "RoundTeamMatchups", new { id = item.RoundId }, null)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Scenario)

@@ -29,7 +29,7 @@
             @Html.DisplayFor(modelItem => item.RoundTeamMatchupViewModel.Round )
         </td>
         <td>
-            @Html.ActionLink(item.RoundTeamMatchupViewModel.Matchup, "Index", new { id = item.RoundTeamMatchupId }) 
+            @Html.ActionLink(item.RoundTeamMatchupViewModel.Matchup, "Index", "Matchups", new { id = item.RoundTeamMatchupId }, null)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Team2.Name)
