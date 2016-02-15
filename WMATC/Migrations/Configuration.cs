@@ -26,19 +26,21 @@ namespace WMATC.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
-            
-            context.Faction.AddOrUpdate(new WMATC.Models.Faction { Title = "Cygnar", ImageURL = "http://privateerpress.com/files/imagecache/3up_square/pages/cygnar.png" });
-            context.Faction.AddOrUpdate(new WMATC.Models.Faction { Title = "Protectorate", ImageURL = "http://privateerpress.com/files/imagecache/3up_square/pages/the-protectorate-of-menoth.png" });
-            context.Faction.AddOrUpdate(new WMATC.Models.Faction { Title = "Khador", ImageURL = "http://privateerpress.com/files/imagecache/3up_square/pages/khador.png" });
-            context.Faction.AddOrUpdate(new WMATC.Models.Faction { Title = "Cryx", ImageURL = "http://privateerpress.com/files/imagecache/3up_square/pages/cryx.png" });
-            context.Faction.AddOrUpdate(new WMATC.Models.Faction { Title = "Retribution", ImageURL = "http://privateerpress.com/files/imagecache/3up_square/pages/the-retribution-of-scyrah.png" });
-            context.Faction.AddOrUpdate(new WMATC.Models.Faction { Title = "Mercenaries", ImageURL = "http://privateerpress.com/files/imagecache/3up_square/pages/mercenaries.png" });
-            context.Faction.AddOrUpdate(new WMATC.Models.Faction { Title = "Convergence", ImageURL = "http://privateerpress.com/files/imagecache/3up_square/pages/Convergence.png" });
-            context.Faction.AddOrUpdate(new WMATC.Models.Faction { Title = "Trollbloods", ImageURL = "http://privateerpress.com/files/imagecache/3up_square/pages/trollbloods.png" });
-            context.Faction.AddOrUpdate(new WMATC.Models.Faction { Title = "Circle", ImageURL = "http://privateerpress.com/files/imagecache/3up_square/pages/circle-orboros.png" });
-            context.Faction.AddOrUpdate(new WMATC.Models.Faction { Title = "Skorne", ImageURL = "http://privateerpress.com/files/imagecache/3up_square/pages/skorne.png" });
-            context.Faction.AddOrUpdate(new WMATC.Models.Faction { Title = "Legion", ImageURL = "http://privateerpress.com/files/imagecache/3up_square/pages/legion-of-everblight.png" });
-            context.Faction.AddOrUpdate(new WMATC.Models.Faction { Title = "Minions", ImageURL = "http://privateerpress.com/files/imagecache/3up_square/pages/minions.png" });
+            if (context.Faction.Count() == 0)
+            {
+                context.Faction.AddOrUpdate(new WMATC.Models.Faction { Title = "Cygnar", ImageURL = "http://privateerpress.com/files/imagecache/3up_square/pages/cygnar.png" });
+                context.Faction.AddOrUpdate(new WMATC.Models.Faction { Title = "Protectorate", ImageURL = "http://privateerpress.com/files/imagecache/3up_square/pages/the-protectorate-of-menoth.png" });
+                context.Faction.AddOrUpdate(new WMATC.Models.Faction { Title = "Khador", ImageURL = "http://privateerpress.com/files/imagecache/3up_square/pages/khador.png" });
+                context.Faction.AddOrUpdate(new WMATC.Models.Faction { Title = "Cryx", ImageURL = "http://privateerpress.com/files/imagecache/3up_square/pages/cryx.png" });
+                context.Faction.AddOrUpdate(new WMATC.Models.Faction { Title = "Retribution", ImageURL = "http://privateerpress.com/files/imagecache/3up_square/pages/the-retribution-of-scyrah.png" });
+                context.Faction.AddOrUpdate(new WMATC.Models.Faction { Title = "Mercenaries", ImageURL = "http://privateerpress.com/files/imagecache/3up_square/pages/mercenaries.png" });
+                context.Faction.AddOrUpdate(new WMATC.Models.Faction { Title = "Convergence", ImageURL = "http://privateerpress.com/files/imagecache/3up_square/pages/Convergence.png" });
+                context.Faction.AddOrUpdate(new WMATC.Models.Faction { Title = "Trollbloods", ImageURL = "http://privateerpress.com/files/imagecache/3up_square/pages/trollbloods.png" });
+                context.Faction.AddOrUpdate(new WMATC.Models.Faction { Title = "Circle", ImageURL = "http://privateerpress.com/files/imagecache/3up_square/pages/circle-orboros.png" });
+                context.Faction.AddOrUpdate(new WMATC.Models.Faction { Title = "Skorne", ImageURL = "http://privateerpress.com/files/imagecache/3up_square/pages/skorne.png" });
+                context.Faction.AddOrUpdate(new WMATC.Models.Faction { Title = "Legion", ImageURL = "http://privateerpress.com/files/imagecache/3up_square/pages/legion-of-everblight.png" });
+                context.Faction.AddOrUpdate(new WMATC.Models.Faction { Title = "Minions", ImageURL = "http://privateerpress.com/files/imagecache/3up_square/pages/minions.png" });
+            }
         }
     }
 }

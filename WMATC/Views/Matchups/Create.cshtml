@@ -7,21 +7,21 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Matchup</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @*<div class="form-group">
-            @Html.LabelFor(model => model.RoundTeamMatchupId, "RoundTeamMatchupId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("RoundTeamMatchupId",  null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.RoundTeamMatchupId, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
+                @Html.LabelFor(model => model.RoundTeamMatchupId, "RoundTeamMatchupId", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("RoundTeamMatchupId",  null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RoundTeamMatchupId, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Player1Id, "Player1Id", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -50,7 +50,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Player1List, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Player1List, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownList("Player1List", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Player1List, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -58,14 +58,22 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Player2List, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Player2List, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownList("Player2List", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Player2List, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" name="command" value="Create" class="btn btn-default" />
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" name="command" value="CreateAnother" class="btn btn-default" />
             </div>
         </div>
     </div>
@@ -78,3 +86,39 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+<script>
+    @{string value = "[";
+
+        foreach (var list in Model.MatchupViewModel.Lists)
+        {
+            value = value + "{id:'" + list.PlayerName + "', ListNumber:" + list.ListNumber + ", ListName:'" + list.ListName + "'},";
+        }
+        value += "];";
+        }
+
+    var lists = @Html.Raw(value);
+
+    $("#Player1Id").on("change", function () {UpdateListSelect('Player1Id','Player1List');UpdateWinnerSelect();});
+    $("#Player2Id").on("change", function () {UpdateListSelect('Player2Id','Player2List');UpdateWinnerSelect();});
+
+    UpdateListSelect('Player1Id','Player1List');
+    UpdateListSelect('Player2Id','Player2List');
+    UpdateWinnerSelect();
+    function UpdateListSelect(PlayerSelectId, ListSelectId) {
+        $('#'+ListSelectId).empty();
+        for (list in lists) {
+            if (lists[list].id == $('#'+PlayerSelectId).children("option").filter(":selected").text()){
+                $('#'+ListSelectId).append('<option value="' + lists[list].ListNumber + '">' + lists[list].ListName + '</option>');
+            }
+        }
+        $('#'+ListSelectId).append('<option value="null"></option>');
+    }
+
+    function UpdateWinnerSelect(){
+        $("#WinnerId").empty();
+        $('#WinnerId').append('<option value="null"></option>');
+        $("#WinnerId").append('<option value="' + $('#Player1Id').children("option").filter(":selected").val() + '">' + $('#Player1Id').children("option").filter(":selected").text() + '</option>');
+        $("#WinnerId").append('<option value="' + $('#Player2Id').children("option").filter(":selected").val() + '">' + $('#Player2Id').children("option").filter(":selected").text() + '</option>');
+    }
+</script>

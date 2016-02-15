@@ -29,11 +29,12 @@ namespace WMATC.Models
         [ForeignKey("WinnerId")]
         public virtual Player Winner { get; set; }
         
-        public int Player1List { get; set; }
-        public int Player2List { get; set; }
+        public int? Player1List { get; set; }
+        public int? Player2List { get; set; }
 
         [NotMapped]
         public ViewModel MatchupViewModel { get; set; }
+
 
         public class ViewModel
         {
@@ -44,9 +45,16 @@ namespace WMATC.Models
             private Matchup _Parent;
 
             public string RoundTeamMatchup { get { return _Parent.RoundTeamMatchup.RoundTeamMatchupViewModel.Round + _Parent.RoundTeamMatchup.RoundTeamMatchupViewModel.Matchup; } }
-
+            public List<List> Lists { get; set; }
             //public string Round { get { return _Parent.Round.Sequence + ". " + _Parent.Round.Scenario; } }
             //public string Matchup { get { return _Parent.Team1.Name + " vs. " + _Parent.Team2.Name; } }
+        }
+
+        public class List
+        {
+            public string PlayerName { get; set; }
+            public int? ListNumber { get; set; }
+            public string ListName { get; set; }
         }
     }
 }

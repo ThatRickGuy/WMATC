@@ -84,32 +84,18 @@ namespace WMATC.Controllers
         [Authorize(Roles = "canEdit")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "RoundTeamMatchupId,RoundId,Team1Id,Team2Id")] RoundTeamMatchup roundTeamMatchup)
+        public ActionResult Create([Bind(Include = "RoundTeamMatchupId,RoundId,Team1Id,Team2Id")] RoundTeamMatchup roundTeamMatchup, string command)
         {
             if (ModelState.IsValid)
             {
                 db.RoundTeamMatchups.Add(roundTeamMatchup);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                if (command == "CreateAnother")
+                    return RedirectToAction("Create");
+                else
+                    return RedirectToAction("Index");
             }
-            if (Session["SelectedEventId"] == null) return Redirect("Events");
-            if (Session["SelectedRoundId"] == null) return Redirect("Rounds");
-
-            int RoundID = 0;
-            int.TryParse(Session["SelectedRoundId"].ToString(), out RoundID);
-            int EventID = 0;
-            int.TryParse(Session["SelectedEventId"].ToString(), out EventID);
-
-            ViewBag.RoundId = new SelectList((from p in db.Rounds where p.RoundId == RoundID select p).ToList(), "RoundId", "Scenario");
-
-            var AvailableTeams = from p in db.Teams where p.EventId == EventID select p;
-            var Team1s = from p in db.RoundTeamMatchups where p.RoundId == RoundID select p.Team1Id;
-            var Team2s = from p in db.RoundTeamMatchups where p.RoundId == RoundID select p.Team2Id;
-            AvailableTeams = from p in AvailableTeams where !Team1s.Contains(p.TeamId) && !Team2s.Contains(p.TeamId) select p;
-
-            ViewBag.Team1Id = new SelectList(AvailableTeams.ToList(), "TeamId", "Name");
-            ViewBag.Team2Id = new SelectList(AvailableTeams.ToList(), "TeamId", "Name");
-            return View(roundTeamMatchup);
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
         // GET: RoundTeamMatchups/Edit/5
@@ -160,25 +146,7 @@ namespace WMATC.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-             if (Session["SelectedEventId"] == null) return Redirect("Events");
-            if (Session["SelectedRoundId"] == null) return Redirect("Rounds");
-
-            int RoundID = 0;
-            int.TryParse(Session["SelectedRoundId"].ToString(), out RoundID);
-            int EventID = 0;
-            int.TryParse(Session["SelectedEventId"].ToString(), out EventID);
-
-            ViewBag.RoundId = new SelectList((from p in db.Rounds where p.RoundId == RoundID select p).ToList(), "RoundId", "Scenario");
-
-            var AvailableTeams = from p in db.Teams where p.EventId == EventID select p;
-            var Team1s = from p in db.RoundTeamMatchups where p.RoundId == RoundID select p.Team1Id;
-            var Team2s = from p in db.RoundTeamMatchups where p.RoundId == RoundID select p.Team2Id;
-            AvailableTeams = from p in AvailableTeams where !Team1s.Contains(p.TeamId) && !Team2s.Contains(p.TeamId) select p;
-
-            ViewBag.Team1Id = new SelectList(AvailableTeams.ToList(), "TeamId", "Name");
-            ViewBag.Team2Id = new SelectList(AvailableTeams.ToList(), "TeamId", "Name");
-            return View(roundTeamMatchup);
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
         // GET: RoundTeamMatchups/Delete/5
