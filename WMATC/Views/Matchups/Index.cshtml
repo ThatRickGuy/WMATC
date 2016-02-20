@@ -24,7 +24,19 @@
             Player 1 List
         </th>
         <th>
+            Player 1 CP
+        </th>
+        <th>
+            Player 1 APD
+        </th>
+        <th>
             Player 2 List
+        </th>
+        <th>
+            Player 2 CP
+        </th>
+        <th>
+            Player 2 APD
         </th>
         <th></th>
     </tr>
@@ -44,7 +56,19 @@
             @Html.DisplayFor(modelItem => item.Player1List)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.Player1CP)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Player1APD)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Player2List)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Player2CP)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Player2APD)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.MatchupId }) |

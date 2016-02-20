@@ -14,6 +14,7 @@ namespace WMATC.Models
         public int EventId { get; set; }
         public string Title { get; set; }
         public DateTime EventDate { get; set; }
+        public DateTime ListLockDate { get; set; }
         public string ImageURL { get; set; }
     }
 }

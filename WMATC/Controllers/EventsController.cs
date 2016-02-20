@@ -73,7 +73,7 @@ namespace WMATC.Controllers
         [Authorize(Roles = "canEdit")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EventId,Title,EventDate,ImageURL")] Event @event)
+        public ActionResult Create([Bind(Include = "EventId,Title,EventDate,ImageURL,ListLockDate")] Event @event)
         {
             if (ModelState.IsValid)
             {
@@ -107,7 +107,7 @@ namespace WMATC.Controllers
         [Authorize(Roles = "canEdit")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EventId,Title,EventDate,ImageURL")] Event @event)
+        public ActionResult Edit([Bind(Include = "EventId,Title,EventDate,ImageURL,ListLockDate")] Event @event)
         {
             if (ModelState.IsValid)
             {

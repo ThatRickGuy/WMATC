@@ -32,6 +32,12 @@ namespace WMATC.Models
         public int? Player1List { get; set; }
         public int? Player2List { get; set; }
 
+        public int? Player1CP { get; set; }
+        public int? Player2CP { get; set; }
+
+        public int? Player1APD { get; set; }
+        public int? Player2APD { get; set; }
+
         [NotMapped]
         public ViewModel MatchupViewModel { get; set; }
 

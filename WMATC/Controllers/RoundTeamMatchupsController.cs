@@ -84,7 +84,7 @@ namespace WMATC.Controllers
         [Authorize(Roles = "canEdit")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "RoundTeamMatchupId,RoundId,Team1Id,Team2Id")] RoundTeamMatchup roundTeamMatchup, string command)
+        public ActionResult Create([Bind(Include = "RoundTeamMatchupId,RoundId,Team1Id,Team2Id,TableZone")] RoundTeamMatchup roundTeamMatchup, string command)
         {
             if (ModelState.IsValid)
             {
@@ -138,7 +138,7 @@ namespace WMATC.Controllers
         [Authorize(Roles = "canEdit")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "RoundTeamMatchupId,RoundId,Team1Id,Team2Id")] RoundTeamMatchup roundTeamMatchup)
+        public ActionResult Edit([Bind(Include = "RoundTeamMatchupId,RoundId,Team1Id,Team2Id,TableZone")] RoundTeamMatchup roundTeamMatchup)
         {
             if (ModelState.IsValid)
             {

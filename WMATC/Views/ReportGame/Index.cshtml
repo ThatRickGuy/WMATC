@@ -1,0 +1,63 @@
+﻿@model IEnumerable<WMATC.Models.Matchup>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Player1.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Player2.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RoundTeamMatchup.RoundTeamMatchupId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Winner.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Player1List)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Player2List)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Player1.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Player2.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RoundTeamMatchup.RoundTeamMatchupId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Winner.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Player1List)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Player2List)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MatchupId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MatchupId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MatchupId })
+        </td>
+    </tr>
+}
+
+</table>

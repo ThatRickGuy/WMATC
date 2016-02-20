@@ -30,6 +30,8 @@ namespace WMATC.Models
         [ForeignKey("Team2Id")]
         public Team Team2 { get; set; }
 
+        public int? TableZone { get; set; }
+
         [NotMapped]
         public ViewModel RoundTeamMatchupViewModel { get; set; }
 

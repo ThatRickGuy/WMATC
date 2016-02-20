@@ -204,6 +204,7 @@
     <Compile Include="Controllers\MatchupsController.cs" />
     <Compile Include="Controllers\PlayersController.cs" />
     <Compile Include="Controllers\PublishController.cs" />
+    <Compile Include="Controllers\ReportGameController.cs" />
     <Compile Include="Controllers\RoundsController.cs" />
     <Compile Include="Controllers\RoundTeamMatchupsController.cs" />
     <Compile Include="Controllers\TeamsController.cs" />
@@ -225,6 +226,10 @@
     <Compile Include="Migrations\201602150046274_initial4.cs" />
     <Compile Include="Migrations\201602150046274_initial4.Designer.cs">
       <DependentUpon>201602150046274_initial4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602202149329_Initial5.cs" />
+    <Compile Include="Migrations\201602202149329_Initial5.Designer.cs">
+      <DependentUpon>201602202149329_Initial5.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -333,6 +338,9 @@
     <Content Include="Views\Players\Edit.cshtml" />
     <Content Include="Views\Players\Index.cshtml" />
     <Content Include="Views\Publish\PublishListJS.cshtml" />
+    <Content Include="Views\ReportGame\Edit.cshtml" />
+    <Content Include="Views\ReportGame\Index.cshtml" />
+    <Content Include="Views\deleteme.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -357,6 +365,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201602150046274_initial4.resx">
       <DependentUpon>201602150046274_initial4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602202149329_Initial5.resx">
+      <DependentUpon>201602202149329_Initial5.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
