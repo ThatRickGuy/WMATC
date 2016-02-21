@@ -14,6 +14,7 @@ namespace WMATC.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+
         // GET: RoundTeamMatchups
         [Authorize(Roles = "canEdit")]
         public ActionResult Index(int? id)
@@ -123,12 +124,9 @@ namespace WMATC.Controllers
             ViewBag.RoundId = new SelectList((from p in db.Rounds where p.RoundId == RoundID select p).ToList(), "RoundId", "Scenario");
 
             var AvailableTeams = from p in db.Teams where p.EventId == EventID select p;
-            var Team1s = from p in db.RoundTeamMatchups where p.RoundId == RoundID select p.Team1Id;
-            var Team2s = from p in db.RoundTeamMatchups where p.RoundId == RoundID select p.Team2Id;
-            AvailableTeams = from p in AvailableTeams where !Team1s.Contains(p.TeamId) && !Team2s.Contains(p.TeamId) select p;
-
-            ViewBag.Team1Id = new SelectList(AvailableTeams.ToList(), "TeamId", "Name");
-            ViewBag.Team2Id = new SelectList(AvailableTeams.ToList(), "TeamId", "Name");
+            
+            ViewBag.Team1Id = new SelectList(AvailableTeams.ToList(), "TeamId", "Name", roundTeamMatchup.Team1Id );
+            ViewBag.Team2Id = new SelectList(AvailableTeams.ToList(), "TeamId", "Name", roundTeamMatchup.Team2Id);
             return View(roundTeamMatchup);
         }
 

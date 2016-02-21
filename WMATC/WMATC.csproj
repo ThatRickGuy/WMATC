@@ -202,6 +202,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MatchupsController.cs" />
+    <Compile Include="Controllers\PairingsController.cs" />
     <Compile Include="Controllers\PlayersController.cs" />
     <Compile Include="Controllers\PublishController.cs" />
     <Compile Include="Controllers\ReportGameController.cs" />
@@ -231,6 +232,10 @@
     <Compile Include="Migrations\201602202149329_Initial5.Designer.cs">
       <DependentUpon>201602202149329_Initial5.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201602210205338_Initial6.cs" />
+    <Compile Include="Migrations\201602210205338_Initial6.Designer.cs">
+      <DependentUpon>201602210205338_Initial6.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Event.cs" />
@@ -244,7 +249,9 @@
     <Compile Include="Models\Team.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\RoundTeamMatchupPrint.cs" />
     <Compile Include="ViewModels\Publish.cs" />
+    <Compile Include="ViewModels\RoundTeamMatchupPrintURL.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -341,6 +348,9 @@
     <Content Include="Views\ReportGame\Edit.cshtml" />
     <Content Include="Views\ReportGame\Index.cshtml" />
     <Content Include="Views\deleteme.cshtml" />
+    <Content Include="Views\Pairings\Generate.cshtml" />
+    <Content Include="Views\Pairings\Print.cshtml" />
+    <Content Include="Views\Pairings\PrintLanding.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -368,6 +378,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201602202149329_Initial5.resx">
       <DependentUpon>201602202149329_Initial5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602210205338_Initial6.resx">
+      <DependentUpon>201602210205338_Initial6.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
