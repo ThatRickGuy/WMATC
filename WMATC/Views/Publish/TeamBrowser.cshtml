@@ -1,0 +1,72 @@
+﻿@model WMATC.ViewModels.TeamBrowser
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="/resources/demos/style.css">
+
+@{
+    var ListsScript = "/StaticEvents/" + Model.EventTitle + ".js";
+}
+<script src="@ListsScript"></script>
+
+
+<table>
+    <tr>
+        <td style="vertical-align:top;"><img src="@Model.EventImageURL" style="height:100px; width:auto;" /></td>
+        <td>
+            <h1 style="line-height: .125; margin-top:10px;">@Model.EventTitle</h1>
+            <hr />
+            <h3 style="line-height: .125;">@Model.EventDate.ToShortDateString()</h3>
+        </td>
+    </tr>
+</table>
+
+
+@{ 
+    var JSToLoadLists = "";
+}
+<div class="accordion">
+    @foreach (var team in Model.Teams)
+    {
+        <h3><img src="@team.TeamImageURL" style="margin-right:5px;"></img>@team.TeamName </h3>
+        <div class="accordion">
+            @foreach (var player in team.Players)
+            {
+                <h4><img src="@player.Faction.ImageURL" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">@player.Name </div><div style="width:30%; float:left;">@player.Caster1 </div>@player.Caster2</h4>
+                <div>
+                    <table>
+                        <tr>
+                            @{  var listID1 = "l" + player.PlayerId + "_1";
+                                var listID2 = "l" + player.PlayerId + "_2";
+                                JSToLoadLists += "document.getElementById('" + listID1 + "').innerHTML = " + listID1 + ".replace(new RegExp('  ', 'g'), '<br/>');;";
+                                JSToLoadLists += "document.getElementById('" + listID2 + "').innerHTML = " + listID2 + ".replace(new RegExp('  ', 'g'), '<br/>');;";
+                            }
+                            <td valign="top" > 
+                                <div id="@listID1"></div>
+                            </td>
+                            <td style="width:25px;"></td>
+                            <td valign="top">
+                                <div id="@listID2"></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+      @Html.Raw(JSToLoadLists)
+    })
+
+    $(".accordion").accordion({
+        collapsible: true,
+        active: false,
+        heightStyle: "content"
+    });
+</script>
+

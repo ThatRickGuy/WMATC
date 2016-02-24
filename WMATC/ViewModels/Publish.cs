@@ -55,6 +55,7 @@ namespace WMATC.ViewModels
         public string Team2IsWinner { get; set; }
         public int Team1Wins { get; set; }
         public int Team2Wins { get; set; }
+        public int TableZone { get; set; }
         public List<MatchupViewModel> Matchups { get; set; }
     }
 

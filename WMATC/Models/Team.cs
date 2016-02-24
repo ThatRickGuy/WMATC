@@ -23,6 +23,9 @@ namespace WMATC.Models
         public bool? HasBeenPairedDown { get; set; }
         public bool? HasBeenBye { get; set; }
 
+
+        //protected string Password { get; set; }
+
     }
 }
 
