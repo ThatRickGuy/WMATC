@@ -43,6 +43,6 @@ namespace WMATC.Models
         public System.Data.Entity.DbSet<WMATC.Models.RoundTeamMatchup> RoundTeamMatchups { get; set; }
 
         public System.Data.Entity.DbSet<WMATC.Models.Matchup> Matchups { get; set; }
- 
+        
     }
 }

@@ -212,10 +212,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201602100326197_initial.cs" />
-    <Compile Include="Migrations\201602100326197_initial.Designer.cs">
-      <DependentUpon>201602100326197_initial.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201602100400299_initial2.cs" />
     <Compile Include="Migrations\201602100400299_initial2.Designer.cs">
       <DependentUpon>201602100400299_initial2.cs</DependentUpon>
@@ -249,8 +245,9 @@
     <Compile Include="Models\Team.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="ViewModels\RoundTeamMatchupPrint.cs" />
     <Compile Include="ViewModels\Publish.cs" />
+    <Compile Include="ViewModels\RoundTeamMatchupPrint.cs" />
+    <Compile Include="ViewModels\Rounds.cs" />
     <Compile Include="ViewModels\RoundTeamMatchupPrintURL.cs" />
     <Compile Include="ViewModels\Standings.cs" />
     <Compile Include="ViewModels\TeamBrowser.cs" />
@@ -340,7 +337,7 @@
     <Content Include="Views\Matchups\Details.cshtml" />
     <Content Include="Views\Matchups\Edit.cshtml" />
     <Content Include="Views\Matchups\Index.cshtml" />
-    <Content Include="Views\Publish\Index.cshtml" />
+    <Content Include="Views\Publish\Rounds.cshtml" />
     <Content Include="Views\Players\Create.cshtml" />
     <Content Include="Views\Players\Delete.cshtml" />
     <Content Include="Views\Players\Details.cshtml" />
@@ -355,6 +352,7 @@
     <Content Include="Views\Pairings\PrintLanding.cshtml" />
     <Content Include="Views\Publish\TeamBrowser.cshtml" />
     <Content Include="Views\Publish\Standings.cshtml" />
+    <Content Include="Views\Publish\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -368,9 +366,6 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201602100326197_initial.resx">
-      <DependentUpon>201602100326197_initial.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201602100400299_initial2.resx">
       <DependentUpon>201602100400299_initial2.cs</DependentUpon>
     </EmbeddedResource>

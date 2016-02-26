@@ -34,8 +34,12 @@
         border-top: 2px solid gray;
     }
 
-    div.BlankBackground {
-        background: #e5e5e5;
+    div.BlankBackgroundPlayer {
+        background: #e5e5f5; /* Old browsers */
+        background: -moz-linear-gradient(45deg, #e5e5e5 0%, #aaaaba 59%, #777787 59%, #444454 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(45deg, #e5e5e5 0%,#aaaaba 59%,#777787 59%,#444454 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(225deg, #e5e5e5 0%,#aaaaba 59%,#777787 59%,#444454 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5e5f5', endColorstr='#ff3242',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
     }
 
     div.BlankBackground {
@@ -130,7 +134,7 @@
     div.PlayerName{
         font-weight:bold; 
         white-space:nowrap; 
-        max-width:125px; 
+        max-width:200px; 
         float:left; 
         overflow:hidden;
     }
@@ -193,18 +197,18 @@
                     </div>
                     <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
                         <span style="font-size:8pt;">TP</span>
-                        <span style="font-size:20px;">@team.TP </span>
+                        <span style="font-size:20px;line-height:31px;">@team.TP </span>
                     </div>
                     <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
                         <span style="font-size:8pt;">CP</span>
-                        <span style="font-size:15px;">@team.CP </span>
+                        <span style="font-size:15px;line-height:25px;">@team.CP </span>
                     </div>
                     <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
                         <span style="font-size:8pt;">APD</span>
-                        <span style="font-size:12px;">@team.APD </span>
+                        <span style="font-size:12px;line-height:24px;">@team.APD </span>
                     </div>
                 </div>
-                <div id="TeamName" style="margin:18px 0px 0px 0px;font-weight:bold;">
+                <div id="TeamName" style="margin:18px 0px 0px 0px;font-weight:bold; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
                     @team.TeamName
                 </div>
             </div>
@@ -214,15 +218,15 @@
 									  width:350px;
 									  margin: 5px 0px 0px 75px;
 									  display:none">
-            @foreach (var player in team.Players)
+            @foreach (var player in (from p in team.Players orderby p.TP descending, p.StrengthOfSchedule descending, p.CP descending , p.APD descending select p).ToList() )
             {
-                <div class="littleShadow Box" style="height:43px; width:350px;">
+                <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
                     <img src="@player.FactionImageURL" alt="@player.Faction" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="@player.Faction">
-                    <div style="float:left;">
+                    <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
                         <div class="PlayerName" data-toggle="tooltip" title="@player.Name">@player.Name</div>
                     </div>
                     <div style="float:right;">
-                        <div style="float:left; margin:3px;">@player.TP</div>
+                        <div style="float:left;margin:3px;">@player.TP</div>
                         <div style="float:left;margin:3px;">@player.StrengthOfSchedule</div>
                         <div style="float:left;margin:3px;">@player.CP</div>
                         <div style="float:left;margin:3px;">@player.APD</div>

@@ -1,0 +1,79 @@
+﻿@model WMATC.ViewModels.RoundTeamMatchupPrint
+
+<style>
+	#Player {
+		color:#222; 
+		font-family:arial,sans-serif; 
+		font-size=small;
+	}
+	#Table {
+		margin-left:10px; 
+		color:#006621; 
+		font-style:normal; 
+		font-size:13px; 
+		font-family:arial,sans-serif; 
+		line-height:22px;
+	}
+	#Opponent {
+		margin-left:10px; 
+		color:#222; 
+		font-style:normal; 
+		font-size:13px; 
+		font-family:arial,sans-serif; 
+		line-height:22PX;
+	}
+</style>
+
+<table>
+    <tr>
+        <td style="vertical-align:top;"><img src="@Model.EventImageURL" style="height:100px; width:auto;" /></td>
+        <td>
+            <h1 style="line-height: .125; margin-top:10px;">@Model.EventName</h1>
+            <hr />
+            <h3 style="line-height: .125;">@Model.EventDate.ToShortDateString()</h3>
+            <h2 style="line-height: .125;">Round @Model.RoundNumber Pairings - Scenario @Model.RoundScenario </h2>
+        </td>
+    </tr>
+</table>
+
+<table class="table" style="width:48%;float:left;">
+    <tr>
+        <td>
+            <H3>Team Names @Model.LeftList.First().Team1Name.Substring(0, 1) - @Model.LeftList.Last().Team1Name.Substring(0, 1)</H3>
+        </td>
+    </tr>
+@foreach (var item in Model.LeftList)
+{
+    <tr>
+        <td>
+            <span id="Player">@item.Team1Name </span><br>
+            <span id="Table">Table @item.TableZone.ToString() </span>
+            <span id="Opponent">vs @item.Team2Name </span>
+            </td>
+    </tr>
+}
+</table>
+
+<table class="table" style="width:48%;float:right;">
+    <tr>
+        <td>
+            <H3>Team Names @Model.RightList.First().Team1Name.Substring(0, 1) - @Model.RightList.Last().Team1Name.Substring(0, 1)</H3>
+        </td>
+    </tr>
+    @foreach (var item in Model.RightList)
+    {
+        <tr>
+            <td>
+                <span id="Player">@item.Team1Name </span><br>
+                <span id="Table">Table @item.TableZone.ToString() </span>
+                <span id="Opponent">vs @item.Team2Name </span>
+            </td>
+        </tr>
+    }
+</table>
+
+
+
+
+
+</table>

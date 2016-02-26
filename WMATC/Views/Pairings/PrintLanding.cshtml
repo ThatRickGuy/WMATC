@@ -1,0 +1,21 @@
+﻿
+@model WMATC.ViewModels.RoundTeamMatchupPrintURL
+
+<script>
+    function doWindows(){
+        var newWin = window.open('@Model.PrintURL', '_blank');
+        
+        if (!newWin || newWin.closed || typeof newWin.closed == 'undefined') {
+            
+        }
+        else
+        {
+            window.location = "/RoundTeamMatchups";
+            newWin.focus();
+        }
+    }
+</script>
+
+<body onload="doWindows()"></body>
+
+<button onclick="doWindows()"></button>

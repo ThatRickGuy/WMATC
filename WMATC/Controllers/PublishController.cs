@@ -27,7 +27,7 @@ namespace WMATC.Controllers
             int.TryParse(Session["SelectedEventId"].ToString(), out SelectedEventId);
 
 
-            var model = new PublishViewModel();
+            var model = new RoundsViewModel();
             var PublishView = PopulatePublishViewModel_Matches(model, SelectedEventId);
             PublishView = PopulatePublishViewModel_Players(model, SelectedEventId);
             var TeamsView = PopulatePublishViewModel_Teams(SelectedEventId);
@@ -39,7 +39,7 @@ namespace WMATC.Controllers
             if (!System.IO.Directory.Exists(Server.MapPath(".") + "\\StaticEvents\\")) System.IO.Directory.CreateDirectory(Server.MapPath(".") + "\\StaticEvents\\");
             System.IO.File.WriteAllText(Server.MapPath(".") + "\\StaticEvents\\" + PublishView.EventTitle + ".js", js);
 
-            var rounds = RenderRazorViewToString(this.ControllerContext, "Index", PublishView);
+            var rounds = RenderRazorViewToString(this.ControllerContext, "Rounds", PublishView);
             System.IO.File.WriteAllText(Server.MapPath(".") + "\\StaticEvents\\" + PublishView.EventTitle + "rounds.html", rounds);
 
             var teams = RenderRazorViewToString(this.ControllerContext, "TeamBrowser", TeamsView);
@@ -48,7 +48,13 @@ namespace WMATC.Controllers
             var standings = RenderRazorViewToString(this.ControllerContext, "Standings", StandingsView);
             System.IO.File.WriteAllText(Server.MapPath(".") + "\\StaticEvents\\" + PublishView.EventTitle + "standings.html", standings);
 
-            return View(PublishView);
+            var IndexView = new ViewModels.PublishViewModel() ;
+            IndexView.EventId = SelectedEventId;
+            IndexView.RoundsURL = "/StaticEvents/" + PublishView.EventTitle + "rounds.html";
+            IndexView.TeamBrowser = "/StaticEvents/" + PublishView.EventTitle + "teams.html";
+            IndexView.StandingsURL = "/StaticEvents/" + PublishView.EventTitle + "standings.html";
+
+            return View(IndexView);
         }
 
         public static string RenderRazorViewToString(ControllerContext controllerContext, string viewName, object model)
@@ -80,14 +86,14 @@ namespace WMATC.Controllers
             return Model;
         }
 
-        private PublishViewModel PopulatePublishViewModel_Players(PublishViewModel Model, int EventID)
+        private RoundsViewModel PopulatePublishViewModel_Players(RoundsViewModel Model, int EventID)
         {
             var Players = from p in db.Players where p.Team.EventId == EventID select new PlayerViewModel { Player = p, PlayerId = p.PlayerId };
             Model.Players = Players.ToList();
             return Model;
         }
 
-        private PublishViewModel PopulatePublishViewModel_Matches(PublishViewModel Model, int EventID)
+        private RoundsViewModel PopulatePublishViewModel_Matches(RoundsViewModel Model, int EventID)
         {
             var MyEvent = (from p in db.Events where p.EventId == EventID select p).First();
 
@@ -159,7 +165,7 @@ namespace WMATC.Controllers
             return Model;
         }
 
-
+         
         private Standings PopulatePublishViewModel_Standings(int EventID)
         {
             var Event = (from p in db.Events where p.EventId == EventID select p).First();
@@ -190,27 +196,27 @@ namespace WMATC.Controllers
 
             foreach (var team in Model.Teams)
             {
-                team.Players = (from p in db.Players where p.TeamId == team.TeamId orderby p.Name select new Standings.Player() { Name = p.Name, Faction = p.Faction.Title, FactionImageURL = p.Faction.ImageURL }).ToList();
+                team.Players = (from p in db.Players where p.TeamId == team.TeamId orderby p.Name select new Standings.Player() { Name = p.Name, Faction = p.Faction.Title, FactionImageURL = p.Faction.ImageURL, PlayerId = p.PlayerId  }).ToList();
 
 
                 // player stats
                 foreach (var player in team.Players)
                 {
                     player.TP = GetPlayerWins(player.PlayerId);
-                    var Matches = (from p in db.Matchups where p.Player1Id == player.PlayerId || p.Player2Id == player.PlayerId select p).ToList();
+                    var Matches = (from p in db.Matchups where p.Player1Id == player.PlayerId || p.Player2Id == player.PlayerId select p).Include(m=>m.Player1 ).Include(m=>m.Player2 ).ToList();
                     foreach (var match in Matches)
                     {
                         if (match.Player1Id == player.PlayerId)
                         {
-                            player.StrengthOfSchedule += GetPlayerWins(match.Player1Id);
-                            player.APD += match.Player1APD.Value;
-                            player.CP += match.Player1CP.Value;
+                            player.StrengthOfSchedule += GetPlayerWins(match.Player2Id);
+                            player.APD += (match.Player1APD.HasValue) ? match.Player1APD.Value : 0;
+                            player.CP += (match.Player1CP.HasValue) ? match.Player1CP.Value : 0;
                         }
                         if (match.Player2Id == player.PlayerId)
                         {
-                            player.StrengthOfSchedule += GetPlayerWins(match.Player2Id);
-                            player.APD += match.Player2APD.Value;
-                            player.CP += match.Player2CP.Value;
+                            player.StrengthOfSchedule += GetPlayerWins(match.Player1Id);
+                            player.APD += (match.Player2APD.HasValue) ? match.Player2APD.Value : 0;
+                            player.CP += (match.Player2CP.HasValue) ? match.Player2CP.Value : 0;
                         }
                     }
                 }
