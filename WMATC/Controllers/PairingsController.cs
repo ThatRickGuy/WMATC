@@ -123,7 +123,7 @@ namespace WMATC.Controllers
                     var MatchCounts = (from p in db.Matchups where p.RoundTeamMatchupId == roundTeamMatchup.RoundTeamMatchupId select p).Count();
 
                     if (Team1Wins > Team2Wins && Team1Wins > MatchCounts / 2) TeamWins[roundTeamMatchup.Team1] += 1;
-                    if (Team2Wins > Team1Wins && Team2Wins > MatchCounts / 2) TeamWins[roundTeamMatchup.Team1] += 1;
+                    if (Team2Wins > Team1Wins && Team2Wins > MatchCounts / 2) TeamWins[roundTeamMatchup.Team2] += 1;
                 }
             }
 
@@ -136,111 +136,115 @@ namespace WMATC.Controllers
 
             // this loop will continue until all teams have been successfully paired. 
             // If something prevents a full pairing (crap random # generator, or invalid data, or a bug) it will try to run the pairings engine 5 times before failing.
-            while (UnPairedTeams.Count > 0)
+            while (UnPairedTeams.Count > 0 )
             {
-                RetryCount += 1;
-                if (RetryCount > 5)
-                {
-                    //Something is preventing all pairings
-                    throw new Exception("Unable to complete pairings! Please use manual Round Team Matchups.");
-                }
-
-                var Wins = (from p in TeamWins orderby p.Value descending select p.Value).FirstOrDefault();
-
-                while (Wins > -1)
-                {
-                    // Pre pairing cleanup, identify pairdown and byes
-                    var AvailableTeams = (from p in TeamWins where p.Value == Wins select p).ToList();
-                    if (AvailableTeams.Count() % 2 != 0)
+                    RetryCount += 1;
+                    if (RetryCount > 5)
                     {
-                        if (Wins > 0)
-                        {
-                            //Pairdown Logic
-                            var PairdownCandidates = from p in AvailableTeams where p.Key.HasBeenPairedDown == false select p.Key;
-                            var Pairdown = PairdownCandidates.ElementAt(rand.Next(PairdownCandidates.Count()));
-                            Pairdown.HasBeenPairedDown = true;
-                            TeamWins[Pairdown]-=1; //force the team into the next lower wins bucket
-                            AvailableTeams = (from p in TeamWins where p.Value >= Wins select p).ToList();
-                        }
-                        else
-                        {
-                            //Bye logic
-                            var PairdownCandidates = from p in AvailableTeams where p.Key.HasBeenPairedDown == false select p.Key;
-                            var Bye = PairdownCandidates.ElementAt(rand.Next(PairdownCandidates.Count()));
-                            Bye.HasBeenBye = true;
-                            TeamWins.Remove(Bye);
-                            AvailableTeams = (from p in TeamWins where p.Value >= Wins select p).ToList();
-                        }
+                        //Something is preventing all pairings
+                        throw new Exception("Unable to complete pairings! Please use manual Round Team Matchups.");
                     }
 
-                    // Find pairings for all available teams (in this win bucket)
-                    while (AvailableTeams.Count > 0)
+                try
+                {
+                    var Wins = (from p in TeamWins orderby p.Value descending select p.Value).FirstOrDefault();
+
+                    while (Wins > -1)
                     {
-
-                        // get a random team from this wins bucket
-                        var Team1 = AvailableTeams.ElementAt(rand.Next(AvailableTeams.Count()));
-
-                        // build a list of previous opponents
-                        var PreviousOpponents = (from p in db.RoundTeamMatchups where p.Team1.TeamId == Team1.Key.TeamId select p.Team2).ToList();
-                        PreviousOpponents.AddRange((from p in db.RoundTeamMatchups where p.Team2.TeamId == Team1.Key.TeamId select p.Team1).ToList());
-
-                        // pull a list of possible opponents (teams in this win bucket excluding previous opponents)
-                        var AvailableOpponents = (from p in AvailableTeams where !PreviousOpponents.Contains(p.Key) && p.Key != Team1.Key select p).ToList();
-                        if (AvailableOpponents.Count() == 0)
+                        // Pre pairing cleanup, identify pairdown and byes
+                        var AvailableTeams = (from p in TeamWins where p.Value == Wins select p).ToList();
+                        if (AvailableTeams.Count() % 2 != 0)
                         {
-                            // something really bad just happened.
-                            throw new Exception("No valid opponents.");
+                            if (Wins > 0)
+                            {
+                                //Pairdown Logic
+                                var PairdownCandidates = from p in AvailableTeams where p.Key.HasBeenPairedDown == null || p.Key.HasBeenPairedDown == false select p.Key;
+                                var Pairdown = PairdownCandidates.ElementAt(rand.Next(PairdownCandidates.Count()));
+                                Pairdown.HasBeenPairedDown = true;
+                                TeamWins[Pairdown] -= 1; //force the team into the next lower wins bucket
+                                AvailableTeams = (from p in TeamWins where p.Value == Wins select p).ToList();
+                            }
+                            else
+                            {
+                                //Bye logic
+                                var PairdownCandidates = from p in AvailableTeams where p.Key.HasBeenBye == null || p.Key.HasBeenBye == false select p.Key;
+                                var Bye = PairdownCandidates.ElementAt(rand.Next(PairdownCandidates.Count()));
+                                Bye.HasBeenBye = true;
+                                TeamWins.Remove(Bye);
+                                AvailableTeams = (from p in TeamWins where p.Value >= Wins select p).ToList();
+                            }
                         }
 
-                        // get a random team from the available opponents bucket
-                        var Team2 = AvailableOpponents.ElementAt(rand.Next(AvailableOpponents.Count()));
-
-                        // get a list of all tablezones played on by either team
-                        var PreviousTables = (from p in db.RoundTeamMatchups where p.Team1Id == Team1.Key.TeamId || p.Team2Id == Team1.Key.TeamId || p.Team1Id == Team2.Key.TeamId || p.Team2Id == Team2.Key.TeamId select p.TableZone).ToList();
-
-                        // get a list of all tablezones in use thie round
-                        var UsedTables = (from p in db.RoundTeamMatchups where p.RoundId == RoundID select p.TableZone).ToList();
-
-                        // get the max tablezone #
-                        var MaxTableZoneNumber = ((from p in db.Teams where p.EventId == EventID select p).Count() / 2);
-
-                        // get a list of ALL tables
-                        var AvailableTables = Enumerable.Range(1, MaxTableZoneNumber).ToList();
-
-                        // Get all tables not currently in use
-                        AvailableTables = (from p in AvailableTables where !UsedTables.Contains(p) select p).ToList();
-
-                        var FreshTables = (from p in AvailableTables where !PreviousTables.Contains(p) select p).ToList();
-                        if (FreshTables.Count() == 0)
+                        // Find pairings for all available teams (in this win bucket)
+                        while (AvailableTeams.Count > 0)
                         {
-                            // No fresh tables available, someone is getting a repeat
-                            FreshTables = AvailableTables;
+
+                            // get a random team from this wins bucket
+                            var Team1 = AvailableTeams.ElementAt(rand.Next(AvailableTeams.Count()));
+
+                            // build a list of previous opponents
+                            var PreviousOpponents = (from p in db.RoundTeamMatchups where p.Team1.TeamId == Team1.Key.TeamId select p.Team2).ToList();
+                            PreviousOpponents.AddRange((from p in db.RoundTeamMatchups where p.Team2.TeamId == Team1.Key.TeamId select p.Team1).ToList());
+
+                            // pull a list of possible opponents (teams in this win bucket excluding previous opponents)
+                            var AvailableOpponents = (from p in AvailableTeams where !PreviousOpponents.Contains(p.Key) && p.Key != Team1.Key select p).ToList();
+                            if (AvailableOpponents.Count() == 0)
+                            {
+                                // something really bad just happened.
+                                throw new Exception("No valid opponents.");
+                            }
+
+                            // get a random team from the available opponents bucket
+                            var Team2 = AvailableOpponents.ElementAt(rand.Next(AvailableOpponents.Count()));
+
+                            // get a list of all tablezones played on by either team
+                            var PreviousTables = (from p in db.RoundTeamMatchups where p.Team1Id == Team1.Key.TeamId || p.Team2Id == Team1.Key.TeamId || p.Team1Id == Team2.Key.TeamId || p.Team2Id == Team2.Key.TeamId select p.TableZone).ToList();
+
+                            // get a list of all tablezones in use thie round
+                            var UsedTables = (from p in db.RoundTeamMatchups where p.RoundId == RoundID select p.TableZone).ToList();
+
+                            // get the max tablezone #
+                            var MaxTableZoneNumber = ((from p in db.Teams where p.EventId == EventID select p).Count() / 2);
+
+                            // get a list of ALL tables
+                            var AvailableTables = Enumerable.Range(1, MaxTableZoneNumber).ToList();
+
+                            // Get all tables not currently in use
+                            AvailableTables = (from p in AvailableTables where !UsedTables.Contains(p) select p).ToList();
+
+                            var FreshTables = (from p in AvailableTables where !PreviousTables.Contains(p) select p).ToList();
+                            if (FreshTables.Count() == 0)
+                            {
+                                // No fresh tables available, someone is getting a repeat
+                                FreshTables = AvailableTables;
+                            }
+                            if (FreshTables.Count() == 0)
+                            {
+                                // Something really bad just happened. 
+                                throw new Exception("No valid tables.");
+                            }
+
+                            var Table = FreshTables.ElementAt(rand.Next(FreshTables.Count()));
+
+                            // save the pairing
+                            var RoundTeamMatchup = new RoundTeamMatchup();
+                            RoundTeamMatchup.RoundId = RoundID;
+                            RoundTeamMatchup.Team1Id = Team1.Key.TeamId;
+                            RoundTeamMatchup.Team2Id = Team2.Key.TeamId;
+                            RoundTeamMatchup.TableZone = Table;
+                            db.RoundTeamMatchups.Add(RoundTeamMatchup);
+                            db.SaveChanges();
+
+                            //Cleanup for next pass
+                            AvailableTeams.Remove(Team1);
+                            AvailableTeams.Remove(Team2);
+                            UnPairedTeams.Remove(Team1.Key);
+                            UnPairedTeams.Remove(Team2.Key);
                         }
-                        if (FreshTables.Count() == 0)
-                        {
-                            // Something really bad just happened. 
-                            throw new Exception("No valid tables.");
-                        }
-
-                        var Table = FreshTables.ElementAt(rand.Next(FreshTables.Count()));
-
-                        // save the pairing
-                        var RoundTeamMatchup = new RoundTeamMatchup();
-                        RoundTeamMatchup.RoundId = RoundID;
-                        RoundTeamMatchup.Team1Id = Team1.Key.TeamId;
-                        RoundTeamMatchup.Team2Id = Team2.Key.TeamId;
-                        RoundTeamMatchup.TableZone = Table;
-                        db.RoundTeamMatchups.Add(RoundTeamMatchup);
-                        db.SaveChanges();
-
-                        //Cleanup for next pass
-                        AvailableTeams.Remove(Team1);
-                        AvailableTeams.Remove(Team2);
-                        UnPairedTeams.Remove(Team1.Key);
-                        UnPairedTeams.Remove(Team2.Key);
+                        Wins -= 1;
                     }
-                    Wins -= 1;
                 }
+                catch { }
             }
 
             return RedirectToAction("Index", "RoundTeamMatchups");

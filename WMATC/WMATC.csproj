@@ -199,13 +199,13 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
+    <Compile Include="Controllers\GameReportController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MatchupsController.cs" />
     <Compile Include="Controllers\PairingsController.cs" />
     <Compile Include="Controllers\PlayersController.cs" />
     <Compile Include="Controllers\PublishController.cs" />
-    <Compile Include="Controllers\ReportGameController.cs" />
     <Compile Include="Controllers\RoundsController.cs" />
     <Compile Include="Controllers\RoundTeamMatchupsController.cs" />
     <Compile Include="Controllers\TeamsController.cs" />
@@ -245,6 +245,7 @@
     <Compile Include="Models\Team.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\GameReport.cs" />
     <Compile Include="ViewModels\Publish.cs" />
     <Compile Include="ViewModels\RoundTeamMatchupPrint.cs" />
     <Compile Include="ViewModels\Rounds.cs" />
@@ -344,18 +345,18 @@
     <Content Include="Views\Players\Edit.cshtml" />
     <Content Include="Views\Players\Index.cshtml" />
     <Content Include="Views\Publish\PublishListJS.cshtml" />
-    <Content Include="Views\ReportGame\Edit.cshtml" />
-    <Content Include="Views\ReportGame\Index.cshtml" />
-    <Content Include="Views\deleteme.cshtml" />
     <Content Include="Views\Pairings\Generate.cshtml" />
     <Content Include="Views\Pairings\Print.cshtml" />
     <Content Include="Views\Pairings\PrintLanding.cshtml" />
     <Content Include="Views\Publish\TeamBrowser.cshtml" />
     <Content Include="Views\Publish\Standings.cshtml" />
     <Content Include="Views\Publish\Index.cshtml" />
+    <Content Include="Views\GameReport\Edit.cshtml" />
+    <Content Include="Views\GameReport\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\DeleteMe\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

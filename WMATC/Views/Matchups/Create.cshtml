@@ -26,7 +26,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Player1Id, "Player1Id", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("Player1Id", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("Player1Id",  null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Player1Id, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -138,17 +138,17 @@
     UpdateWinnerSelect();
     function UpdateListSelect(PlayerSelectId, ListSelectId) {
         $('#'+ListSelectId).empty();
+        $('#'+ListSelectId).append('<option value=""></option>');
         for (list in lists) {
             if (lists[list].id == $('#'+PlayerSelectId).children("option").filter(":selected").text()){
                 $('#'+ListSelectId).append('<option value="' + lists[list].ListNumber + '">' + lists[list].ListName + '</option>');
             }
-        }
-        $('#'+ListSelectId).append('<option value="null"></option>');
+        }        
     }
 
     function UpdateWinnerSelect(){
         $("#WinnerId").empty();
-        $('#WinnerId').append('<option value="null"></option>');
+        $('#WinnerId').append('<option value=""></option>');
         $("#WinnerId").append('<option value="' + $('#Player1Id').children("option").filter(":selected").val() + '">' + $('#Player1Id').children("option").filter(":selected").text() + '</option>');
         $("#WinnerId").append('<option value="' + $('#Player2Id').children("option").filter(":selected").val() + '">' + $('#Player2Id').children("option").filter(":selected").text() + '</option>');
     }

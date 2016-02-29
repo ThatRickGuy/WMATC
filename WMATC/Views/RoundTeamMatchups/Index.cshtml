@@ -20,9 +20,6 @@
             @Html.DisplayNameFor(model => model.Team1.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Team2.Name)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.TableZone)
         </th>
         <th></th>
@@ -35,9 +32,6 @@
         </td>
         <td>
             @Html.ActionLink(item.RoundTeamMatchupViewModel.Matchup, "Index", "Matchups", new { id = item.RoundTeamMatchupId }, null)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Team2.Name)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.TableZone)
