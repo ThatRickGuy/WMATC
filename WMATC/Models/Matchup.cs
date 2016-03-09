@@ -19,7 +19,7 @@ namespace WMATC.Models
 
         public int Player1Id { get; set; }
         [ForeignKey("Player1Id")]
-        public Player Player1 { get; set;  }
+        public Player Player1 { get; set; }
 
         public int Player2Id { get; set; }
         [ForeignKey("Player2Id")]
@@ -28,7 +28,7 @@ namespace WMATC.Models
         public int? WinnerId { get; set; }
         [ForeignKey("WinnerId")]
         public virtual Player Winner { get; set; }
-        
+
         public int? Player1List { get; set; }
         public int? Player2List { get; set; }
 
@@ -38,10 +38,14 @@ namespace WMATC.Models
         public int? Player1APD { get; set; }
         public int? Player2APD { get; set; }
 
+        public string VictoryCondition { get; set; }
+
+        [NotMapped]
+        public readonly string[] VictoryConditions = { "Assassination", "Scenario", "Clock", "Conceded", "Disqualified" };
+        
         [NotMapped]
         public ViewModel MatchupViewModel { get; set; }
-
-
+        
         public class ViewModel
         {
             public ViewModel(Matchup Parent)

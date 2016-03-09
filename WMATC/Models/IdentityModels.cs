@@ -21,7 +21,7 @@ namespace WMATC.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("RingDevConnection", throwIfV1Schema: false)
         {
         }
 

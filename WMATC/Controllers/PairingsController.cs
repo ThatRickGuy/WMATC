@@ -97,6 +97,8 @@ namespace WMATC.Controllers
             int EventID = 0;
             int.TryParse(Session["SelectedEventId"].ToString(), out EventID);
 
+            int RoundNumber = 0;
+
             db.RoundTeamMatchups.RemoveRange(from p in db.RoundTeamMatchups where p.RoundId == RoundID && p.Round.EventId == EventID select p);
             db.SaveChanges();
 
@@ -110,7 +112,7 @@ namespace WMATC.Controllers
                 var roundTeamMatchups = (from p in db.RoundTeamMatchups
                                          where p.RoundId == round.RoundId
                                          select p).Include(m => m.Team1).Include(m => m.Team2).ToList();
-
+                if (round.RoundId == RoundID) RoundNumber = round.Sequence;
 
                 foreach (var roundTeamMatchup in roundTeamMatchups)
                 {
@@ -138,12 +140,22 @@ namespace WMATC.Controllers
             // If something prevents a full pairing (crap random # generator, or invalid data, or a bug) it will try to run the pairings engine 5 times before failing.
             while (UnPairedTeams.Count > 0 )
             {
-                    RetryCount += 1;
-                    if (RetryCount > 5)
-                    {
-                        //Something is preventing all pairings
-                        throw new Exception("Unable to complete pairings! Please use manual Round Team Matchups.");
-                    }
+                //clear bye/pairdown for this round
+                var q = (from p in UnPairedTeams where p.ByeRound == RoundNumber select p);
+                foreach (var p in q)
+                    p.ByeRound = null;
+                q = (from p in UnPairedTeams where p.PairedDownRound == RoundNumber select p);
+                foreach (var p in q)
+                    p.PairedDownRound = null;
+
+
+                //check for max attempts 
+                RetryCount += 1;
+                if (RetryCount > 5)
+                {
+                    //Something is preventing all pairings
+                    throw new Exception("Unable to complete pairings! Please use manual Round Team Matchups.");
+                }
 
                 try
                 {
@@ -158,18 +170,18 @@ namespace WMATC.Controllers
                             if (Wins > 0)
                             {
                                 //Pairdown Logic
-                                var PairdownCandidates = from p in AvailableTeams where p.Key.HasBeenPairedDown == null || p.Key.HasBeenPairedDown == false select p.Key;
+                                var PairdownCandidates = from p in AvailableTeams where p.Key.PairedDownRound == null select p.Key;
                                 var Pairdown = PairdownCandidates.ElementAt(rand.Next(PairdownCandidates.Count()));
-                                Pairdown.HasBeenPairedDown = true;
+                                Pairdown.PairedDownRound = RoundNumber;
                                 TeamWins[Pairdown] -= 1; //force the team into the next lower wins bucket
                                 AvailableTeams = (from p in TeamWins where p.Value == Wins select p).ToList();
                             }
                             else
                             {
                                 //Bye logic
-                                var PairdownCandidates = from p in AvailableTeams where p.Key.HasBeenBye == null || p.Key.HasBeenBye == false select p.Key;
+                                var PairdownCandidates = from p in AvailableTeams where p.Key.ByeRound == null select p.Key;
                                 var Bye = PairdownCandidates.ElementAt(rand.Next(PairdownCandidates.Count()));
-                                Bye.HasBeenBye = true;
+                                Bye.ByeRound = RoundNumber;
                                 TeamWins.Remove(Bye);
                                 AvailableTeams = (from p in TeamWins where p.Value >= Wins select p).ToList();
                             }

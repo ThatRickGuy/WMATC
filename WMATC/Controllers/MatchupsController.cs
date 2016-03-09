@@ -115,7 +115,7 @@ namespace WMATC.Controllers
         [Authorize(Roles = "canEdit")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MatchupId,RoundTeamMatchupId,Player1Id,Player2Id,WinnerId,Player1List,Player2List,Player1CP,Player2CP,Player1APD,Player2APD")] Matchup matchup, string Command)
+        public ActionResult Create([Bind(Include = "MatchupId,RoundTeamMatchupId,Player1Id,Player2Id,WinnerId,Player1List,Player2List,Player1CP,Player2CP,Player1APD,Player2APD,VictoryCondition,ByeRound,PairDownRound")] Matchup matchup, string Command)
         {
             int SelectedRoundTeamMatchupId = -1;
             int.TryParse(Session["SelectedRoundTeamMatchupId"].ToString(), out SelectedRoundTeamMatchupId);

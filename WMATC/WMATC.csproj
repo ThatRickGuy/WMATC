@@ -18,13 +18,15 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort>44300</IISExpressSSLPort>
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,6 +36,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -42,6 +45,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.0.1011, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -79,6 +83,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -86,12 +91,9 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
@@ -132,6 +134,7 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -212,25 +215,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201602100400299_initial2.cs" />
-    <Compile Include="Migrations\201602100400299_initial2.Designer.cs">
-      <DependentUpon>201602100400299_initial2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201602131841190_initial21.cs" />
-    <Compile Include="Migrations\201602131841190_initial21.Designer.cs">
-      <DependentUpon>201602131841190_initial21.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201602150046274_initial4.cs" />
-    <Compile Include="Migrations\201602150046274_initial4.Designer.cs">
-      <DependentUpon>201602150046274_initial4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201602202149329_Initial5.cs" />
-    <Compile Include="Migrations\201602202149329_Initial5.Designer.cs">
-      <DependentUpon>201602202149329_Initial5.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201602210205338_Initial6.cs" />
-    <Compile Include="Migrations\201602210205338_Initial6.Designer.cs">
-      <DependentUpon>201602210205338_Initial6.cs</DependentUpon>
+    <Compile Include="Migrations\201603010407139_initial.cs" />
+    <Compile Include="Migrations\201603010407139_initial.Designer.cs">
+      <DependentUpon>201603010407139_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -267,6 +254,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\RingDev.com.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -353,6 +341,7 @@
     <Content Include="Views\Publish\Index.cshtml" />
     <Content Include="Views\GameReport\Edit.cshtml" />
     <Content Include="Views\GameReport\Index.cshtml" />
+    <Content Include="Views\Teams1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -367,20 +356,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201602100400299_initial2.resx">
-      <DependentUpon>201602100400299_initial2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201602131841190_initial21.resx">
-      <DependentUpon>201602131841190_initial21.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201602150046274_initial4.resx">
-      <DependentUpon>201602150046274_initial4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201602202149329_Initial5.resx">
-      <DependentUpon>201602202149329_Initial5.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201602210205338_Initial6.resx">
-      <DependentUpon>201602210205338_Initial6.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201603010407139_initial.resx">
+      <DependentUpon>201603010407139_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
@@ -401,7 +378,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>55074</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44300/</IISUrl>
+          <IISUrl>http://localhost:44300/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

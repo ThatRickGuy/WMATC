@@ -79,9 +79,12 @@ namespace WMATC.Controllers
             Model.EventTitle = Event.Title;
             Model.EventImageURL = Event.ImageURL;
             Model.Teams = (from p in db.Teams where p.EventId == EventID select new TeamBrowser.Team() { TeamImageURL = p.ImgURL, TeamName = p.Name }).ToList();
-            foreach (var team in Model.Teams)
+            if (Event.ListLockDate < DateTime.Now)
             {
-                team.Players = (from p in db.Players where p.Team.Name == team.TeamName orderby p.Name select p).ToList();
+                foreach (var team in Model.Teams)
+                {
+                    team.Players = (from p in db.Players where p.Team.Name == team.TeamName orderby p.Name select p).ToList();
+                }
             }
             return Model;
         }

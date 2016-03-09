@@ -20,8 +20,8 @@ namespace WMATC.Models
         [ForeignKey("EventId")]
         public Event Event { get; set; }
 
-        public bool? HasBeenPairedDown { get; set; }
-        public bool? HasBeenBye { get; set; }
+        public int? PairedDownRound { get; set; }
+        public int? ByeRound { get; set; }
 
 
         //protected string Password { get; set; }
