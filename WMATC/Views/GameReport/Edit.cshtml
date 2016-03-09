@@ -1,0 +1,105 @@
+﻿@model WMATC.ViewModels.GameReport
+@{
+    Layout = null;
+}
+
+<style>
+    .myContainer {
+    transition: background-color 1s linear; 
+   -moz-transition: background-color 1s linear;  
+   -webkit-transition: background-color 1s linear; 
+   -ms-transition: background-color 1s linear; 
+        background-color: #ffffff;
+    }
+</style>
+
+@using (Ajax.BeginForm("Edit", new AjaxOptions()
+{
+    InsertionMode = InsertionMode.InsertAfter,
+    UpdateTargetId = "test"
+}))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal myContainer" style="width:1200px;height:35px;">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.MatchupId)
+        
+        <div style="float:left;width:200px;">
+            @Html.DropDownList("WinnerId", new SelectList(Model.Players, "PlayerId", "PlayerName", Model.WinnerId), htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => Model.WinnerId, "", new { @class = "text-danger" })
+        </div>
+
+        <div style="float:left;width:183px; margin:5px;">
+            @Html.DisplayFor(modelItem => Model.Player1.PlayerName)
+        </div>
+
+        <div style="float:left;width:85px;margin-right:3px;">
+            @Html.DropDownList("Player1ListId", new SelectList(Model.Player1Lists, "ListId", "Warnoun", Model.Player1ListId), htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => Model.Player1Lists, "", new { @class = "text-danger" })
+        </div>
+
+        <div style="float:left;width:52px;margin-right:3px;">
+            @Html.EditorFor(model => model.Player1CP, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Player1CP, "", new { @class = "text-danger" })
+        </div>
+
+        <div style="float:left;width:60px;margin-right:10px;">
+            @Html.EditorFor(model => model.Player1APD, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Player1APD, "", new { @class = "text-danger" })
+        </div>
+
+        <div style="float:left;width:173px; margin:5px;">
+            @Html.DisplayFor(modelItem => Model.Player2.PlayerName)
+        </div>
+
+        <div style="float:left;width:85px;margin-right:3px;">
+            @Html.DropDownList("Player2ListId", new SelectList(Model.Player2Lists, "ListId", "Warnoun", Model.Player2ListId), htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => Model.Player2Lists, "", new { @class = "text-danger" })
+        </div>
+
+        <div style="float:left;width:52px;margin-right:3px;">
+            @Html.EditorFor(model => model.Player2CP, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Player2CP, "", new { @class = "text-danger" })
+        </div>
+
+        <div style="float:left;width:60px;margin-right:10px;">
+            @Html.EditorFor(model => model.Player2APD, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Player2APD, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group" style="float:left;margin-left:5px;">
+                <input type="button" value="Save" class="btn btn-default" onclick="DoAjaxPostAndMore(this)" />
+        </div>
+    </div>
+}
+
+<script>
+    function DoAjaxPostAndMore(btnClicked) {
+        var $form = $(btnClicked).parents('form');
+        var $rowDiv = $(btnClicked).parent().parent();
+        $rowDiv.css('background-color', '#ffff99');
+
+        $.ajax({
+            type: "POST",
+            url: $form.attr('action'),
+            data: $form.serialize(),
+            error: function (xhr, status, error) {
+                //do something about the error
+                $rowDiv.css('background-color', '#ff9999');
+            },
+            success: function (response) {
+                //do something with response
+                $rowDiv.css('background-color', '#99ff99');
+                setTimeout(function () {
+                    $rowDiv.css('background-color', '#ffffff');
+                }, 1000);
+            }
+        });
+        
+        return false;// if it's a link to prevent post
+
+    }
+</script>
+
+<div id="test"></div>

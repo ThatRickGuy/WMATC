@@ -1,0 +1,93 @@
+﻿@model IEnumerable<WMATC.ViewModels.GameReport>
+
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+@{
+    ViewBag.Title = "Report Games";
+}
+<div class="form-horizontal">
+    <table style="width:1000px;">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.WinnerId)
+            </th>
+
+            <th style="width:20px;"></th>
+
+            <th>
+                Player 1
+            </th>
+            <th>
+                List
+            </th>
+            <th style="width:52px;">
+                CP
+            </th>
+            <th style="width:60px;">
+                APD
+            </th>
+
+            <th style="width:20px;"></th>
+
+            <th>
+                Player 2
+            </th>
+            <th>
+                List
+            </th>
+            <th style="width:52px;">
+                CP
+            </th>
+            <th style="width:60px;">
+                APD
+            </th>
+            <th></th>
+        </tr>
+    </table>
+    <div id="divEditorsContainer" style="width:1000px;">
+        @foreach (var item in (from p in Model orderby (p.WinnerId == null) descending  select p))
+        {
+            <div style="clear:left;">
+                @item.MatchupId 
+            </div>
+        }
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $("#divEditorsContainer").children().each(function(){
+                var context = $(this);
+                var matchupId = context.html();
+                context.load( "gamereport/edit/" + $.trim(matchupId));
+            })
+        })
+    </script>
+
+
+
+
+
+
+
+    @*<tr bgcolor="@RowBackgroundColor">
+
+
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Save" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+
+        </table>*@
+
+
+</div>
