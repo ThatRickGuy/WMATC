@@ -99,6 +99,7 @@ namespace WMATC.Controllers
 
             int RoundNumber = 0;
 
+            //Purge current round team matchups
             db.RoundTeamMatchups.RemoveRange(from p in db.RoundTeamMatchups where p.RoundId == RoundID && p.Round.EventId == EventID select p);
             db.SaveChanges();
 
@@ -129,9 +130,12 @@ namespace WMATC.Controllers
                 }
             }
 
-            var UnPairedTeams = (from p in TeamWins select p.Key).ToList();
-            
+            // remove drops
+            foreach (var team in (from p in TeamWins where p.Key.DropRound >= RoundNumber select p).ToList())
+                TeamWins.Remove(team.Key );
 
+            var UnPairedTeams = (from p in TeamWins select p.Key).ToList();
+         
             var rand = new Random();
             var RetryCount = 0;
 

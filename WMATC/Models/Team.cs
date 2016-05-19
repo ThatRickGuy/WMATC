@@ -22,7 +22,7 @@ namespace WMATC.Models
 
         public int? PairedDownRound { get; set; }
         public int? ByeRound { get; set; }
-
+        public int? DropRound { get; set; }
 
         //protected string Password { get; set; }
 

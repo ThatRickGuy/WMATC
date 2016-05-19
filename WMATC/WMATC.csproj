@@ -201,6 +201,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AspNetUserRolesController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\GameReportController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -219,8 +220,19 @@
     <Compile Include="Migrations\201603010407139_initial.Designer.cs">
       <DependentUpon>201603010407139_initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603090444082_update1.cs" />
+    <Compile Include="Migrations\201603090444082_update1.Designer.cs">
+      <DependentUpon>201603090444082_update1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605190334341_drop.cs" />
+    <Compile Include="Migrations\201605190334341_drop.Designer.cs">
+      <DependentUpon>201605190334341_drop.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AspNetUserRole.cs">
+      <DependentUpon>UserRoles.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\Faction.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -230,6 +242,21 @@
     <Compile Include="Models\Round.cs" />
     <Compile Include="Models\RoundTeamMatchup.cs" />
     <Compile Include="Models\Team.cs" />
+    <Compile Include="Models\UserRoles.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserRoles.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserRoles.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserRoles.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserRoles.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserRoles.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\GameReport.cs" />
@@ -247,12 +274,29 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\UserRoles.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>UserRoles.edmx</DependentUpon>
+      <LastGenOutput>UserRoles.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\UserRoles.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>UserRoles.edmx</DependentUpon>
+      <LastGenOutput>UserRoles.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EntityDeploy Include="Models\UserRoles.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>UserRoles.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\UserRoles.edmx.diagram">
+      <DependentUpon>UserRoles.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\RingDev.com.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -341,6 +385,11 @@
     <Content Include="Views\Publish\Index.cshtml" />
     <Content Include="Views\GameReport\Edit.cshtml" />
     <Content Include="Views\GameReport\Index.cshtml" />
+    <Content Include="Views\AspNetUserRoles\Create.cshtml" />
+    <Content Include="Views\AspNetUserRoles\Delete.cshtml" />
+    <Content Include="Views\AspNetUserRoles\Details.cshtml" />
+    <Content Include="Views\AspNetUserRoles\Edit.cshtml" />
+    <Content Include="Views\AspNetUserRoles\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -358,6 +407,15 @@
     <EmbeddedResource Include="Migrations\201603010407139_initial.resx">
       <DependentUpon>201603010407139_initial.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603090444082_update1.resx">
+      <DependentUpon>201603090444082_update1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605190334341_drop.resx">
+      <DependentUpon>201605190334341_drop.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
