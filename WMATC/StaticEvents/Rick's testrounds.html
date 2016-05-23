@@ -1,0 +1,637 @@
+<link href="/Content/bootstrap.css" rel="stylesheet"/>
+<link href="/Content/site.css" rel="stylesheet"/>
+
+<script src="/Scripts/modernizr-2.6.2.js"></script>
+
+
+
+
+<style>
+    div.MatchupBar {
+        margin: 5px;
+    }
+
+    div.ShadowBox {
+        border-radius: 10px 10px 10px 10px;
+        -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+        -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+        box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    }
+
+    div.littleShadow {
+        border-radius: 10px;
+        -webkit-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
+        -moz-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
+        box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
+    }
+
+    div.LeftBox {
+        border-radius: 10px 0px 0px 10px;
+        border-bottom: 2px solid gray;
+        border-left: 2px solid gray;
+        border-top: 2px solid gray;
+        float: left;
+    }
+
+    div.RightBox {
+        border-radius: 0px 10px 10px 0px;
+        border-bottom: 2px solid gray;
+        border-right: 2px solid gray;
+        border-top: 2px solid gray;
+        float: Right;
+    }
+
+    div.WinnerBackground {
+        background: #D1F1D1;
+    }
+
+    div.LoserBackground {
+        background: #F1D1D1;
+    }
+
+    div.BlankBackground {
+        background: #e5e5e5;
+    }
+
+    div.BlankBackgroundRight {
+        background: #e5e5e5; /* Old browsers */
+        background: -moz-linear-gradient(-45deg, #e5e5e5 0%, #aaaaaa 59%, #777777 59%, #444444 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(-45deg, #e5e5e5 0%,#aaaaaa 59%,#777777 59%,#444444 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(135deg, #e5e5e5 0%,#aaaaaa 59%,#777777 59%,#444444 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5e5e5', endColorstr='#ff3232',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+        width:250px; 
+        height:55px;
+    }
+
+    div.BlankBackgroundLeft {
+        background: #e5e5e5; /* Old browsers */
+        background: -moz-linear-gradient(45deg, #e5e5e5 0%, #aaaaaa 59%, #777777 59%, #444444 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(45deg, #e5e5e5 0%,#aaaaaa 59%,#777777 59%,#444444 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(225deg, #e5e5e5 0%,#aaaaaa 59%,#777777 59%,#444444 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5e5e5', endColorstr='#ff3232',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+        width:250px; 
+        height:55px;
+    }
+
+    div.LoserBackgroundRight {
+        background: #e5e5e5; /* Old browsers */
+        background: -moz-linear-gradient(-45deg, #e5e5e5 0%, #baaaaa 59%, #877777 59%, #544444 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(-45deg, #e5e5e5 0%,#baaaaa 59%, #877777 59%,#544444 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(135deg, #e5e5e5 0%,#baaaaa 59%,#877777 59%,#544444 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5e5e5', endColorstr='#544444',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+        width:250px; 
+        height:55px;
+    }
+
+    div.LoserBackgroundLeft {
+        background: #e5e5e5; /* Old browsers */
+        background: -moz-linear-gradient(45deg, #e5e5e5 0%, #baaaaa 59%, #877777 59%, #544444 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(45deg, #e5e5e5 0%,#baaaaa 59%, #877777 59%,#544444 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(225deg, #e5e5e5 0%,#baaaaa 59%,#877777 59%,#544444 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5e5e5', endColorstr='#544444',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+        width:250px; 
+        height:55px;
+    }
+
+    div.WinnerBackgroundRight {
+        background: #e5e5e5; /* Old browsers */
+        background: -moz-linear-gradient(-45deg, #e5e5e5 0%, #aabaaa 59%, #778777 59%, #445444 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(-45deg, #e5e5e5 0%,#aabaaa 59%, #778777 59%,#445444 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(135deg, #e5e5e5 0%,#aabaaa 59%,#778777 59%,#445444 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5e5e5', endColorstr='#445444',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+        width:250px; 
+        height:55px;
+    }
+
+    div.WinnerBackgroundLeft {
+        background: #e5e5e5; /* Old browsers */
+        background: -moz-linear-gradient(45deg, #e5e5e5 0%, #aabaaa 59%, #778777 59%, #445444 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(45deg, #e5e5e5 0%,#aabaaa 59%,#778777 59%,#445444 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(225deg, #e5e5e5 0%,#aabaaa 59%,#778777 59%,#445444 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5e5e5', endColorstr='#445444',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+        width:250px; 
+        height:55px;
+    }
+
+    #chevron {
+        position: relative;
+        text-align: center;
+        padding: 1px;
+        margin-bottom: 3px;
+        height: 6px;
+        width: 20px;
+    }
+
+        #chevron:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 51%;
+            border-left: 1px solid #706516;
+            border-top: 1px solid #706516;
+            border-bottom: 1px solid #706516;
+            background: #ad9d22; /* Old browsers */
+            background: -moz-linear-gradient(left, #ad9d22 55%, #28d3cd 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(left, #ad9d22 55%,#28d3cd 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to right, #ad9d22 55%,#28d3cd 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ad9d22', endColorstr='#e8e87d',GradientType=1 ); /* IE6-9 */
+            -webkit-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
+            -moz-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
+            box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
+            -webkit-transform: skew(0deg, 6deg);
+            -moz-transform: skew(0deg, 6deg);
+            -ms-transform: skew(0deg, 6deg);
+            -o-transform: skew(0deg, 6deg);
+            transform: skew(0deg, 6deg);
+        }
+
+        #chevron:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            width: 50%;
+            border-right: 1px solid #706516;
+            border-top: 1px solid #706516;
+            border-bottom: 1px solid #706516;
+            background: #ad9d22; /* Old browsers */
+            background: -moz-linear-gradient(left, #cccc20 0%, #e8e87d 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(left, #cccc20 0%,#e8e87d 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to right, #cccc20 0%,#e8e87d 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ad9d22', endColorstr='#e8e87d',GradientType=1 ); /* IE6-9 */
+            -webkit-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
+            -moz-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
+            box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
+            -webkit-transform: skew(0deg, -6deg);
+            -moz-transform: skew(0deg, -6deg);
+            -ms-transform: skew(0deg, -6deg);
+            -o-transform: skew(0deg, -6deg);
+            transform: skew(0deg, -6deg);
+        }
+
+    div.Player1Name{
+        font-weight:bold; 
+        white-space:nowrap; 
+        max-width:125px; 
+        float:left; 
+        overflow:hidden;
+    }
+
+    div.Player2Name {
+        font-weight:bold; 
+        max-width:125px; 
+        overflow:hidden; 
+        white-space:nowrap; 
+        text-align:right;
+    }
+
+    a.Player1Caster {
+        color:#111111; 
+        font-size:9pt; 
+        cursor:pointer; 
+        margin-left:5px; 
+        clear:left; 
+        float:left;
+    }
+
+    a.Player2Caster{
+        color:#111111; 
+        font-size:9pt; 
+        cursor:pointer; 
+        margin-right:5px; 
+        clear:right; 
+        float:right;
+    }
+</style>
+
+<style>
+    .overlay {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.4);
+        display: none;
+        z-index:998;
+    }
+
+        .overlay:target {
+            visibility: visible;
+            opacity: 1;
+        }
+
+    .popup {
+        padding: 20px;
+        background: #fff;
+        border-radius: 5px;
+        width: 45%;
+        position: absolute;
+        z-index:999;
+    }
+
+        .popup h2 {
+            margin-top: 0;
+            color: #333;
+            font-family: Tahoma, Arial, sans-serif;
+        }
+
+        .popup .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            transition: all 200ms;
+            font-size: 30px;
+            font-weight: bold;
+            text-decoration: none;
+            color: #333;
+        }
+
+            .popup .close:hover {
+                color: orange;
+            }
+
+        .popup .content {
+            max-height: 30%;
+            overflow: auto;
+        }
+</style>
+
+<div id="popup1" class="overlay">
+    <div id="popup" class="popup">
+        <h2 id="popupTitle">title</h2>
+        <a class="close" onclick="document.getElementById('popup1').style.display ='none'">X</a>
+        <div class="content" id="popupContent">
+            XXX
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/StaticEvents/Rick&#39;s test.js"></script>
+<script type="text/javascript">
+		<!--
+    function listClick(event, title, list) {
+        
+        document.getElementById('popupContent').innerHTML = list.replace(new RegExp('  ', 'g'), '<br/>');
+        document.getElementById('popupTitle').innerText = title;
+        pu = document.getElementById('popup1');
+        pu.style.display = 'inline-block';
+        pu = document.getElementById('popup');
+        var so = getScroll();
+        horOffset = event.clientX + so[0] - 75;
+        vertOffset = event.clientY + so[1] - 65;
+        pu.style.left = '28%';
+        pu.style.top = vertOffset+'px';
+        pu.style.display = 'inline-block';
+    }
+
+
+    function getScroll(){
+        if(window.pageYOffset!= undefined){
+            return [pageXOffset, pageYOffset];
+        }
+        else{
+            var sx, sy, d= document, r= d.documentElement, b= d.body;
+            sx= r.scrollLeft || b.scrollLeft || 0;
+            sy= r.scrollTop || b.scrollTop || 0;
+            return [sx, sy];
+        }
+    }
+
+    function toggle_visibility(id) {
+		var e = document.getElementById(id);
+		if (e.style.display == 'inline-block')
+			e.style.display = 'none';
+		else
+			e.style.display = 'inline-block';
+	}
+    //-->
+</script>
+<div style="margin:25px;">
+    <div style="float:left; width:35%;">
+        <img src="http://ringdev.com/PGSwissStandings/pgswiss_small.png" style="height:100px; width:auto;" />
+    </div>
+    <div style="float:left; width:65%;">
+        <h1>
+            Rick&#39;s test
+        </h1>
+        <h3>
+            1/1/2017
+        </h3>
+    </div>
+</div>
+<br style="clear:left;" />
+
+
+    <h2 onclick="toggle_visibility('1'); " style="cursor: pointer; ">
+        1
+        . Destruction
+    </h2><div id="1" style="display: none">
+
+            <div>
+                <div id="MatchupBar" class="ShadowBox" style="width:500px; height:55px; margin-top:15px;">
+                    <div style="position:absolute;left:225px;width: 50px; height:55px;display:inline;text-align:center; ">
+                        <span style="font-size:8pt;">Zone</span>
+                        <br style="line-height:1px;">
+                        <span style="font-size:30px;line-height:25px;">1</span>
+                    </div>
+
+                    <div id="Team1" class="LeftBox LoserBackgroundLeft" onclick="toggle_visibility('Matchups1');">
+                        <div id="Team1Flag" style="float:left;margin:10px;">
+                            <img alt="BYE" style="width:auto; height:33px">
+                        </div>
+
+                        <div style="margin:3px 27px 3px 0px;float:right;">
+                        </div>
+                        <div id="Team1Name" style="margin:18px 0px 0px 0px;font-weight:bold; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            BYE
+                        </div>
+                    </div>
+                    <div id="Team2" class="RightBox WinnerBackgroundRight" onclick="toggle_visibility('Matchups1');">
+                        <div id="Team2Flag" style="float:right;margin:10px;">
+                            <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTuu2mTi-0lSfD_17AkpbdBAYVwUGEZONYHOTRETeAkd-Bd4sB_" alt="team 3" style="width:auto; height:33px">
+                        </div>
+                        <div id="Team2Name" style="float:right;margin:18px 0px 0px 0px;font-weight:bold; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            team 3
+                        </div>
+                        <div style="margin:3px  0px 3px 27px;">
+<div id="chevron">
+                            </div> <div id="chevron">
+                            </div> <div id="chevron">
+                            </div>                         </div>
+                    </div>
+                </div>
+                <div id="Matchups1" style="clear:both;
+									  width:350px;
+									  margin: 5px 0px 0px 75px;
+									  display:none">
+                        <div id="Matchup" class="littleShadow" style="height:43px;">
+
+                            <div id="MatchupPlayer1" class="LeftBox LoserBackground" style="width:175px">
+                                <img style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip">
+                                <div style="float:left;">
+                                    <div class="Player1Name" data-toggle="tooltip" title="BYE">BYE</div>
+                                    <a class="Player1Caster" onclick="listClick(event, '', l10_0)"></a>
+                                </div>
+                                
+                            </div>
+                            <div id="MatchupPlayer2" class="RightBox WinnerBackground" style="width:175px">
+                                <div id="MatchupPlayer2Faction" style="float:right; margin:3px;">
+                                    <img src="http://privateerpress.com/files/imagecache/3up_square/pages/Convergence.png" alt="Convergence" style="float:Right; width:32px; height:32px;" data-toggle="tooltip" title="">
+                                </div>
+                                <div style="float:right;">
+                                    <div class="Player2Name" data-toggle="tooltip" title="Tim">Tim</div>
+                                    <a class="Player2Caster" onclick="listClick(event, '', l7_0)"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="Matchup" class="littleShadow" style="height:43px;">
+
+                            <div id="MatchupPlayer1" class="LeftBox LoserBackground" style="width:175px">
+                                <img style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip">
+                                <div style="float:left;">
+                                    <div class="Player1Name" data-toggle="tooltip" title="BYE">BYE</div>
+                                    <a class="Player1Caster" onclick="listClick(event, '', l10_0)"></a>
+                                </div>
+                                
+                            </div>
+                            <div id="MatchupPlayer2" class="RightBox WinnerBackground" style="width:175px">
+                                <div id="MatchupPlayer2Faction" style="float:right; margin:3px;">
+                                    <img src="http://privateerpress.com/files/imagecache/3up_square/pages/minions.png" alt="Minions" style="float:Right; width:32px; height:32px;" data-toggle="tooltip" title="">
+                                </div>
+                                <div style="float:right;">
+                                    <div class="Player2Name" data-toggle="tooltip" title="Jim">Jim</div>
+                                    <a class="Player2Caster" onclick="listClick(event, '', l8_0)"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="Matchup" class="littleShadow" style="height:43px;">
+
+                            <div id="MatchupPlayer1" class="LeftBox LoserBackground" style="width:175px">
+                                <img style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip">
+                                <div style="float:left;">
+                                    <div class="Player1Name" data-toggle="tooltip" title="BYE">BYE</div>
+                                    <a class="Player1Caster" onclick="listClick(event, '', l10_0)"></a>
+                                </div>
+                                
+                            </div>
+                            <div id="MatchupPlayer2" class="RightBox WinnerBackground" style="width:175px">
+                                <div id="MatchupPlayer2Faction" style="float:right; margin:3px;">
+                                    <img src="http://privateerpress.com/files/imagecache/3up_square/pages/cryx.png" alt="Cryx" style="float:Right; width:32px; height:32px;" data-toggle="tooltip" title="">
+                                </div>
+                                <div style="float:right;">
+                                    <div class="Player2Name" data-toggle="tooltip" title="Slim">Slim</div>
+                                    <a class="Player2Caster" onclick="listClick(event, '', l9_0)"></a>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div>
+                <div id="MatchupBar" class="ShadowBox" style="width:500px; height:55px; margin-top:15px;">
+                    <div style="position:absolute;left:225px;width: 50px; height:55px;display:inline;text-align:center; ">
+                        <span style="font-size:8pt;">Zone</span>
+                        <br style="line-height:1px;">
+                        <span style="font-size:30px;line-height:25px;">2</span>
+                    </div>
+
+                    <div id="Team1" class="LeftBox LoserBackgroundLeft" onclick="toggle_visibility('Matchups2');">
+                        <div id="Team1Flag" style="float:left;margin:10px;">
+                            <img src="http://icons.iconarchive.com/icons/hopstarter/face-avatars/256/Male-Face-F5-icon.png" alt="team 2" style="width:auto; height:33px">
+                        </div>
+
+                        <div style="margin:3px 27px 3px 0px;float:right;">
+<div id="chevron"></div>                         </div>
+                        <div id="Team1Name" style="margin:18px 0px 0px 0px;font-weight:bold; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            team 2
+                        </div>
+                    </div>
+                    <div id="Team2" class="RightBox WinnerBackgroundRight" onclick="toggle_visibility('Matchups2');">
+                        <div id="Team2Flag" style="float:right;margin:10px;">
+                            <img src="http://icons.iconarchive.com/icons/hopstarter/face-avatars/256/Male-Face-H5-icon.png" alt="team 1" style="width:auto; height:33px">
+                        </div>
+                        <div id="Team2Name" style="float:right;margin:18px 0px 0px 0px;font-weight:bold; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            team 1
+                        </div>
+                        <div style="margin:3px  0px 3px 27px;">
+<div id="chevron">
+                            </div> <div id="chevron">
+                            </div>                         </div>
+                    </div>
+                </div>
+                <div id="Matchups2" style="clear:both;
+									  width:350px;
+									  margin: 5px 0px 0px 75px;
+									  display:none">
+                        <div id="Matchup" class="littleShadow" style="height:43px;">
+
+                            <div id="MatchupPlayer1" class="LeftBox LoserBackground" style="width:175px">
+                                <img src="http://privateerpress.com/files/imagecache/3up_square/pages/the-retribution-of-scyrah.png" alt="Retribution" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Retribution">
+                                <div style="float:left;">
+                                    <div class="Player1Name" data-toggle="tooltip" title="Ed">Ed</div>
+                                    <a class="Player1Caster" onclick="listClick(event, '', l4_1)"></a>
+                                </div>
+                                
+                            </div>
+                            <div id="MatchupPlayer2" class="RightBox WinnerBackground" style="width:175px">
+                                <div id="MatchupPlayer2Faction" style="float:right; margin:3px;">
+                                    <img src="http://privateerpress.com/files/imagecache/3up_square/pages/cygnar.png" alt="Cygnar" style="float:Right; width:32px; height:32px;" data-toggle="tooltip">
+                                </div>
+                                <div style="float:right;">
+                                    <div class="Player2Name" data-toggle="tooltip" title="Jimmy">Jimmy</div>
+                                    <a class="Player2Caster" onclick="listClick(event, '', l1_1)"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="Matchup" class="littleShadow" style="height:43px;">
+
+                            <div id="MatchupPlayer1" class="LeftBox LoserBackground" style="width:175px">
+                                <img src="http://privateerpress.com/files/imagecache/3up_square/pages/mercenaries.png" alt="Mercenaries" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Mercenaries">
+                                <div style="float:left;">
+                                    <div class="Player1Name" data-toggle="tooltip" title="Fred">Fred</div>
+                                    <a class="Player1Caster" onclick="listClick(event, '', l5_2)"></a>
+                                </div>
+                                
+                            </div>
+                            <div id="MatchupPlayer2" class="RightBox WinnerBackground" style="width:175px">
+                                <div id="MatchupPlayer2Faction" style="float:right; margin:3px;">
+                                    <img src="http://privateerpress.com/files/imagecache/3up_square/pages/khador.png" alt="Khador" style="float:Right; width:32px; height:32px;" data-toggle="tooltip">
+                                </div>
+                                <div style="float:right;">
+                                    <div class="Player2Name" data-toggle="tooltip" title="Pauly">Pauly</div>
+                                    <a class="Player2Caster" onclick="listClick(event, '', l2_1)"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="Matchup" class="littleShadow" style="height:43px;">
+
+                            <div id="MatchupPlayer1" class="LeftBox WinnerBackground" style="width:175px">
+                                <img src="http://privateerpress.com/files/imagecache/3up_square/pages/cryx.png" alt="Cryx" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Cryx">
+                                <div style="float:left;">
+                                    <div class="Player1Name" data-toggle="tooltip" title="Ned">Ned</div>
+                                    <a class="Player1Caster" onclick="listClick(event, '', l6_2)"></a>
+                                </div>
+                                
+                            </div>
+                            <div id="MatchupPlayer2" class="RightBox LoserBackground" style="width:175px">
+                                <div id="MatchupPlayer2Faction" style="float:right; margin:3px;">
+                                    <img src="http://privateerpress.com/files/imagecache/3up_square/pages/circle-orboros.png" alt="Circle" style="float:Right; width:32px; height:32px;" data-toggle="tooltip">
+                                </div>
+                                <div style="float:right;">
+                                    <div class="Player2Name" data-toggle="tooltip" title="Sandy">Sandy</div>
+                                    <a class="Player2Caster" onclick="listClick(event, '', l3_2)"></a>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+    </div>
+    <h2 onclick="toggle_visibility('2'); " style="cursor: pointer; ">
+        2
+        . Close Quarters
+    </h2><div id="2" style="display: inline-block">
+
+            <div>
+                <div id="MatchupBar" class="ShadowBox" style="width:500px; height:55px; margin-top:15px;">
+                    <div style="position:absolute;left:225px;width: 50px; height:55px;display:inline;text-align:center; ">
+                        <span style="font-size:8pt;">Zone</span>
+                        <br style="line-height:1px;">
+                        <span style="font-size:30px;line-height:25px;">3</span>
+                    </div>
+
+                    <div id="Team1" class="LeftBox WinnerBackgroundLeft" onclick="toggle_visibility('Matchups3');">
+                        <div id="Team1Flag" style="float:left;margin:10px;">
+                            <img src="http://icons.iconarchive.com/icons/hopstarter/face-avatars/256/Male-Face-H5-icon.png" alt="team 1" style="width:auto; height:33px">
+                        </div>
+
+                        <div style="margin:3px 27px 3px 0px;float:right;">
+<div id="chevron"></div> <div id="chevron"></div>                         </div>
+                        <div id="Team1Name" style="margin:18px 0px 0px 0px;font-weight:bold; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            team 1
+                        </div>
+                    </div>
+                    <div id="Team2" class="RightBox LoserBackgroundRight" onclick="toggle_visibility('Matchups3');">
+                        <div id="Team2Flag" style="float:right;margin:10px;">
+                            <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTuu2mTi-0lSfD_17AkpbdBAYVwUGEZONYHOTRETeAkd-Bd4sB_" alt="team 3" style="width:auto; height:33px">
+                        </div>
+                        <div id="Team2Name" style="float:right;margin:18px 0px 0px 0px;font-weight:bold; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            team 3
+                        </div>
+                        <div style="margin:3px  0px 3px 27px;">
+<div id="chevron">
+                            </div>                         </div>
+                    </div>
+                </div>
+                <div id="Matchups3" style="clear:both;
+									  width:350px;
+									  margin: 5px 0px 0px 75px;
+									  display:none">
+                        <div id="Matchup" class="littleShadow" style="height:43px;">
+
+                            <div id="MatchupPlayer1" class="LeftBox WinnerBackground" style="width:175px">
+                                <img src="http://privateerpress.com/files/imagecache/3up_square/pages/cygnar.png" alt="Cygnar" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Cygnar">
+                                <div style="float:left;">
+                                    <div class="Player1Name" data-toggle="tooltip" title="Jimmy">Jimmy</div>
+                                    <a class="Player1Caster" onclick="listClick(event, '', l1_1)"></a>
+                                </div>
+                                
+                            </div>
+                            <div id="MatchupPlayer2" class="RightBox LoserBackground" style="width:175px">
+                                <div id="MatchupPlayer2Faction" style="float:right; margin:3px;">
+                                    <img src="http://privateerpress.com/files/imagecache/3up_square/pages/Convergence.png" alt="Convergence" style="float:Right; width:32px; height:32px;" data-toggle="tooltip">
+                                </div>
+                                <div style="float:right;">
+                                    <div class="Player2Name" data-toggle="tooltip" title="Tim">Tim</div>
+                                    <a class="Player2Caster" onclick="listClick(event, '', l7_1)"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="Matchup" class="littleShadow" style="height:43px;">
+
+                            <div id="MatchupPlayer1" class="LeftBox WinnerBackground" style="width:175px">
+                                <img src="http://privateerpress.com/files/imagecache/3up_square/pages/khador.png" alt="Khador" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Khador">
+                                <div style="float:left;">
+                                    <div class="Player1Name" data-toggle="tooltip" title="Pauly">Pauly</div>
+                                    <a class="Player1Caster" onclick="listClick(event, '', l2_1)"></a>
+                                </div>
+                                
+                            </div>
+                            <div id="MatchupPlayer2" class="RightBox LoserBackground" style="width:175px">
+                                <div id="MatchupPlayer2Faction" style="float:right; margin:3px;">
+                                    <img src="http://privateerpress.com/files/imagecache/3up_square/pages/minions.png" alt="Minions" style="float:Right; width:32px; height:32px;" data-toggle="tooltip">
+                                </div>
+                                <div style="float:right;">
+                                    <div class="Player2Name" data-toggle="tooltip" title="Jim">Jim</div>
+                                    <a class="Player2Caster" onclick="listClick(event, '', l8_1)"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="Matchup" class="littleShadow" style="height:43px;">
+
+                            <div id="MatchupPlayer1" class="LeftBox LoserBackground" style="width:175px">
+                                <img src="http://privateerpress.com/files/imagecache/3up_square/pages/circle-orboros.png" alt="Circle" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Circle">
+                                <div style="float:left;">
+                                    <div class="Player1Name" data-toggle="tooltip" title="Sandy">Sandy</div>
+                                    <a class="Player1Caster" onclick="listClick(event, '', l3_1)"></a>
+                                </div>
+                                
+                            </div>
+                            <div id="MatchupPlayer2" class="RightBox WinnerBackground" style="width:175px">
+                                <div id="MatchupPlayer2Faction" style="float:right; margin:3px;">
+                                    <img src="http://privateerpress.com/files/imagecache/3up_square/pages/cryx.png" alt="Cryx" style="float:Right; width:32px; height:32px;" data-toggle="tooltip">
+                                </div>
+                                <div style="float:right;">
+                                    <div class="Player2Name" data-toggle="tooltip" title="Slim">Slim</div>
+                                    <a class="Player2Caster" onclick="listClick(event, '', l9_1)"></a>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+    </div>
+

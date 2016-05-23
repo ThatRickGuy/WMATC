@@ -50,9 +50,9 @@ namespace WMATC.Controllers
 
             var IndexView = new ViewModels.PublishViewModel() ;
             IndexView.EventId = SelectedEventId;
-            IndexView.RoundsURL = "/StaticEvents/" + PublishView.EventTitle + "rounds.html";
-            IndexView.TeamBrowser = "/StaticEvents/" + PublishView.EventTitle + "teams.html";
-            IndexView.StandingsURL = "/StaticEvents/" + PublishView.EventTitle + "standings.html";
+            IndexView.RoundsURL = "./StaticEvents/" + PublishView.EventTitle + "rounds.html";
+            IndexView.TeamBrowser = "./StaticEvents/" + PublishView.EventTitle + "teams.html";
+            IndexView.StandingsURL = "./StaticEvents/" + PublishView.EventTitle + "standings.html";
 
             return View(IndexView);
         }
@@ -78,7 +78,7 @@ namespace WMATC.Controllers
             Model.EventDate = Event.EventDate;
             Model.EventTitle = Event.Title;
             Model.EventImageURL = Event.ImageURL;
-            Model.Teams = (from p in db.Teams where p.EventId == EventID select new TeamBrowser.Team() { TeamImageURL = p.ImgURL, TeamName = p.Name }).ToList();
+            Model.Teams = (from p in db.Teams where p.EventId == EventID && p.Name != "BYE" select new TeamBrowser.Team() { TeamImageURL = p.ImgURL, TeamName = p.Name }).ToList();
             if (Event.ListLockDate < DateTime.Now)
             {
                 foreach (var team in Model.Teams)
@@ -91,7 +91,7 @@ namespace WMATC.Controllers
 
         private RoundsViewModel PopulatePublishViewModel_Players(RoundsViewModel Model, int EventID)
         {
-            var Players = from p in db.Players where p.Team.EventId == EventID select new PlayerViewModel { Player = p, PlayerId = p.PlayerId };
+            var Players = from p in db.Players where p.Team.EventId == EventID && p.Name != "BYE" select new PlayerViewModel { Player = p, PlayerId = p.PlayerId };
             Model.Players = Players.ToList();
             return Model;
         }
@@ -197,7 +197,7 @@ namespace WMATC.Controllers
             Model.CurrentRound = CurrentRound;
             
 
-            foreach (var team in Model.Teams)
+            foreach (var team in (from p in Model.Teams where p.TeamName != "BYE" select p))
             {
                 team.Players = (from p in db.Players where p.TeamId == team.TeamId orderby p.Name select new Standings.Player() { Name = p.Name, Faction = p.Faction.Title, FactionImageURL = p.Faction.ImageURL, PlayerId = p.PlayerId  }).ToList();
 

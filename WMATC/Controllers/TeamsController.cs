@@ -126,7 +126,7 @@ namespace WMATC.Controllers
         [Authorize(Roles = "canEdit")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TeamId,Name,ImgURL,EventId")] Team team)
+        public ActionResult Edit([Bind(Include = "TeamId,Name,ImgURL,EventId,PairedDownRound,ByeRound,DropRound")] Team team)
         {
             if (ModelState.IsValid)
             {

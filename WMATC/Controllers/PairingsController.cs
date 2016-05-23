@@ -61,7 +61,7 @@ namespace WMATC.Controllers
             System.IO.File.WriteAllText(Server.MapPath(".\\..") + "\\StaticEvents\\" + rtmp.EventName + "_Round" + rtmp.RoundNumber + ".html", output);
 
             var rtmpu = new ViewModels.RoundTeamMatchupPrintURL();
-            rtmpu.PrintURL = "/StaticEvents/" + rtmp.EventName + "_Round" + rtmp.RoundNumber + ".html";
+            rtmpu.PrintURL = "./StaticEvents/" + rtmp.EventName + "_Round" + rtmp.RoundNumber + ".html";
 
             return View(rtmpu);
         }
@@ -97,43 +97,19 @@ namespace WMATC.Controllers
             int EventID = 0;
             int.TryParse(Session["SelectedEventId"].ToString(), out EventID);
 
-            int RoundNumber = 0;
+            int RoundNumber = (from p in db.Rounds where p.RoundId == RoundID && p.EventId == EventID select p.Sequence).First ();
 
-            //Purge current round team matchups
-            db.RoundTeamMatchups.RemoveRange(from p in db.RoundTeamMatchups where p.RoundId == RoundID && p.Round.EventId == EventID select p);
-            db.SaveChanges();
 
-            var Rounds = (from p in db.Rounds where p.EventId == EventID orderby p.Sequence select p).ToList();
-
+            //Ensure the Bye team exists and remove all existing player and team matchups for the round
+            PerformPreGenerateDataCleanup(EventID, RoundID);
+                        
             //Hold a list of Teams and the number of Wins they have
-            var TeamWins = new Dictionary<Team, int>();
-
-            foreach (var round in Rounds)
-            {
-                var roundTeamMatchups = (from p in db.RoundTeamMatchups
-                                         where p.RoundId == round.RoundId
-                                         select p).Include(m => m.Team1).Include(m => m.Team2).ToList();
-                if (round.RoundId == RoundID) RoundNumber = round.Sequence;
-
-                foreach (var roundTeamMatchup in roundTeamMatchups)
-                {
-
-                    if (!TeamWins.ContainsKey(roundTeamMatchup.Team1)) TeamWins.Add(roundTeamMatchup.Team1, 0);
-                    if (!TeamWins.ContainsKey(roundTeamMatchup.Team2)) TeamWins.Add(roundTeamMatchup.Team2, 0);
-
-                    var Team1Wins = (from p in db.Matchups where p.RoundTeamMatchupId == roundTeamMatchup.RoundTeamMatchupId && p.WinnerId == p.Player1Id select p).Count();
-                    var Team2Wins = (from p in db.Matchups where p.RoundTeamMatchupId == roundTeamMatchup.RoundTeamMatchupId && p.WinnerId == p.Player2Id select p).Count();
-                    var MatchCounts = (from p in db.Matchups where p.RoundTeamMatchupId == roundTeamMatchup.RoundTeamMatchupId select p).Count();
-
-                    if (Team1Wins > Team2Wins && Team1Wins > MatchCounts / 2) TeamWins[roundTeamMatchup.Team1] += 1;
-                    if (Team2Wins > Team1Wins && Team2Wins > MatchCounts / 2) TeamWins[roundTeamMatchup.Team2] += 1;
-                }
-            }
-
+            Dictionary<Team, int> TeamWins = GenerateTeamWins(EventID);
+            
             // remove drops
             foreach (var team in (from p in TeamWins where p.Key.DropRound >= RoundNumber select p).ToList())
                 TeamWins.Remove(team.Key );
-
+            
             var UnPairedTeams = (from p in TeamWins select p.Key).ToList();
          
             var rand = new Random();
@@ -151,53 +127,63 @@ namespace WMATC.Controllers
                 q = (from p in UnPairedTeams where p.PairedDownRound == RoundNumber select p);
                 foreach (var p in q)
                     p.PairedDownRound = null;
-
-
-                //check for max attempts 
+                
+                //check for multiple/max attempts 
                 RetryCount += 1;
+                if (RetryCount>0)
+                {
+                    TeamWins = GenerateTeamWins(EventID);
+                    // remove drops
+                    foreach (var team in (from p in TeamWins where p.Key.DropRound >= RoundNumber select p).ToList())
+                        TeamWins.Remove(team.Key);
+                }
                 if (RetryCount > 5)
                 {
                     //Something is preventing all pairings
                     throw new Exception("Unable to complete pairings! Please use manual Round Team Matchups.");
                 }
 
+
                 try
                 {
                     var Wins = (from p in TeamWins orderby p.Value descending select p.Value).FirstOrDefault();
 
-                    while (Wins > -1)
+                    while (Wins >= -1)
                     {
                         // Pre pairing cleanup, identify pairdown and byes
                         var AvailableTeams = (from p in TeamWins where p.Value == Wins select p).ToList();
+
+                        // If we're in the 0 wins group and there are an odd number of teams, drop the BYE team
+                        if (Wins == 0 && AvailableTeams.Count() % 2 == 1)
+                        {
+                            var ByeTeam = (from p in AvailableTeams where p.Key.Name == "BYE" select p).First ();
+                            AvailableTeams.Remove(ByeTeam);
+                            TeamWins.Remove(ByeTeam.Key );
+                            UnPairedTeams.Remove(ByeTeam.Key );
+                        }
+
                         if (AvailableTeams.Count() % 2 != 0)
                         {
-                            if (Wins > 0)
-                            {
-                                //Pairdown Logic
-                                var PairdownCandidates = from p in AvailableTeams where p.Key.PairedDownRound == null select p.Key;
-                                var Pairdown = PairdownCandidates.ElementAt(rand.Next(PairdownCandidates.Count()));
-                                Pairdown.PairedDownRound = RoundNumber;
-                                TeamWins[Pairdown] -= 1; //force the team into the next lower wins bucket
-                                AvailableTeams = (from p in TeamWins where p.Value == Wins select p).ToList();
-                            }
-                            else
-                            {
-                                //Bye logic
-                                var PairdownCandidates = from p in AvailableTeams where p.Key.ByeRound == null select p.Key;
-                                var Bye = PairdownCandidates.ElementAt(rand.Next(PairdownCandidates.Count()));
-                                Bye.ByeRound = RoundNumber;
-                                TeamWins.Remove(Bye);
-                                AvailableTeams = (from p in TeamWins where p.Value >= Wins select p).ToList();
-                            }
+                            //Pairdown Logic
+                            var PairdownCandidates = from p in AvailableTeams where p.Key.PairedDownRound == null select p.Key;
+                            var Pairdown = PairdownCandidates.ElementAt(rand.Next(PairdownCandidates.Count()));
+                            Pairdown.PairedDownRound = RoundNumber;
+                            TeamWins[Pairdown] -= 1; //force the team into the next lower wins bucket
+                                
+                            AvailableTeams = (from p in TeamWins where p.Value == Wins select p).ToList();
                         }
 
                         // Find pairings for all available teams (in this win bucket)
                         while (AvailableTeams.Count > 0)
                         {
 
-                            // get a random team from this wins bucket
+                            // get a random team from this wins bucket (or Bye if it's available)
                             var Team1 = AvailableTeams.ElementAt(rand.Next(AvailableTeams.Count()));
-
+                            if ((from p in AvailableTeams where p.Key.Name == "BYE" select p).Count () > 0)
+                            {
+                                Team1 = (from p in AvailableTeams where p.Key.Name == "BYE" select p).First();
+                            }
+                            
                             // build a list of previous opponents
                             var PreviousOpponents = (from p in db.RoundTeamMatchups where p.Team1.TeamId == Team1.Key.TeamId select p.Team2).ToList();
                             PreviousOpponents.AddRange((from p in db.RoundTeamMatchups where p.Team2.TeamId == Team1.Key.TeamId select p.Team1).ToList());
@@ -220,7 +206,7 @@ namespace WMATC.Controllers
                             var UsedTables = (from p in db.RoundTeamMatchups where p.RoundId == RoundID select p.TableZone).ToList();
 
                             // get the max tablezone #
-                            var MaxTableZoneNumber = ((from p in db.Teams where p.EventId == EventID select p).Count() / 2);
+                            var MaxTableZoneNumber = ((from p in db.Teams where p.EventId == EventID select p).Count() / 2 +1);
 
                             // get a list of ALL tables
                             var AvailableTables = Enumerable.Range(1, MaxTableZoneNumber).ToList();
@@ -249,6 +235,22 @@ namespace WMATC.Controllers
                             RoundTeamMatchup.Team2Id = Team2.Key.TeamId;
                             RoundTeamMatchup.TableZone = Table;
                             db.RoundTeamMatchups.Add(RoundTeamMatchup);
+
+                            if (Team1.Key.Name=="BYE")
+                            {
+                                Team2.Key.ByeRound = RoundNumber;
+                                var ByePlayer = (from p in db.Players where p.Team.Name == "BYE" && p.Team.EventId == EventID select p).First();
+                                var Players = (from p in db.Players where p.TeamId == Team2.Key.TeamId select p);
+                                foreach (var player in Players )
+                                {
+                                    var matchup = new Matchup();
+                                    matchup.Player1Id = ByePlayer.PlayerId;
+                                    matchup.Player2Id = player.PlayerId;
+                                    matchup.WinnerId = player.PlayerId;
+                                    db.Matchups.Add(matchup);
+                                }
+                            }
+                            
                             db.SaveChanges();
 
                             //Cleanup for next pass
@@ -266,7 +268,57 @@ namespace WMATC.Controllers
             return RedirectToAction("Index", "RoundTeamMatchups");
         }
 
+        private Dictionary<Team, int> GenerateTeamWins(int eventID)
+        {
+            var TeamWins = new Dictionary<Team, int>();
+            var Rounds = (from p in db.Rounds where p.EventId == eventID orderby p.Sequence select p).ToList();
+            foreach (var team in (from p in db.Teams where p.EventId == eventID select p))
+                TeamWins.Add(team, 0);
+            foreach (var round in Rounds)
+            {
+                var roundTeamMatchups = (from p in db.RoundTeamMatchups
+                                         where p.RoundId == round.RoundId
+                                         select p).Include(m => m.Team1).Include(m => m.Team2).ToList();
 
+                foreach (var roundTeamMatchup in roundTeamMatchups)
+                {
+                    var Team1Wins = (from p in db.Matchups where p.RoundTeamMatchupId == roundTeamMatchup.RoundTeamMatchupId && p.WinnerId == p.Player1Id select p).Count();
+                    var Team2Wins = (from p in db.Matchups where p.RoundTeamMatchupId == roundTeamMatchup.RoundTeamMatchupId && p.WinnerId == p.Player2Id select p).Count();
+                    var MatchCounts = (from p in db.Matchups where p.RoundTeamMatchupId == roundTeamMatchup.RoundTeamMatchupId select p).Count();
+
+                    if (Team1Wins > Team2Wins && Team1Wins > MatchCounts / 2) TeamWins[roundTeamMatchup.Team1] += 1;
+                    if (Team2Wins > Team1Wins && Team2Wins > MatchCounts / 2) TeamWins[roundTeamMatchup.Team2] += 1;
+                }
+            }
+            return TeamWins;
+        }
+
+        private void PerformPreGenerateDataCleanup(int eventID, int roundID)
+        {
+            //Make sure the BYE team exists
+            if ((from p in db.Teams where p.Name == "BYE" && p.EventId == eventID select p).Count() == 0)
+            {
+                var byeTeam = new Team();
+                byeTeam.EventId = eventID;
+                byeTeam.Name = "BYE";
+                db.Teams.Add(byeTeam);
+                db.SaveChanges();
+            }
+            if ((from p in db.Players where p.Team.EventId == eventID && p.Name == "BYE" select p).Count() == 0)
+            {
+                var ByeTeamID = (from p in db.Teams where p.EventId == eventID && p.Name == "BYE" select p.TeamId).FirstOrDefault();
+                var byePlayer = new Player();
+                byePlayer.Name = "BYE";
+                byePlayer.TeamId = ByeTeamID;
+                db.Players.Add(byePlayer);
+                db.SaveChanges();
+            }
+
+            //Purge current round team matchups
+            db.Matchups.RemoveRange(from p in db.Matchups where p.RoundTeamMatchup.RoundId == roundID && p.RoundTeamMatchup.Round.EventId == eventID select p);
+            db.RoundTeamMatchups.RemoveRange(from p in db.RoundTeamMatchups where p.RoundId == roundID && p.Round.EventId == eventID select p);
+            db.SaveChanges();
+        }
 
         public static string RenderRazorViewToString(ControllerContext controllerContext, string viewName, object model)
         {
