@@ -247,7 +247,7 @@ namespace WMATC.Controllers
                                     matchup.Player1Id = ByePlayer.PlayerId;
                                     matchup.Player2Id = player.PlayerId;
                                     matchup.WinnerId = player.PlayerId;
-                                    matchup.Player2APD = 38;
+                                    matchup.Player2APD = 50;
                                     matchup.Player2CP = 3;
                                     db.Matchups.Add(matchup);
                                 }
