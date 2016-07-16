@@ -75,7 +75,7 @@ namespace WMATC.Controllers
         {
             var Event = (from p in db.Events where p.EventId == EventID select p).First();
             var Model = new TeamBrowser();
-            Model.EventDate = Event.EventDate;
+            Model.EventDate = Event.EventDate ;
             Model.EventTitle = Event.Title;
             Model.EventImageURL = Event.ImageURL;
             Model.Teams = (from p in db.Teams where p.EventId == EventID && p.Name != "BYE" select new TeamBrowser.Team() { TeamImageURL = p.ImgURL, TeamName = p.Name }).ToList();
@@ -100,7 +100,7 @@ namespace WMATC.Controllers
         {
             var MyEvent = (from p in db.Events where p.EventId == EventID select p).First();
 
-            Model.EventDate = MyEvent.EventDate;
+            Model.EventDate = MyEvent.EventDate ;
             Model.EventTitle = MyEvent.Title;
             Model.EventImageURL = MyEvent.ImageURL;
 
@@ -173,7 +173,7 @@ namespace WMATC.Controllers
         {
             var Event = (from p in db.Events where p.EventId == EventID select p).First();
             var Model = new Standings();
-            Model.EventDate = Event.EventDate;
+            Model.EventDate = Event.EventDate ;
             Model.EventTitle = Event.Title;
             Model.EventImageURL = Event.ImageURL;
             Model.Teams = (from p in db.Teams where p.EventId == EventID select new Standings.Team() { TeamImageURL = p.ImgURL, TeamName = p.Name, TeamId = p.TeamId }).ToList();

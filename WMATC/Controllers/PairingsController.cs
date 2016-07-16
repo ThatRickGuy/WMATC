@@ -33,7 +33,7 @@ namespace WMATC.Controllers
             var RoundTeamMatchups = (from p in db.RoundTeamMatchups where p.RoundId == RoundID select p).Include(m => m.Team1).Include(m => m.Team2).ToList();
 
             var rtmp = new ViewModels.RoundTeamMatchupPrint();
-            rtmp.EventDate = Round.Event.EventDate;
+            rtmp.EventDate = Round.Event.EventDate ;
             rtmp.EventImageURL = Round.Event.ImageURL;
             rtmp.EventName = Round.Event.Title;
             rtmp.RoundNumber = Round.Sequence;

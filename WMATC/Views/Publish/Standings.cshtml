@@ -193,7 +193,7 @@
                     </div>
                     <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
                         <span style="font-size:8pt;">SoS</span>
-                        <span style="font-size:25px;">@team.StrengthOfSchedule </span>
+                        <span style="font-size:20px;line-height:31px;">@team.StrengthOfSchedule </span>
                     </div>
                     <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
                         <span style="font-size:8pt;">TP</span>
@@ -201,11 +201,11 @@
                     </div>
                     <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
                         <span style="font-size:8pt;">CP</span>
-                        <span style="font-size:15px;line-height:25px;">@team.CP </span>
+                        <span style="font-size:20px;line-height:31px;">@team.CP </span>
                     </div>
                     <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
                         <span style="font-size:8pt;">APD</span>
-                        <span style="font-size:12px;line-height:24px;">@team.APD </span>
+                        <span style="font-size:20px;line-height:31px;">@team.APD </span>
                     </div>
                 </div>
                 <div id="TeamName" style="margin:18px 0px 0px 0px;font-weight:bold; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
@@ -218,20 +218,23 @@
 									  width:350px;
 									  margin: 5px 0px 0px 75px;
 									  display:none">
-            @foreach (var player in (from p in team.Players orderby p.TP descending, p.StrengthOfSchedule descending, p.CP descending , p.APD descending select p).ToList() )
+            @if (team.Players != null)
             {
-                <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
-                    <img src="@player.FactionImageURL" alt="@player.Faction" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="@player.Faction">
-                    <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
-                        <div class="PlayerName" data-toggle="tooltip" title="@player.Name">@player.Name</div>
+                foreach (var player in (from p in team.Players orderby p.TP descending, p.StrengthOfSchedule descending, p.CP descending, p.APD descending select p).ToList())
+                {
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="@player.FactionImageURL" alt="@player.Faction" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="@player.Faction">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="@player.Name">@player.Name</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">@player.TP</div>
+                            <div  style="float:left;margin:3px;">@player.StrengthOfSchedule</div>
+                            <div  style="float:left;margin:3px;">@player.CP</div>
+                            <div  style="float:left;margin:3px;">@player.APD</div>
+                        </div>
                     </div>
-                    <div style="float:right;">
-                        <div style="float:left;margin:3px;">@player.TP</div>
-                        <div style="float:left;margin:3px;">@player.StrengthOfSchedule</div>
-                        <div style="float:left;margin:3px;">@player.CP</div>
-                        <div style="float:left;margin:3px;">@player.APD</div>
-                    </div>
-                </div>
+                }
             }
             @{ iTeamList += 1;}
         </div>

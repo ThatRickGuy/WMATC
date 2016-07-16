@@ -65,7 +65,7 @@ namespace WMATC.Controllers
         [Authorize(Roles = "canEdit")]
         public ActionResult Create()
         {
-            ViewBag.EventId = new SelectList(db.Events, "EventId", "Title");
+            ViewBag.EventId = new SelectList(db.Events, "EventId", "Title", Session["SelectedEventId"]);
             return View();
         }
 

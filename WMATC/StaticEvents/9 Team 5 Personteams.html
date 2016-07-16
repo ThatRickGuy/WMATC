@@ -1,0 +1,748 @@
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="/resources/demos/style.css">
+
+
+<script src="./9 Team 5 Person.js"></script>
+
+
+<style>
+    img.teamLogo {
+    height: auto; 
+    width: auto; 
+    max-width: 60px; 
+    max-height: 60px;
+}
+</style>
+
+<table>
+    <tr>
+        <td style="vertical-align:top;"><img src="data:image/jpeg;base64,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" style="height:100px; width:auto;" /></td>
+        <td>
+            <h1 style="line-height: .125; margin-top:10px;">9 Team 5 Person</h1>
+            <hr />
+            <h3 style="line-height: .125;">6/13/2016</h3>
+        </td>
+    </tr>
+</table>
+
+
+
+<div class="accordion">
+        <h3><img src="http://s3.amazonaws.com/spoonflower/public/design_thumbnails/0170/2130/rrateets_wg_pp_03_preview.png" class="teamLogo" style="margin-right:5px;"></img>Generic White Dudes </h3>
+        <div class="accordion">
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/mercenaries.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">Aziz </div><div style="width:30%; float:left;">Ossrum </div>Ashlynn</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l36_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l36_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/the-protectorate-of-menoth.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">Frank </div><div style="width:30%; float:left;">Sevvy </div>Sevvy2</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l33_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l33_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/cygnar.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">Joe </div><div style="width:30%; float:left;">Haley </div>Haley 2</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l32_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l32_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/the-retribution-of-scyrah.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">LeBron </div><div style="width:30%; float:left;">Garryth </div>Vyros1</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l34_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l34_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/trollbloods.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">Montavius </div><div style="width:30%; float:left;">Grissel </div>Doomshaper1</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l35_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l35_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+        </div>
+        <h3><img src="http://pre07.deviantart.net/844b/th/pre/i/2013/023/4/9/asshole_logo_in_chrome_by_boomerjay-du6ab8.png" class="teamLogo" style="margin-right:5px;"></img>Madison Asshole #1 </h3>
+        <div class="accordion">
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/the-retribution-of-scyrah.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">Andy </div><div style="width:30%; float:left;">Ossyan </div>Rhan</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l40_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l40_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/khador.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">Jordan B </div><div style="width:30%; float:left;">Butcher1 </div>Zerkova1</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l38_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l38_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/cygnar.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">Keith </div><div style="width:30%; float:left;">Haley3 </div>Sloan</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l37_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l37_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/minions.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">Nathan </div><div style="width:30%; float:left;">Carver </div>Arkadius</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l39_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l39_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/mercenaries.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">Nathan R </div><div style="width:30%; float:left;">Fiona </div>Bart</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l41_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l41_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+        </div>
+        <h3><img src="https://ml.ponychan.net/arch/src/1342248007709.png" class="teamLogo" style="margin-right:5px;"></img>Madison not Asshole </h3>
+        <div class="accordion">
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/the-protectorate-of-menoth.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">Dan </div><div style="width:30%; float:left;">Sevvy1 </div>Kreoss1</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l43_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l43_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/circle-orboros.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">Jeff </div><div style="width:30%; float:left;">Goatvhana </div>Kromac1</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l45_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l45_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/mercenaries.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">Josh </div><div style="width:30%; float:left;">Ashlynn </div>Shae</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l44_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l44_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/legion-of-everblight.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">Obligitory Legion dude </div><div style="width:30%; float:left;">Vayl1 </div>Abby2</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l46_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l46_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/khador.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">Rick </div><div style="width:30%; float:left;">Irusk 2 </div>Old Witch</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l42_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l42_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+        </div>
+        <h3><img src="http://vignette2.wikia.nocookie.net/tracer-clan/images/9/9f/Fat-nerd-with-glasses_full-jpeg.png/revision/latest?cb=20130807232619" class="teamLogo" style="margin-right:5px;"></img>Milwaukee Nerds </h3>
+        <div class="accordion">
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/minions.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">Adam </div><div style="width:30%; float:left;">Calaban </div>Midas</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l51_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l51_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/khador.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">Brian </div><div style="width:30%; float:left;">Sorcha1 </div>Butcher3</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l50_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l50_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/legion-of-everblight.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">Bryan </div><div style="width:30%; float:left;">Thagrosh1 </div>Vayl2</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l49_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l49_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/circle-orboros.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">Dan </div><div style="width:30%; float:left;">Kaya2 </div>Kruegar1</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l47_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l47_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/cygnar.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">Zach </div><div style="width:30%; float:left;">Haley1 </div>Haley3</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l48_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l48_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+        </div>
+        <h3><img src="http://vignette2.wikia.nocookie.net/southpark/images/6/62/Crag_y_Those_Guys.png/revision/latest?cb=20140425221527" class="teamLogo" style="margin-right:5px;"></img>Milwaukee RotD </h3>
+        <div class="accordion">
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/mercenaries.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">Dave </div><div style="width:30%; float:left;">asdf </div>lkjsdf</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l52_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l52_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/cryx.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">Dustin </div><div style="width:30%; float:left;">aspoirhj </div>spoiejhr</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l54_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l54_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/the-retribution-of-scyrah.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">Jacob </div><div style="width:30%; float:left;">s;leirj </div>scaesr</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l56_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l56_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/legion-of-everblight.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">Randy </div><div style="width:30%; float:left;">oiurh </div>posiud</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l53_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l53_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/skorne.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">Steven </div><div style="width:30%; float:left;">iosuehr </div>soieudhr</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l55_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l55_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+        </div>
+        <h3><img src="http://www.images-iherb.com/l/NOW-03910-3.jpg" class="teamLogo" style="margin-right:5px;"></img>12&quot; Spray </h3>
+        <div class="accordion">
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/circle-orboros.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">he </div><div style="width:30%; float:left;">werwcxdr </div>doijrsl</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l59_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l59_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/mercenaries.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">her </div><div style="width:30%; float:left;">wer </div>rewe</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l57_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l57_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/cygnar.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">him </div><div style="width:30%; float:left;">werwwer </div>reererxserr</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l58_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l58_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/minions.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">s/he </div><div style="width:30%; float:left;">seoirhj </div>oisajer</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l61_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l61_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/Convergence.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">she </div><div style="width:30%; float:left;">skjhr </div>huihreu</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l60_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l60_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+        </div>
+        <h3><img src="http://www.bonkersenergy.com/wp-content/uploads/2015/07/skateboard_01.jpg" class="teamLogo" style="margin-right:5px;"></img>GTFO N3WBS L@LER SKATZ3R </h3>
+        <div class="accordion">
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/trollbloods.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">avcafcsdc </div><div style="width:30%; float:left;">aserasf </div>araces</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l65_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l65_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/mercenaries.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">blah </div><div style="width:30%; float:left;">halvsies </div>othersies</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l64_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l64_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/cygnar.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">FULL OUT </div><div style="width:30%; float:left;">oijc </div>ojfosi</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l66_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l66_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/khador.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">grrr </div><div style="width:30%; float:left;">gser </div>serws</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l62_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l62_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/cygnar.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">ser </div><div style="width:30%; float:left;">serssss </div>resserw</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l63_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l63_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+        </div>
+        <h3><img src="http://images.forbes.com/media/lists/fictional/2011/c-montgomery-burns_197x282.jpg" class="teamLogo" style="margin-right:5px;"></img>Ohhh sick burnz </h3>
+        <div class="accordion">
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/Convergence.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">Amanda </div><div style="width:30%; float:left;">999239 </div>75638</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l70_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l70_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/cygnar.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">Casey </div><div style="width:30%; float:left;">sersscs </div>serscsescx</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l68_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l68_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/circle-orboros.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">Cylest </div><div style="width:30%; float:left;">rewxxer </div>oeiruj</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l67_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l67_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/skorne.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">Danielle </div><div style="width:30%; float:left;">0892374 </div>27836</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l69_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l69_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/cryx.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">Who dat? </div><div style="width:30%; float:left;">aklsjh </div>lkjser</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l71_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l71_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+        </div>
+        <h3><img src="http://daredevilmusicproduction.com/wp-content/uploads/2014/03/Easy-Button-Feature-Image.jpg" class="teamLogo" style="margin-right:5px;"></img>Laughably Eazy </h3>
+        <div class="accordion">
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/khador.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">derp </div><div style="width:30%; float:left;">jcikk </div>kickees</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l74_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l74_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/the-protectorate-of-menoth.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">durp </div><div style="width:30%; float:left;">jseick </div>kicke</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l73_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l73_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/the-retribution-of-scyrah.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">furp </div><div style="width:30%; float:left;">77 </div>112</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l76_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l76_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/cryx.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">herp </div><div style="width:30%; float:left;">46 </div>93</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l75_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l75_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4><img src="http://privateerpress.com/files/imagecache/3up_square/pages/cygnar.png" style="width:auto; height:28px; float:left; margin-right:5px; " /><div style="width:30%; float:left;">hurp </div><div style="width:30%; float:left;">seoiru </div>soeiruc</h4>
+                    <div>
+                        <table>
+                            <tr>
+
+                                <td valign="top">
+                                    <div id="l72_1"></div>
+                                </td>
+                                <td style="width:25px;"></td>
+                                <td valign="top">
+                                    <div id="l72_2"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+        </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        document.getElementById('l36_1').innerHTML = l36_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l36_2').innerHTML = l36_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l33_1').innerHTML = l33_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l33_2').innerHTML = l33_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l32_1').innerHTML = l32_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l32_2').innerHTML = l32_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l34_1').innerHTML = l34_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l34_2').innerHTML = l34_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l35_1').innerHTML = l35_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l35_2').innerHTML = l35_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l40_1').innerHTML = l40_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l40_2').innerHTML = l40_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l38_1').innerHTML = l38_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l38_2').innerHTML = l38_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l37_1').innerHTML = l37_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l37_2').innerHTML = l37_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l39_1').innerHTML = l39_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l39_2').innerHTML = l39_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l41_1').innerHTML = l41_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l41_2').innerHTML = l41_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l43_1').innerHTML = l43_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l43_2').innerHTML = l43_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l45_1').innerHTML = l45_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l45_2').innerHTML = l45_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l44_1').innerHTML = l44_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l44_2').innerHTML = l44_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l46_1').innerHTML = l46_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l46_2').innerHTML = l46_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l42_1').innerHTML = l42_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l42_2').innerHTML = l42_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l51_1').innerHTML = l51_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l51_2').innerHTML = l51_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l50_1').innerHTML = l50_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l50_2').innerHTML = l50_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l49_1').innerHTML = l49_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l49_2').innerHTML = l49_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l47_1').innerHTML = l47_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l47_2').innerHTML = l47_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l48_1').innerHTML = l48_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l48_2').innerHTML = l48_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l52_1').innerHTML = l52_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l52_2').innerHTML = l52_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l54_1').innerHTML = l54_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l54_2').innerHTML = l54_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l56_1').innerHTML = l56_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l56_2').innerHTML = l56_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l53_1').innerHTML = l53_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l53_2').innerHTML = l53_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l55_1').innerHTML = l55_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l55_2').innerHTML = l55_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l59_1').innerHTML = l59_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l59_2').innerHTML = l59_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l57_1').innerHTML = l57_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l57_2').innerHTML = l57_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l58_1').innerHTML = l58_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l58_2').innerHTML = l58_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l61_1').innerHTML = l61_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l61_2').innerHTML = l61_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l60_1').innerHTML = l60_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l60_2').innerHTML = l60_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l65_1').innerHTML = l65_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l65_2').innerHTML = l65_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l64_1').innerHTML = l64_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l64_2').innerHTML = l64_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l66_1').innerHTML = l66_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l66_2').innerHTML = l66_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l62_1').innerHTML = l62_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l62_2').innerHTML = l62_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l63_1').innerHTML = l63_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l63_2').innerHTML = l63_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l70_1').innerHTML = l70_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l70_2').innerHTML = l70_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l68_1').innerHTML = l68_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l68_2').innerHTML = l68_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l67_1').innerHTML = l67_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l67_2').innerHTML = l67_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l69_1').innerHTML = l69_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l69_2').innerHTML = l69_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l71_1').innerHTML = l71_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l71_2').innerHTML = l71_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l74_1').innerHTML = l74_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l74_2').innerHTML = l74_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l73_1').innerHTML = l73_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l73_2').innerHTML = l73_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l76_1').innerHTML = l76_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l76_2').innerHTML = l76_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l75_1').innerHTML = l75_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l75_2').innerHTML = l75_2.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l72_1').innerHTML = l72_1.replace(new RegExp('  ', 'g'), '<br/>');;document.getElementById('l72_2').innerHTML = l72_2.replace(new RegExp('  ', 'g'), '<br/>');;
+    })
+
+    $(".accordion").accordion({
+        collapsible: true,
+        active: false,
+        heightStyle: "content"
+    });
+</script>

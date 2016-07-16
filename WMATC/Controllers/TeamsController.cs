@@ -67,7 +67,7 @@ namespace WMATC.Controllers
                 int.TryParse(Session["SelectedEventId"].ToString(), out EventId);
                 events = (from p in events where p.EventId == EventId select p);
             }
-            ViewBag.EventId = new SelectList(events.ToList(), "EventId", "Title");
+            ViewBag.EventId = new SelectList(events.ToList(), "EventId", "Title", Session["SelectedEventId"]);
             return View();
         }
 
@@ -168,8 +168,23 @@ namespace WMATC.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Team team = db.Teams.Find(id);
-            db.Teams.Remove(team);
-            db.SaveChanges();
+            var q = from p in db.Players where p.TeamId == team.TeamId select 1;
+            if (q.Count() > 0)
+                ViewBag.Message = "Cannot delete a team with players.";
+            q = from p in db.RoundTeamMatchups where p.Team1Id == team.TeamId || p.Team2Id==team.TeamId select 1;
+            if (q.Count() > 0)
+                ViewBag.Message = "Cannot delete a team that has pairings.";
+            if (ViewBag.Message != string.Empty)
+            {
+                return View(team);
+            }
+            else
+            {
+                var deleteme = 1;
+                deleteme += 1;
+                db.Teams.Remove(team);
+                db.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
 

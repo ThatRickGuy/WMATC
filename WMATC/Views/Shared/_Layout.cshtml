@@ -42,24 +42,24 @@
     </div>
     <div class="HeaderBar" style="width:100%;">
         <div style="border:2px solid silver; border-radius:4px; background:#111111; margin:2px 10px 2px 130px; vertical-align: top; display: inline-block; min-width:100px; min-height:24px; padding:0px 3px 0px 3px; -webkit-box-shadow: inset 0px 0px 5px 2px rgba(27,24,112,1); -moz-box-shadow: inset 0px 0px 5px 2px rgba(27,24,112,1); box-shadow: inset 0px 0px 5px 2px rgba(27,24,112,1);">
-            
-                @Html.ActionLink(Session["SelectedEvent"] == null ? " " : Session["SelectedEvent"].ToString(), "Index", "Events")
-            
+
+            @Html.ActionLink(Session["SelectedEvent"] == null ? " " : Session["SelectedEvent"].ToString(), "Index", "Events")
+
         </div>
         <div style="border:2px solid silver; border-radius:4px; background:#111111; margin:2px 10px 2px 10px; vertical-align: top; display: inline-block; min-width:100px; min-height:24px; padding:0px 3px 0px 3px; -webkit-box-shadow: inset 0px 0px 5px 2px rgba(27,24,112,1); -moz-box-shadow: inset 0px 0px 5px 2px rgba(27,24,112,1); box-shadow: inset 0px 0px 5px 2px rgba(27,24,112,1);">
-            
-                @Html.ActionLink(Session["SelectedTeam"] == null ? " " : Session["SelectedTeam"].ToString(), "Index", "Teams")
-            
+
+            @Html.ActionLink(Session["SelectedTeam"] == null ? " " : Session["SelectedTeam"].ToString(), "Index", "Teams")
+
         </div>
         <div style="border:2px solid silver; border-radius:4px; background:#111111; margin:2px 10px 2px 10px; vertical-align: top; display: inline-block; min-width:100px; min-height:24px; padding:0px 3px 0px 3px; -webkit-box-shadow: inset 0px 0px 5px 2px rgba(27,24,112,1); -moz-box-shadow: inset 0px 0px 5px 2px rgba(27,24,112,1); box-shadow: inset 0px 0px 5px 2px rgba(27,24,112,1);">
-            
-                @Html.ActionLink(Session["SelectedRound"] == null ? " " : Session["SelectedRound"].ToString(), "Index", "Rounds")
-            
+
+            @Html.ActionLink(Session["SelectedRound"] == null ? " " : Session["SelectedRound"].ToString(), "Index", "Rounds")
+
         </div>
         <div style="border:2px solid silver; border-radius:4px; background:#111111; margin:2px 10px 2px 10px; vertical-align: top; display: inline-block; min-width:100px; min-height:24px; padding:0px 3px 0px 3px; -webkit-box-shadow: inset 0px 0px 5px 2px rgba(27,24,112,1); -moz-box-shadow: inset 0px 0px 5px 2px rgba(27,24,112,1); box-shadow: inset 0px 0px 5px 2px rgba(27,24,112,1);">
-            
-                @Html.ActionLink(Session["SelectedRoundTeamMatchup"] == null ? " " : Session["SelectedRoundTeamMatchup"].ToString(), "Index", "RoundTeamMatchups")
-            
+
+            @Html.ActionLink(Session["SelectedRoundTeamMatchup"] == null ? " " : Session["SelectedRoundTeamMatchup"].ToString(), "Index", "RoundTeamMatchups")
+
         </div>
     </div>
     <div class="row">
@@ -74,7 +74,7 @@
             <nav class="navbar navbar-inverse" style="margin-bottom: 0px">
                 <div class="container-fluid">
                     <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Events", "Index","Events")</li>
+                        <li>@Html.ActionLink("Events", "Index", "Events")</li>
                     </ul>
                 </div>
             </nav>
@@ -147,17 +147,22 @@
                 <img src="http://ringdev.com/images/RingDev.PNG" style="margin-left:10px;" alt="RingDev" />
             </nav>
         </div>
-                <div class="container body-content col-md-5">
-                    @RenderBody()
-                    <hr />
-                    <footer>
-                        <p><br /><br /><br /><br /><br />&copy; @DateTime.Now.Year - RingDev</p>
-                    </footer>
-                </div>
+        <div class="container body-content col-md-5">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p><br /><br /><br /><br /><br />&copy; @DateTime.Now.Year - RingDev</p>
+            </footer>
         </div>
+    </div>
 
-    @Scripts.Render("~/bundles/jquery")
+    
     @Scripts.Render("~/bundles/bootstrap")
+
+    <script src="@Url.Content("~/Scripts/EditorHookup.js")" type="text/javascript"></script>
+
     @RenderSection("scripts", required: false)
+    <script src="https://code.jquery.com/ui/1.10.2/jquery-ui.js" integrity="sha256-EgPuQS+2I8bm2u3b3r1dJUEiO56a/xeZGXiTnNTvYZM=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
 </body>
 </html>

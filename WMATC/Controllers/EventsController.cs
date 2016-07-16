@@ -64,7 +64,8 @@ namespace WMATC.Controllers
         [Authorize(Roles = "canEdit")]
         public ActionResult Create()
         {
-            return View();
+            Event NewEvent = new Event();
+            return View(NewEvent);
         }
 
         // POST: Events/Create
