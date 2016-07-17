@@ -210,11 +210,11 @@
 
 <style>
     .overlay {
-        position: absolute;
+        position: fixed;
         top: 0;
         bottom: 0;
-        left: 0;
-        right: 0;
+        height:100%;
+        width:100%;
         background: rgba(0, 0, 0, 0.4);
         display: none;
         z-index:998;
@@ -280,30 +280,14 @@
 		<!--
     function listClick(event, title, list) {
         
-        document.getElementById('popupContent').innerHTML = list.replace(new RegExp('  ', 'g'), '<br/>');
+        document.getElementById('popupContent').innerHTML = list.replace(/\n/g, "<br />");
         document.getElementById('popupTitle').innerText = title;
         pu = document.getElementById('popup1');
         pu.style.display = 'inline-block';
         pu = document.getElementById('popup');
-        var so = getScroll();
-        horOffset = event.clientX + so[0] - 75;
-        vertOffset = event.clientY + so[1] - 65;
         pu.style.left = '28%';
-        pu.style.top = vertOffset+'px';
+        pu.style.top = '15%';
         pu.style.display = 'inline-block';
-    }
-
-
-    function getScroll(){
-        if(window.pageYOffset!= undefined){
-            return [pageXOffset, pageYOffset];
-        }
-        else{
-            var sx, sy, d= document, r= d.documentElement, b= d.body;
-            sx= r.scrollLeft || b.scrollLeft || 0;
-            sy= r.scrollTop || b.scrollTop || 0;
-            return [sx, sy];
-        }
     }
 
     function toggle_visibility(id) {
@@ -352,6 +336,8 @@
             string siMatchup = "Matchups" + iMatchup;
             string Team1Background = teamMatchup.Team1IsWinner + "Left";
             string Team2Background = teamMatchup.Team2IsWinner + "Right";
+            if (teamMatchup.Team1ImageURL == null) { teamMatchup.Team1ImageURL = "./../content/blank.png"; }
+            if (teamMatchup.Team2ImageURL == null) { teamMatchup.Team2ImageURL = "./../content/blank.png"; }
 
             <div>
                 <div id="MatchupBar" class="ShadowBox" style="width:500px; height:55px; margin-top:15px;">
@@ -370,7 +356,7 @@
                             @for (var i = 0; i < teamMatchup.Team1Wins; i++)
                             {<div id="chevron"></div> }
                         </div>
-                        <div id="Team1Name" style="margin:18px 0px 0px 0px;font-weight:bold; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                        <div id="Team1Name" style="margin:8px 0px 0px 0px;font-weight:bold; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
                             @teamMatchup.Team1Name
                         </div>
                     </div>
@@ -378,7 +364,7 @@
                         <div id="Team2Flag" style="float:right;margin:10px;">
                             <img src="@teamMatchup.Team2ImageURL" alt="@teamMatchup.Team2Name" style="width:auto; height:33px">
                         </div>
-                        <div id="Team2Name" style="float:right;margin:18px 0px 0px 0px;font-weight:bold; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                        <div id="Team2Name" style="float:right;margin:8px 0px 0px 0px;font-weight:bold; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
                             @teamMatchup.Team2Name
                         </div>
                         <div style="margin:3px  0px 3px 27px;">
@@ -401,7 +387,7 @@
                             }
                             <div id="MatchupPlayer1" class="LeftBox @matchup.Player1IsWinner" style="width:175px">
                                 <img src="@matchup.Player1FactionURL" alt="@matchup.Player1Faction" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="@matchup.Player1Faction">
-                                <div style="float:left;">
+                                <div style="float:left;width:132px;height:35px;overflow:hidden;white-space: nowrap;">
                                     <div class="Player1Name" data-toggle="tooltip" title="@matchup.Player1Name">@matchup.Player1Name</div>
                                     <a class="Player1Caster" onclick="listClick(event, '@matchup.Player1Caster', @Player1JSId)">@matchup.Player1Caster</a>
                                 </div>
@@ -411,7 +397,7 @@
                                 <div id="MatchupPlayer2Faction" style="float:right; margin:3px;">
                                     <img src="@matchup.Player2FactionURL" alt="@matchup.Player2Faction" style="float:Right; width:32px; height:32px;" data-toggle="tooltip" title="@matchup.Player2Caster">
                                 </div>
-                                <div style="float:right;">
+                                <div style="float:right;width:132px;height:35px;overflow:hidden;white-space: nowrap;">
                                     <div class="Player2Name" data-toggle="tooltip" title="@matchup.Player2Name">@matchup.Player2Name</div>
                                     <a class="Player2Caster" onclick="listClick(event, '@matchup.Player2Caster', @Player2JSId)">@matchup.Player2Caster</a>
                                 </div>

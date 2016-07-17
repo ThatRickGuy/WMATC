@@ -40,12 +40,12 @@
         </div>
 
         <div style="float:left;width:52px;margin-right:3px;">
-            @Html.EditorFor(model => model.Player1CP, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Player1CP, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.Player1CP, new { htmlAttributes = new { @class = "form-control", min=0, max=5 } })
+            @Html.ValidationMessageFor(model => model.Player1CP, "",  new { @class = "text-danger" })
         </div>
 
         <div style="float:left;width:60px;margin-right:10px;">
-            @Html.EditorFor(model => model.Player1APD, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.Player1APD, new { htmlAttributes = new { @class = "form-control", min = 0 } })
             @Html.ValidationMessageFor(model => model.Player1APD, "", new { @class = "text-danger" })
         </div>
 
@@ -59,12 +59,12 @@
         </div>
 
         <div style="float:left;width:52px;margin-right:3px;">
-            @Html.EditorFor(model => model.Player2CP, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.Player2CP, new { htmlAttributes = new { @class = "form-control", min = 0, max = 5 } })
             @Html.ValidationMessageFor(model => model.Player2CP, "", new { @class = "text-danger" })
         </div>
 
         <div style="float:left;width:60px;margin-right:10px;">
-            @Html.EditorFor(model => model.Player2APD, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.Player2APD, new { htmlAttributes = new { @class = "form-control", min = 0} })
             @Html.ValidationMessageFor(model => model.Player2APD, "", new { @class = "text-danger" })
         </div>
 

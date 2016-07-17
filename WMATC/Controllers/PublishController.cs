@@ -45,6 +45,8 @@ namespace WMATC.Controllers
             var teams = RenderRazorViewToString(this.ControllerContext, "TeamBrowser", TeamsView);
             System.IO.File.WriteAllText(Server.MapPath(".") + "\\StaticEvents\\" + PublishView.EventTitle + "teams.html", teams);
 
+
+            StandingsView.Teams = (from p in StandingsView.Teams where p.TeamName != "BYE" select p).ToList();
             var standings = RenderRazorViewToString(this.ControllerContext, "Standings", StandingsView);
             System.IO.File.WriteAllText(Server.MapPath(".") + "\\StaticEvents\\" + PublishView.EventTitle + "standings.html", standings);
 
@@ -91,7 +93,7 @@ namespace WMATC.Controllers
 
         private RoundsViewModel PopulatePublishViewModel_Players(RoundsViewModel Model, int EventID)
         {
-            var Players = from p in db.Players where p.Team.EventId == EventID && p.Name != "BYE" select new PlayerViewModel { Player = p, PlayerId = p.PlayerId };
+            var Players = from p in db.Players where p.Team.EventId == EventID select new PlayerViewModel { Player = p, PlayerId = p.PlayerId };
             Model.Players = Players.ToList();
             return Model;
         }
@@ -199,7 +201,7 @@ namespace WMATC.Controllers
 
             foreach (var team in (from p in Model.Teams where p.TeamName != "BYE" select p))
             {
-                team.Players = (from p in db.Players where p.TeamId == team.TeamId orderby p.Name select new Standings.Player() { Name = p.Name, Faction = p.Faction.Title, FactionImageURL = p.Faction.ImageURL, PlayerId = p.PlayerId  }).ToList();
+                team.Players = (from p in db.Players where p.TeamId == team.TeamId && p.Name != "BYE" orderby p.Name select new Standings.Player() { Name = p.Name, Faction = p.Faction.Title, FactionImageURL = p.Faction.ImageURL, PlayerId = p.PlayerId  }).ToList();
 
 
                 // player stats

@@ -7,53 +7,58 @@
     ViewBag.Title = "Report Games";
 }
 <div class="form-horizontal">
-    <table style="width:1000px;">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.WinnerId)
-            </th>
+    <div>
+        <table style="width:1000px; position:fixed;">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.WinnerId)
+                </th>
 
-            <th style="width:20px;"></th>
+                <th style="width:20px;"></th>
 
-            <th>
-                Player 1
-            </th>
-            <th>
-                List
-            </th>
-            <th style="width:52px;">
-                CP
-            </th>
-            <th style="width:60px;">
-                APD
-            </th>
+                <th>
+                    Player 1
+                </th>
+                <th>
+                    List
+                </th>
+                <th style="width:52px;">
+                    CP
+                </th>
+                <th style="width:60px;">
+                    APD
+                </th>
 
-            <th style="width:20px;"></th>
+                <th style="width:20px;"></th>
 
-            <th>
-                Player 2
-            </th>
-            <th>
-                List
-            </th>
-            <th style="width:52px;">
-                CP
-            </th>
-            <th style="width:60px;">
-                APD
-            </th>
-            <th></th>
-        </tr>
-    </table>
-    <div id="divEditorsContainer" style="width:1000px;">
-        @foreach (var item in (from p in Model orderby (p.WinnerId == null) descending  select p))
-        {
-            <div style="clear:left;">
-                @item.MatchupId 
-            </div>
-        }
+                <th>
+                    Player 2
+                </th>
+                <th>
+                    List
+                </th>
+                <th style="width:52px;">
+                    CP
+                </th>
+                <th style="width:60px;">
+                    APD
+                </th>
+                <th></th>
+            </tr>
+            <tr>
+
+            </tr>
+        </table>
+        <div id="divEditorsContainer" style="width:1000px; margin-top:24px;">
+            <br/>
+            @foreach (var item in (from p in Model orderby (p.WinnerId == null) descending  select p))
+            {
+                <div style="clear:left;">
+                    @item.MatchupId 
+                </div>
+            }
+        </div>
     </div>
-
     <script>
         $(document).ready(function() {
             $("#divEditorsContainer").children().each(function(){
