@@ -72,8 +72,8 @@ namespace WMATC.Controllers
             //Lists.Add(new PlayerList() { Key = null, PlayerName = "", Value = "" });
             foreach (var Player in AvailavlePlayers)
             {
-                Lists.Add(new PlayerList() { Key = 1, PlayerName = Player.Name, Value = "1. " + Player.Caster1 });
-                Lists.Add(new PlayerList() { Key = 2, PlayerName = Player.Name, Value = "2. " + Player.Caster2 });
+                Lists.Add(new PlayerList() { Key = 1, PlayerName = HttpUtility.HtmlEncode(Player.Name), Value = "1. " + HttpUtility.HtmlEncode(Player.Caster1) });
+                Lists.Add(new PlayerList() { Key = 2, PlayerName = HttpUtility.HtmlEncode(Player.Name), Value = "2. " + HttpUtility.HtmlEncode(Player.Caster2) });
             }
             ViewBag.Player1List = new SelectList(Lists, "Key", "Value", "PlayerName");
 
@@ -90,15 +90,15 @@ namespace WMATC.Controllers
             
             foreach (var Player in AvailavlePlayers)
             {
-                Lists.Add(new PlayerList() { Key = 1, PlayerName = Player.Name, Value = "1. " + Player.Caster1 });
-                Lists.Add(new PlayerList() { Key = 2, PlayerName = Player.Name, Value = "2. " + Player.Caster2 });
+                Lists.Add(new PlayerList() { Key = 1, PlayerName = HttpUtility.HtmlEncode(Player.Name), Value = "1. " + HttpUtility.HtmlEncode(Player.Caster1) });
+                Lists.Add(new PlayerList() { Key = 2, PlayerName = HttpUtility.HtmlEncode(Player.Name), Value = "2. " + HttpUtility.HtmlEncode(Player.Caster2) });
             }
             ViewBag.Player2List = new SelectList(Lists, "Key", "Value", "PlayerName");
 
 
             Matchup matchup = new Matchup();
             matchup.MatchupViewModel = new Matchup.ViewModel(matchup );
-            matchup.MatchupViewModel.Lists = (from p in Lists select new Matchup.List { PlayerName =  p.PlayerName.Replace("'","\\'"), ListNumber = p.Key, ListName = p.Value }).ToList ();
+            matchup.MatchupViewModel.Lists = (from p in Lists select new Matchup.List { PlayerName = HttpUtility.HtmlEncode(p.PlayerName), ListNumber = p.Key, ListName = HttpUtility.HtmlEncode(p.Value) }).ToList ();
             return View(matchup);
         }
 
