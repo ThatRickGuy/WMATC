@@ -40,6 +40,7 @@ namespace WMATC.Migrations
                 context.Faction.AddOrUpdate(new WMATC.Models.Faction { Title = "Skorne", ImageURL = "http://privateerpress.com/files/imagecache/3up_square/pages/skorne.png" });
                 context.Faction.AddOrUpdate(new WMATC.Models.Faction { Title = "Legion", ImageURL = "http://privateerpress.com/files/imagecache/3up_square/pages/legion-of-everblight.png" });
                 context.Faction.AddOrUpdate(new WMATC.Models.Faction { Title = "Minions", ImageURL = "http://privateerpress.com/files/imagecache/3up_square/pages/minions.png" });
+                context.Faction.AddOrUpdate(new WMATC.Models.Faction { Title = "Grymkin", ImageURL = "http://privateerpress.com/hordes/gallery/grymkin-the-wicked-harvest" });
             }
         }
     }

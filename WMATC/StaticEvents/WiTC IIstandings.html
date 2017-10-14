@@ -1,0 +1,1683 @@
+<link href="/Content/bootstrap.css" rel="stylesheet"/>
+<link href="/Content/site.css" rel="stylesheet"/>
+
+<script src="/Scripts/modernizr-2.6.2.js"></script>
+
+
+
+
+<style>
+    div.MatchupBar {
+        margin: 5px;
+    }
+
+    div.ShadowBox {
+        border-radius: 10px;
+        -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+        -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+        box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    }
+
+    div.littleShadow {
+        border-radius: 10px;
+        -webkit-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
+        -moz-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
+        box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
+    }
+
+    div.Box {
+        border-radius: 10px;
+        border-bottom: 2px solid gray;
+        border-left: 2px solid gray;
+        border-right: 2px solid gray;
+        border-top: 2px solid gray;
+    }
+
+    div.BlankBackgroundPlayer {
+        background: #e5e5f5; /* Old browsers */
+        background: -moz-linear-gradient(45deg, #e5e5e5 0%, #aaaaba 59%, #777787 59%, #444454 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(45deg, #e5e5e5 0%,#aaaaba 59%,#777787 59%,#444454 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(225deg, #e5e5e5 0%,#aaaaba 59%,#777787 59%,#444454 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5e5f5', endColorstr='#ff3242',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    }
+
+    div.BlankBackground {
+        background: #e5e5e5; /* Old browsers */
+        background: -moz-linear-gradient(45deg, #e5e5e5 0%, #aaaaaa 59%, #777777 59%, #444444 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(45deg, #e5e5e5 0%,#aaaaaa 59%,#777777 59%,#444444 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(225deg, #e5e5e5 0%,#aaaaaa 59%,#777777 59%,#444444 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5e5e5', endColorstr='#ff3232',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+        width: 500px;
+        height: 55px;
+    }
+
+    div.WinnerBackground {
+        background: #e5e5e5; /* Old browsers */
+        background: -moz-linear-gradient(45deg, #e5f5e5 0%, #aabaaa 59%, #778777 59%, #445444 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(45deg, #e5f5e5 0%,#aabaaa 59%,#778777 59%,#445444 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(225deg, #e5f5e5 0%,#aabaaa 59%,#778777 59%,#445444 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5e5e5', endColorstr='#ff3232',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+        width: 500px;
+        height: 55px;
+    }
+
+    div.WinnerBackground_old {
+        background: #e5e5e5; /* Old browsers */
+        background: -moz-linear-gradient(45deg, #e5e5e5 0%, #9dff96 59%, #63ff75 59%, #4eff32 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(45deg, #e5e5e5 0%,#9dff96 59%,#63ff75 59%,#4eff32 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(225deg, #e5e5e5 0%,#9dff96 59%,#63ff75 59%,#4eff32 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5e5e5', endColorstr='#4eff32',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+        width: 500px;
+        height: 55px;
+    }
+
+    #chevron {
+        position: relative;
+        text-align: center;
+        padding: 1px;
+        margin-bottom: 3px;
+        height: 6px;
+        width: 20px;
+    }
+
+        #chevron:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 51%;
+            border-left: 1px solid #706516;
+            border-top: 1px solid #706516;
+            border-bottom: 1px solid #706516;
+            background: #ad9d22; /* Old browsers */
+            background: -moz-linear-gradient(left, #ad9d22 55%, #28d3cd 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(left, #ad9d22 55%,#28d3cd 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to right, #ad9d22 55%,#28d3cd 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ad9d22', endColorstr='#e8e87d',GradientType=1 ); /* IE6-9 */
+            -webkit-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
+            -moz-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
+            box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
+            -webkit-transform: skew(0deg, 6deg);
+            -moz-transform: skew(0deg, 6deg);
+            -ms-transform: skew(0deg, 6deg);
+            -o-transform: skew(0deg, 6deg);
+            transform: skew(0deg, 6deg);
+        }
+
+        #chevron:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            width: 50%;
+            border-right: 1px solid #706516;
+            border-top: 1px solid #706516;
+            border-bottom: 1px solid #706516;
+            background: #ad9d22; /* Old browsers */
+            background: -moz-linear-gradient(left, #cccc20 0%, #e8e87d 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(left, #cccc20 0%,#e8e87d 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to right, #cccc20 0%,#e8e87d 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ad9d22', endColorstr='#e8e87d',GradientType=1 ); /* IE6-9 */
+            -webkit-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
+            -moz-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
+            box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
+            -webkit-transform: skew(0deg, -6deg);
+            -moz-transform: skew(0deg, -6deg);
+            -ms-transform: skew(0deg, -6deg);
+            -o-transform: skew(0deg, -6deg);
+            transform: skew(0deg, -6deg);
+        }
+
+    div.PlayerName{
+        font-weight:bold; 
+        white-space:nowrap; 
+        max-width:200px; 
+        float:left; 
+        overflow:hidden;
+    }
+</style>
+
+<script type="text/javascript">
+		<!--
+    function toggle_visibility(id) {
+		var e = document.getElementById(id);
+		if (e.style.display == 'inline-block')
+			e.style.display = 'none';
+		else
+			e.style.display = 'inline-block';
+	}
+    //-->
+</script>
+
+
+<table>
+    <tr>
+        <td style="vertical-align:top;"><img src="http://ringdevc.w14.wh-2.com/atc/6pack.png" style="height:100px; width:auto;" /></td>
+        <td>
+            <h1 style="line-height: .125; margin-top:10px;">WiTC II</h1>
+            <hr />
+            <h3 style="line-height: .125;">8/26/2017</h3>
+        </td>
+    </tr>
+</table>
+
+
+    <div>
+        <div id="MatchupBar" class="ShadowBox " style="width:500px; height:55px; margin-top:15px;">
+
+
+
+            <div id="Team1" class="Box WinnerBackground" onclick="toggle_visibility('0');">
+                <div id="Team1Flag" style="float:left;margin:10px;">
+                    <img src="./../content/blank.png" alt="Muse on Minis" style="width:auto; height:33px">
+                </div>
+
+                <div style="margin:1px 27px 3px 0px;float:right;">
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:23px;">
+                        <span style="font-size:8pt;">Wins</span>
+                        <span style="font-size:30px;">4 </span>
+                    </div>
+                    <div style="float:left; min-width:20px; margin:2px 5px 0px 5px;">
+<div id="chevron"></div> <div id="chevron"></div> <div id="chevron"></div> <div id="chevron"></div>                     </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">TP</span>
+                        <span style="font-size:20px;line-height:31px;">10 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">SoS</span>
+                        <span style="font-size:20px;line-height:31px;">9 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">CP</span>
+                        <span style="font-size:20px;line-height:31px;">35 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">APD</span>
+                        <span style="font-size:20px;line-height:31px;">513 </span>
+                    </div>
+                </div>
+                <div id="TeamName" style="margin:18px 0px 0px 0px;font-weight:bold; color:#eeeeee; text-shadow: 0px 0px 3px #000000;max-width:180px; max-height:24px; overflow:hidden;">
+                    Muse on Minis
+                </div>
+            </div>
+        </div>
+
+        <div id="0" style="clear:both;
+									  width:350px;
+									  margin: 5px 0px 0px 75px;
+									  display:none">
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_RetributionWO.png" alt="Retribution" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Retribution">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Dave Brown">Dave Brown</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">4</div>
+                            <div  style="float:left;margin:3px;">8</div>
+                            <div  style="float:left;margin:3px;">11</div>
+                            <div  style="float:left;margin:3px;">136</div>
+                        </div>
+                    </div>
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_CygnarWO.png" alt="Cygnar" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Cygnar">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Keith Christianson">Keith Christianson</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">4</div>
+                            <div  style="float:left;margin:3px;">7</div>
+                            <div  style="float:left;margin:3px;">13</div>
+                            <div  style="float:left;margin:3px;">196</div>
+                        </div>
+                    </div>
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_MercenariesWO.png" alt="Mercenaries" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Mercenaries">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Josh Maxson">Josh Maxson</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">2</div>
+                            <div  style="float:left;margin:3px;">9</div>
+                            <div  style="float:left;margin:3px;">11</div>
+                            <div  style="float:left;margin:3px;">181</div>
+                        </div>
+                    </div>
+            
+        </div>
+    </div>
+    <div>
+        <div id="MatchupBar" class="ShadowBox " style="width:500px; height:55px; margin-top:15px;">
+
+
+
+            <div id="Team1" class="Box BlankBackground" onclick="toggle_visibility('1');">
+                <div id="Team1Flag" style="float:left;margin:10px;">
+                    <img src="./../content/blank.png" alt="C-Faction^3" style="width:auto; height:33px">
+                </div>
+
+                <div style="margin:1px 27px 3px 0px;float:right;">
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:23px;">
+                        <span style="font-size:8pt;">Wins</span>
+                        <span style="font-size:30px;">3 </span>
+                    </div>
+                    <div style="float:left; min-width:20px; margin:2px 5px 0px 5px;">
+<div id="chevron"></div> <div id="chevron"></div> <div id="chevron"></div>                     </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">TP</span>
+                        <span style="font-size:20px;line-height:31px;">9 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">SoS</span>
+                        <span style="font-size:20px;line-height:31px;">9 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">CP</span>
+                        <span style="font-size:20px;line-height:31px;">38 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">APD</span>
+                        <span style="font-size:20px;line-height:31px;">323 </span>
+                    </div>
+                </div>
+                <div id="TeamName" style="margin:18px 0px 0px 0px;font-weight:bold; color:#eeeeee; text-shadow: 0px 0px 3px #000000;max-width:180px; max-height:24px; overflow:hidden;">
+                    C-Faction^3
+                </div>
+            </div>
+        </div>
+
+        <div id="1" style="clear:both;
+									  width:350px;
+									  margin: 5px 0px 0px 75px;
+									  display:none">
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_CircleWO.png" alt="Circle" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Circle">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Chad Kaufman">Chad Kaufman</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">3</div>
+                            <div  style="float:left;margin:3px;">10</div>
+                            <div  style="float:left;margin:3px;">15</div>
+                            <div  style="float:left;margin:3px;">96</div>
+                        </div>
+                    </div>
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_CygnarWO.png" alt="Cygnar" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Cygnar">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Francesc Massan&#233;s">Francesc Massan&#233;s</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">3</div>
+                            <div  style="float:left;margin:3px;">9</div>
+                            <div  style="float:left;margin:3px;">6</div>
+                            <div  style="float:left;margin:3px;">51</div>
+                        </div>
+                    </div>
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_ConvergenceWO.png" alt="Convergence" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Convergence">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Dan Skibo">Dan Skibo</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">3</div>
+                            <div  style="float:left;margin:3px;">4</div>
+                            <div  style="float:left;margin:3px;">17</div>
+                            <div  style="float:left;margin:3px;">176</div>
+                        </div>
+                    </div>
+            
+        </div>
+    </div>
+    <div>
+        <div id="MatchupBar" class="ShadowBox " style="width:500px; height:55px; margin-top:15px;">
+
+
+
+            <div id="Team1" class="Box BlankBackground" onclick="toggle_visibility('2');">
+                <div id="Team1Flag" style="float:left;margin:10px;">
+                    <img src="http://img.photobucket.com/albums/v144/NekuraIzou/PPForumIcon_zpsjpcolsii.png" alt="Nonokrion Order" style="width:auto; height:33px">
+                </div>
+
+                <div style="margin:1px 27px 3px 0px;float:right;">
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:23px;">
+                        <span style="font-size:8pt;">Wins</span>
+                        <span style="font-size:30px;">3 </span>
+                    </div>
+                    <div style="float:left; min-width:20px; margin:2px 5px 0px 5px;">
+<div id="chevron"></div> <div id="chevron"></div> <div id="chevron"></div>                     </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">TP</span>
+                        <span style="font-size:20px;line-height:31px;">9 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">SoS</span>
+                        <span style="font-size:20px;line-height:31px;">7 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">CP</span>
+                        <span style="font-size:20px;line-height:31px;">42 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">APD</span>
+                        <span style="font-size:20px;line-height:31px;">477 </span>
+                    </div>
+                </div>
+                <div id="TeamName" style="margin:18px 0px 0px 0px;font-weight:bold; color:#eeeeee; text-shadow: 0px 0px 3px #000000;max-width:180px; max-height:24px; overflow:hidden;">
+                    Nonokrion Order
+                </div>
+            </div>
+        </div>
+
+        <div id="2" style="clear:both;
+									  width:350px;
+									  margin: 5px 0px 0px 75px;
+									  display:none">
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_CygnarWO.png" alt="Cygnar" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Cygnar">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Zach Watson">Zach Watson</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">4</div>
+                            <div  style="float:left;margin:3px;">4</div>
+                            <div  style="float:left;margin:3px;">14</div>
+                            <div  style="float:left;margin:3px;">229</div>
+                        </div>
+                    </div>
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogoTM_Grymkin.png" alt="Grymkin" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Grymkin">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Travis Marg">Travis Marg</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">3</div>
+                            <div  style="float:left;margin:3px;">4</div>
+                            <div  style="float:left;margin:3px;">14</div>
+                            <div  style="float:left;margin:3px;">139</div>
+                        </div>
+                    </div>
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_SkorneWO.png" alt="Skorne" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Skorne">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Tony Coutley">Tony Coutley</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">2</div>
+                            <div  style="float:left;margin:3px;">8</div>
+                            <div  style="float:left;margin:3px;">14</div>
+                            <div  style="float:left;margin:3px;">109</div>
+                        </div>
+                    </div>
+            
+        </div>
+    </div>
+    <div>
+        <div id="MatchupBar" class="ShadowBox " style="width:500px; height:55px; margin-top:15px;">
+
+
+
+            <div id="Team1" class="Box BlankBackground" onclick="toggle_visibility('3');">
+                <div id="Team1Flag" style="float:left;margin:10px;">
+                    <img src="./../content/blank.png" alt="Mighty Fluffy Tuna" style="width:auto; height:33px">
+                </div>
+
+                <div style="margin:1px 27px 3px 0px;float:right;">
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:23px;">
+                        <span style="font-size:8pt;">Wins</span>
+                        <span style="font-size:30px;">3 </span>
+                    </div>
+                    <div style="float:left; min-width:20px; margin:2px 5px 0px 5px;">
+<div id="chevron"></div> <div id="chevron"></div> <div id="chevron"></div>                     </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">TP</span>
+                        <span style="font-size:20px;line-height:31px;">7 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">SoS</span>
+                        <span style="font-size:20px;line-height:31px;">11 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">CP</span>
+                        <span style="font-size:20px;line-height:31px;">28 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">APD</span>
+                        <span style="font-size:20px;line-height:31px;">515 </span>
+                    </div>
+                </div>
+                <div id="TeamName" style="margin:18px 0px 0px 0px;font-weight:bold; color:#eeeeee; text-shadow: 0px 0px 3px #000000;max-width:180px; max-height:24px; overflow:hidden;">
+                    Mighty Fluffy Tuna
+                </div>
+            </div>
+        </div>
+
+        <div id="3" style="clear:both;
+									  width:350px;
+									  margin: 5px 0px 0px 75px;
+									  display:none">
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_KhadorWO.png" alt="Khador" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Khador">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Justin Wierzba">Justin Wierzba</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">4</div>
+                            <div  style="float:left;margin:3px;">9</div>
+                            <div  style="float:left;margin:3px;">19</div>
+                            <div  style="float:left;margin:3px;">324</div>
+                        </div>
+                    </div>
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_CryxWO.png" alt="Cryx" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Cryx">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Jordan Ashenberg">Jordan Ashenberg</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">2</div>
+                            <div  style="float:left;margin:3px;">10</div>
+                            <div  style="float:left;margin:3px;">4</div>
+                            <div  style="float:left;margin:3px;">97</div>
+                        </div>
+                    </div>
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_RetributionWO.png" alt="Retribution" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Retribution">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Matthew Schmidkamp">Matthew Schmidkamp</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">1</div>
+                            <div  style="float:left;margin:3px;">15</div>
+                            <div  style="float:left;margin:3px;">5</div>
+                            <div  style="float:left;margin:3px;">94</div>
+                        </div>
+                    </div>
+            
+        </div>
+    </div>
+    <div>
+        <div id="MatchupBar" class="ShadowBox " style="width:500px; height:55px; margin-top:15px;">
+
+
+
+            <div id="Team1" class="Box BlankBackground" onclick="toggle_visibility('4');">
+                <div id="Team1Flag" style="float:left;margin:10px;">
+                    <img src="./../content/blank.png" alt="LOS? Where we&#39;re going we don&#39;t need LOS!" style="width:auto; height:33px">
+                </div>
+
+                <div style="margin:1px 27px 3px 0px;float:right;">
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:23px;">
+                        <span style="font-size:8pt;">Wins</span>
+                        <span style="font-size:30px;">3 </span>
+                    </div>
+                    <div style="float:left; min-width:20px; margin:2px 5px 0px 5px;">
+<div id="chevron"></div> <div id="chevron"></div> <div id="chevron"></div>                     </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">TP</span>
+                        <span style="font-size:20px;line-height:31px;">7 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">SoS</span>
+                        <span style="font-size:20px;line-height:31px;">10 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">CP</span>
+                        <span style="font-size:20px;line-height:31px;">52 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">APD</span>
+                        <span style="font-size:20px;line-height:31px;">635 </span>
+                    </div>
+                </div>
+                <div id="TeamName" style="margin:18px 0px 0px 0px;font-weight:bold; color:#eeeeee; text-shadow: 0px 0px 3px #000000;max-width:180px; max-height:24px; overflow:hidden;">
+                    LOS? Where we&#39;re going we don&#39;t need LOS!
+                </div>
+            </div>
+        </div>
+
+        <div id="4" style="clear:both;
+									  width:350px;
+									  margin: 5px 0px 0px 75px;
+									  display:none">
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_SkorneWO.png" alt="Skorne" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Skorne">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Steven Sill">Steven Sill</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">3</div>
+                            <div  style="float:left;margin:3px;">10</div>
+                            <div  style="float:left;margin:3px;">24</div>
+                            <div  style="float:left;margin:3px;">197</div>
+                        </div>
+                    </div>
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_CryxWO.png" alt="Cryx" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Cryx">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Dustin Wengert">Dustin Wengert</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">3</div>
+                            <div  style="float:left;margin:3px;">9</div>
+                            <div  style="float:left;margin:3px;">8</div>
+                            <div  style="float:left;margin:3px;">236</div>
+                        </div>
+                    </div>
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_RetributionWO.png" alt="Retribution" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Retribution">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="David Geddes">David Geddes</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">1</div>
+                            <div  style="float:left;margin:3px;">10</div>
+                            <div  style="float:left;margin:3px;">20</div>
+                            <div  style="float:left;margin:3px;">202</div>
+                        </div>
+                    </div>
+            
+        </div>
+    </div>
+    <div>
+        <div id="MatchupBar" class="ShadowBox " style="width:500px; height:55px; margin-top:15px;">
+
+
+
+            <div id="Team1" class="Box BlankBackground" onclick="toggle_visibility('5');">
+                <div id="Team1Flag" style="float:left;margin:10px;">
+                    <img src="./../content/blank.png" alt="Iowa&#39;s Finest" style="width:auto; height:33px">
+                </div>
+
+                <div style="margin:1px 27px 3px 0px;float:right;">
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:23px;">
+                        <span style="font-size:8pt;">Wins</span>
+                        <span style="font-size:30px;">3 </span>
+                    </div>
+                    <div style="float:left; min-width:20px; margin:2px 5px 0px 5px;">
+<div id="chevron"></div> <div id="chevron"></div> <div id="chevron"></div>                     </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">TP</span>
+                        <span style="font-size:20px;line-height:31px;">6 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">SoS</span>
+                        <span style="font-size:20px;line-height:31px;">7 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">CP</span>
+                        <span style="font-size:20px;line-height:31px;">31 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">APD</span>
+                        <span style="font-size:20px;line-height:31px;">339 </span>
+                    </div>
+                </div>
+                <div id="TeamName" style="margin:18px 0px 0px 0px;font-weight:bold; color:#eeeeee; text-shadow: 0px 0px 3px #000000;max-width:180px; max-height:24px; overflow:hidden;">
+                    Iowa&#39;s Finest
+                </div>
+            </div>
+        </div>
+
+        <div id="5" style="clear:both;
+									  width:350px;
+									  margin: 5px 0px 0px 75px;
+									  display:none">
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_CryxWO.png" alt="Cryx" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Cryx">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Mike White">Mike White</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">2</div>
+                            <div  style="float:left;margin:3px;">10</div>
+                            <div  style="float:left;margin:3px;">12</div>
+                            <div  style="float:left;margin:3px;">176</div>
+                        </div>
+                    </div>
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_ConvergenceWO.png" alt="Convergence" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Convergence">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Dan White">Dan White</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">2</div>
+                            <div  style="float:left;margin:3px;">9</div>
+                            <div  style="float:left;margin:3px;">9</div>
+                            <div  style="float:left;margin:3px;">61</div>
+                        </div>
+                    </div>
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_LegionWO.png" alt="Legion" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Legion">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Rich Arnold">Rich Arnold</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">2</div>
+                            <div  style="float:left;margin:3px;">7</div>
+                            <div  style="float:left;margin:3px;">10</div>
+                            <div  style="float:left;margin:3px;">102</div>
+                        </div>
+                    </div>
+            
+        </div>
+    </div>
+    <div>
+        <div id="MatchupBar" class="ShadowBox " style="width:500px; height:55px; margin-top:15px;">
+
+
+
+            <div id="Team1" class="Box BlankBackground" onclick="toggle_visibility('6');">
+                <div id="Team1Flag" style="float:left;margin:10px;">
+                    <img src="http://ringdev.com/Swiss/standings/TheGreatQuimbini_sm.png" alt="The Great Quimbini and the Dirty Tricks 2" style="width:auto; height:33px">
+                </div>
+
+                <div style="margin:1px 27px 3px 0px;float:right;">
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:23px;">
+                        <span style="font-size:8pt;">Wins</span>
+                        <span style="font-size:30px;">2 </span>
+                    </div>
+                    <div style="float:left; min-width:20px; margin:2px 5px 0px 5px;">
+<div id="chevron"></div> <div id="chevron"></div>                     </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">TP</span>
+                        <span style="font-size:20px;line-height:31px;">8 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">SoS</span>
+                        <span style="font-size:20px;line-height:31px;">8 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">CP</span>
+                        <span style="font-size:20px;line-height:31px;">33 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">APD</span>
+                        <span style="font-size:20px;line-height:31px;">348 </span>
+                    </div>
+                </div>
+                <div id="TeamName" style="margin:18px 0px 0px 0px;font-weight:bold; color:#eeeeee; text-shadow: 0px 0px 3px #000000;max-width:180px; max-height:24px; overflow:hidden;">
+                    The Great Quimbini and the Dirty Tricks 2
+                </div>
+            </div>
+        </div>
+
+        <div id="6" style="clear:both;
+									  width:350px;
+									  margin: 5px 0px 0px 75px;
+									  display:none">
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_CryxWO.png" alt="Cryx" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Cryx">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Dan Wasmer">Dan Wasmer</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">4</div>
+                            <div  style="float:left;margin:3px;">6</div>
+                            <div  style="float:left;margin:3px;">17</div>
+                            <div  style="float:left;margin:3px;">96</div>
+                        </div>
+                    </div>
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_CygnarWO.png" alt="Cygnar" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Cygnar">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Jake Quimby">Jake Quimby</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">2</div>
+                            <div  style="float:left;margin:3px;">10</div>
+                            <div  style="float:left;margin:3px;">2</div>
+                            <div  style="float:left;margin:3px;">77</div>
+                        </div>
+                    </div>
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_MinionsWO.png" alt="Minions" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Minions">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Rick Way">Rick Way</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">2</div>
+                            <div  style="float:left;margin:3px;">4</div>
+                            <div  style="float:left;margin:3px;">14</div>
+                            <div  style="float:left;margin:3px;">175</div>
+                        </div>
+                    </div>
+            
+        </div>
+    </div>
+    <div>
+        <div id="MatchupBar" class="ShadowBox " style="width:500px; height:55px; margin-top:15px;">
+
+
+
+            <div id="Team1" class="Box BlankBackground" onclick="toggle_visibility('7');">
+                <div id="Team1Flag" style="float:left;margin:10px;">
+                    <img src="https://scontent-ort2-1.xx.fbcdn.net/v/t1.0-9/20994069_10209765396519576_8549070343557405376_n.jpg?oh=76c65c228cb68eb41ec18949f85695f5&amp;oe=5A2F3A19" alt="Dank Legacy&#39;s 3 Man Wolf Pack" style="width:auto; height:33px">
+                </div>
+
+                <div style="margin:1px 27px 3px 0px;float:right;">
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:23px;">
+                        <span style="font-size:8pt;">Wins</span>
+                        <span style="font-size:30px;">2 </span>
+                    </div>
+                    <div style="float:left; min-width:20px; margin:2px 5px 0px 5px;">
+<div id="chevron"></div> <div id="chevron"></div>                     </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">TP</span>
+                        <span style="font-size:20px;line-height:31px;">8 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">SoS</span>
+                        <span style="font-size:20px;line-height:31px;">5 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">CP</span>
+                        <span style="font-size:20px;line-height:31px;">49 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">APD</span>
+                        <span style="font-size:20px;line-height:31px;">576 </span>
+                    </div>
+                </div>
+                <div id="TeamName" style="margin:18px 0px 0px 0px;font-weight:bold; color:#eeeeee; text-shadow: 0px 0px 3px #000000;max-width:180px; max-height:24px; overflow:hidden;">
+                    Dank Legacy&#39;s 3 Man Wolf Pack
+                </div>
+            </div>
+        </div>
+
+        <div id="7" style="clear:both;
+									  width:350px;
+									  margin: 5px 0px 0px 75px;
+									  display:none">
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogoTM_Grymkin.png" alt="Grymkin" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Grymkin">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Davis Bailey">Davis Bailey</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">4</div>
+                            <div  style="float:left;margin:3px;">2</div>
+                            <div  style="float:left;margin:3px;">12</div>
+                            <div  style="float:left;margin:3px;">159</div>
+                        </div>
+                    </div>
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_LegionWO.png" alt="Legion" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Legion">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Johnny Pastrami">Johnny Pastrami</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">2</div>
+                            <div  style="float:left;margin:3px;">7</div>
+                            <div  style="float:left;margin:3px;">18</div>
+                            <div  style="float:left;margin:3px;">214</div>
+                        </div>
+                    </div>
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_RetributionWO.png" alt="Retribution" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Retribution">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Ethan Kraus">Ethan Kraus</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">2</div>
+                            <div  style="float:left;margin:3px;">5</div>
+                            <div  style="float:left;margin:3px;">19</div>
+                            <div  style="float:left;margin:3px;">203</div>
+                        </div>
+                    </div>
+            
+        </div>
+    </div>
+    <div>
+        <div id="MatchupBar" class="ShadowBox " style="width:500px; height:55px; margin-top:15px;">
+
+
+
+            <div id="Team1" class="Box BlankBackground" onclick="toggle_visibility('8');">
+                <div id="Team1Flag" style="float:left;margin:10px;">
+                    <img src="./../content/blank.png" alt="Always a Morty" style="width:auto; height:33px">
+                </div>
+
+                <div style="margin:1px 27px 3px 0px;float:right;">
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:23px;">
+                        <span style="font-size:8pt;">Wins</span>
+                        <span style="font-size:30px;">2 </span>
+                    </div>
+                    <div style="float:left; min-width:20px; margin:2px 5px 0px 5px;">
+<div id="chevron"></div> <div id="chevron"></div>                     </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">TP</span>
+                        <span style="font-size:20px;line-height:31px;">7 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">SoS</span>
+                        <span style="font-size:20px;line-height:31px;">5 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">CP</span>
+                        <span style="font-size:20px;line-height:31px;">26 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">APD</span>
+                        <span style="font-size:20px;line-height:31px;">301 </span>
+                    </div>
+                </div>
+                <div id="TeamName" style="margin:18px 0px 0px 0px;font-weight:bold; color:#eeeeee; text-shadow: 0px 0px 3px #000000;max-width:180px; max-height:24px; overflow:hidden;">
+                    Always a Morty
+                </div>
+            </div>
+        </div>
+
+        <div id="8" style="clear:both;
+									  width:350px;
+									  margin: 5px 0px 0px 75px;
+									  display:none">
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_CygnarWO.png" alt="Cygnar" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Cygnar">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="John Acker">John Acker</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">4</div>
+                            <div  style="float:left;margin:3px;">2</div>
+                            <div  style="float:left;margin:3px;">19</div>
+                            <div  style="float:left;margin:3px;">171</div>
+                        </div>
+                    </div>
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_KhadorWO.png" alt="Khador" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Khador">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Andrew Pangburn">Andrew Pangburn</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">2</div>
+                            <div  style="float:left;margin:3px;">9</div>
+                            <div  style="float:left;margin:3px;">3</div>
+                            <div  style="float:left;margin:3px;">63</div>
+                        </div>
+                    </div>
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_RetributionWO.png" alt="Retribution" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Retribution">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Mark Harpold">Mark Harpold</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">1</div>
+                            <div  style="float:left;margin:3px;">5</div>
+                            <div  style="float:left;margin:3px;">4</div>
+                            <div  style="float:left;margin:3px;">67</div>
+                        </div>
+                    </div>
+            
+        </div>
+    </div>
+    <div>
+        <div id="MatchupBar" class="ShadowBox " style="width:500px; height:55px; margin-top:15px;">
+
+
+
+            <div id="Team1" class="Box BlankBackground" onclick="toggle_visibility('9');">
+                <div id="Team1Flag" style="float:left;margin:10px;">
+                    <img src="./../content/blank.png" alt="Trump Arcana: Khadoran Collusion is Fake News" style="width:auto; height:33px">
+                </div>
+
+                <div style="margin:1px 27px 3px 0px;float:right;">
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:23px;">
+                        <span style="font-size:8pt;">Wins</span>
+                        <span style="font-size:30px;">2 </span>
+                    </div>
+                    <div style="float:left; min-width:20px; margin:2px 5px 0px 5px;">
+<div id="chevron"></div> <div id="chevron"></div>                     </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">TP</span>
+                        <span style="font-size:20px;line-height:31px;">6 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">SoS</span>
+                        <span style="font-size:20px;line-height:31px;">9 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">CP</span>
+                        <span style="font-size:20px;line-height:31px;">27 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">APD</span>
+                        <span style="font-size:20px;line-height:31px;">380 </span>
+                    </div>
+                </div>
+                <div id="TeamName" style="margin:18px 0px 0px 0px;font-weight:bold; color:#eeeeee; text-shadow: 0px 0px 3px #000000;max-width:180px; max-height:24px; overflow:hidden;">
+                    Trump Arcana: Khadoran Collusion is Fake News
+                </div>
+            </div>
+        </div>
+
+        <div id="9" style="clear:both;
+									  width:350px;
+									  margin: 5px 0px 0px 75px;
+									  display:none">
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_KhadorWO.png" alt="Khador" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Khador">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="George Coe">George Coe</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">3</div>
+                            <div  style="float:left;margin:3px;">9</div>
+                            <div  style="float:left;margin:3px;">7</div>
+                            <div  style="float:left;margin:3px;">81</div>
+                        </div>
+                    </div>
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogoTM_Grymkin.png" alt="Grymkin" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Grymkin">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Brian Kerr">Brian Kerr</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">2</div>
+                            <div  style="float:left;margin:3px;">10</div>
+                            <div  style="float:left;margin:3px;">6</div>
+                            <div  style="float:left;margin:3px;">114</div>
+                        </div>
+                    </div>
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_SkorneWO.png" alt="Skorne" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Skorne">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Paul Hassebrock">Paul Hassebrock</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">1</div>
+                            <div  style="float:left;margin:3px;">9</div>
+                            <div  style="float:left;margin:3px;">14</div>
+                            <div  style="float:left;margin:3px;">185</div>
+                        </div>
+                    </div>
+            
+        </div>
+    </div>
+    <div>
+        <div id="MatchupBar" class="ShadowBox " style="width:500px; height:55px; margin-top:15px;">
+
+
+
+            <div id="Team1" class="Box BlankBackground" onclick="toggle_visibility('10');">
+                <div id="Team1Flag" style="float:left;margin:10px;">
+                    <img src="https://photos-6.dropbox.com/t/2/AABy4iSBc7R8h22umZRpMdQSIkuVrbJzquESZqzZ5O29mA/12/256412113/png/32x32/3/1503561600/0/2/tshirtlust_destroyallhumans.png/EJvWuewBGJcBIAIoAg/56mGIT3iAUs4WyyqcppU_f5TEZZ4GZrscb5XITgE6KQ%2C8YNMmN2urg81xG-SvVIe67o7UWtC-MSjq3ed-bv1ah4?dl=0&amp;size=1280x960&amp;size_mode=3" alt="Kill All Humans!" style="width:auto; height:33px">
+                </div>
+
+                <div style="margin:1px 27px 3px 0px;float:right;">
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:23px;">
+                        <span style="font-size:8pt;">Wins</span>
+                        <span style="font-size:30px;">2 </span>
+                    </div>
+                    <div style="float:left; min-width:20px; margin:2px 5px 0px 5px;">
+<div id="chevron"></div> <div id="chevron"></div>                     </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">TP</span>
+                        <span style="font-size:20px;line-height:31px;">5 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">SoS</span>
+                        <span style="font-size:20px;line-height:31px;">9 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">CP</span>
+                        <span style="font-size:20px;line-height:31px;">37 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">APD</span>
+                        <span style="font-size:20px;line-height:31px;">601 </span>
+                    </div>
+                </div>
+                <div id="TeamName" style="margin:18px 0px 0px 0px;font-weight:bold; color:#eeeeee; text-shadow: 0px 0px 3px #000000;max-width:180px; max-height:24px; overflow:hidden;">
+                    Kill All Humans!
+                </div>
+            </div>
+        </div>
+
+        <div id="10" style="clear:both;
+									  width:350px;
+									  margin: 5px 0px 0px 75px;
+									  display:none">
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_RetributionWO.png" alt="Retribution" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Retribution">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Nicolas Duenas">Nicolas Duenas</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">3</div>
+                            <div  style="float:left;margin:3px;">6</div>
+                            <div  style="float:left;margin:3px;">24</div>
+                            <div  style="float:left;margin:3px;">325</div>
+                        </div>
+                    </div>
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_RetributionWO.png" alt="Retribution" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Retribution">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Allister Stutsman">Allister Stutsman</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">1</div>
+                            <div  style="float:left;margin:3px;">13</div>
+                            <div  style="float:left;margin:3px;">11</div>
+                            <div  style="float:left;margin:3px;">193</div>
+                        </div>
+                    </div>
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_RetributionWO.png" alt="Retribution" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Retribution">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Zach Dick">Zach Dick</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">1</div>
+                            <div  style="float:left;margin:3px;">10</div>
+                            <div  style="float:left;margin:3px;">2</div>
+                            <div  style="float:left;margin:3px;">83</div>
+                        </div>
+                    </div>
+            
+        </div>
+    </div>
+    <div>
+        <div id="MatchupBar" class="ShadowBox " style="width:500px; height:55px; margin-top:15px;">
+
+
+
+            <div id="Team1" class="Box BlankBackground" onclick="toggle_visibility('11');">
+                <div id="Team1Flag" style="float:left;margin:10px;">
+                    <img src="https://i.gyazo.com/35760c79cdbb299dce3ecd2aa6483a50.png" alt="Team Earth, Wind, Fire" style="width:auto; height:33px">
+                </div>
+
+                <div style="margin:1px 27px 3px 0px;float:right;">
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:23px;">
+                        <span style="font-size:8pt;">Wins</span>
+                        <span style="font-size:30px;">2 </span>
+                    </div>
+                    <div style="float:left; min-width:20px; margin:2px 5px 0px 5px;">
+<div id="chevron"></div> <div id="chevron"></div>                     </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">TP</span>
+                        <span style="font-size:20px;line-height:31px;">4 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">SoS</span>
+                        <span style="font-size:20px;line-height:31px;">7 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">CP</span>
+                        <span style="font-size:20px;line-height:31px;">31 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">APD</span>
+                        <span style="font-size:20px;line-height:31px;">403 </span>
+                    </div>
+                </div>
+                <div id="TeamName" style="margin:18px 0px 0px 0px;font-weight:bold; color:#eeeeee; text-shadow: 0px 0px 3px #000000;max-width:180px; max-height:24px; overflow:hidden;">
+                    Team Earth, Wind, Fire
+                </div>
+            </div>
+        </div>
+
+        <div id="11" style="clear:both;
+									  width:350px;
+									  margin: 5px 0px 0px 75px;
+									  display:none">
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_CircleWO.png" alt="Circle" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Circle">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Benjamin Lubet">Benjamin Lubet</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">2</div>
+                            <div  style="float:left;margin:3px;">9</div>
+                            <div  style="float:left;margin:3px;">10</div>
+                            <div  style="float:left;margin:3px;">97</div>
+                        </div>
+                    </div>
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_ProtectorateWO.png" alt="Protectorate" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Protectorate">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Matthew Lust">Matthew Lust</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">2</div>
+                            <div  style="float:left;margin:3px;">7</div>
+                            <div  style="float:left;margin:3px;">16</div>
+                            <div  style="float:left;margin:3px;">191</div>
+                        </div>
+                    </div>
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_CygnarWO.png" alt="Cygnar" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Cygnar">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Tyler Keese">Tyler Keese</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">0</div>
+                            <div  style="float:left;margin:3px;">9</div>
+                            <div  style="float:left;margin:3px;">5</div>
+                            <div  style="float:left;margin:3px;">115</div>
+                        </div>
+                    </div>
+            
+        </div>
+    </div>
+    <div>
+        <div id="MatchupBar" class="ShadowBox " style="width:500px; height:55px; margin-top:15px;">
+
+
+
+            <div id="Team1" class="Box BlankBackground" onclick="toggle_visibility('12');">
+                <div id="Team1Flag" style="float:left;margin:10px;">
+                    <img src="./../content/blank.png" alt="Sgt Sodium&#39;s Crappy Dice Club Band" style="width:auto; height:33px">
+                </div>
+
+                <div style="margin:1px 27px 3px 0px;float:right;">
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:23px;">
+                        <span style="font-size:8pt;">Wins</span>
+                        <span style="font-size:30px;">1 </span>
+                    </div>
+                    <div style="float:left; min-width:20px; margin:2px 5px 0px 5px;">
+<div id="chevron"></div>                     </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">TP</span>
+                        <span style="font-size:20px;line-height:31px;">5 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">SoS</span>
+                        <span style="font-size:20px;line-height:31px;">9 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">CP</span>
+                        <span style="font-size:20px;line-height:31px;">20 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">APD</span>
+                        <span style="font-size:20px;line-height:31px;">429 </span>
+                    </div>
+                </div>
+                <div id="TeamName" style="margin:18px 0px 0px 0px;font-weight:bold; color:#eeeeee; text-shadow: 0px 0px 3px #000000;max-width:180px; max-height:24px; overflow:hidden;">
+                    Sgt Sodium&#39;s Crappy Dice Club Band
+                </div>
+            </div>
+        </div>
+
+        <div id="12" style="clear:both;
+									  width:350px;
+									  margin: 5px 0px 0px 75px;
+									  display:none">
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_CygnarWO.png" alt="Cygnar" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Cygnar">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Larry McCracken">Larry McCracken</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">2</div>
+                            <div  style="float:left;margin:3px;">8</div>
+                            <div  style="float:left;margin:3px;">6</div>
+                            <div  style="float:left;margin:3px;">127</div>
+                        </div>
+                    </div>
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_KhadorWO.png" alt="Khador" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Khador">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Andy Ackerman">Andy Ackerman</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">2</div>
+                            <div  style="float:left;margin:3px;">6</div>
+                            <div  style="float:left;margin:3px;">12</div>
+                            <div  style="float:left;margin:3px;">250</div>
+                        </div>
+                    </div>
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_ProtectorateWO.png" alt="Protectorate" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Protectorate">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Dustin Green">Dustin Green</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">1</div>
+                            <div  style="float:left;margin:3px;">10</div>
+                            <div  style="float:left;margin:3px;">2</div>
+                            <div  style="float:left;margin:3px;">52</div>
+                        </div>
+                    </div>
+            
+        </div>
+    </div>
+    <div>
+        <div id="MatchupBar" class="ShadowBox " style="width:500px; height:55px; margin-top:15px;">
+
+
+
+            <div id="Team1" class="Box BlankBackground" onclick="toggle_visibility('13');">
+                <div id="Team1Flag" style="float:left;margin:10px;">
+                    <img src="./../content/blank.png" alt="Pointy Eared Green Blooded Gobber Brigade" style="width:auto; height:33px">
+                </div>
+
+                <div style="margin:1px 27px 3px 0px;float:right;">
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:23px;">
+                        <span style="font-size:8pt;">Wins</span>
+                        <span style="font-size:30px;">1 </span>
+                    </div>
+                    <div style="float:left; min-width:20px; margin:2px 5px 0px 5px;">
+<div id="chevron"></div>                     </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">TP</span>
+                        <span style="font-size:20px;line-height:31px;">5 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">SoS</span>
+                        <span style="font-size:20px;line-height:31px;">5 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">CP</span>
+                        <span style="font-size:20px;line-height:31px;">31 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">APD</span>
+                        <span style="font-size:20px;line-height:31px;">447 </span>
+                    </div>
+                </div>
+                <div id="TeamName" style="margin:18px 0px 0px 0px;font-weight:bold; color:#eeeeee; text-shadow: 0px 0px 3px #000000;max-width:180px; max-height:24px; overflow:hidden;">
+                    Pointy Eared Green Blooded Gobber Brigade
+                </div>
+            </div>
+        </div>
+
+        <div id="13" style="clear:both;
+									  width:350px;
+									  margin: 5px 0px 0px 75px;
+									  display:none">
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_RetributionWO.png" alt="Retribution" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Retribution">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Megan Johnson">Megan Johnson</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">2</div>
+                            <div  style="float:left;margin:3px;">4</div>
+                            <div  style="float:left;margin:3px;">12</div>
+                            <div  style="float:left;margin:3px;">158</div>
+                        </div>
+                    </div>
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_CygnarWO.png" alt="Cygnar" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Cygnar">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Jackie Christianson">Jackie Christianson</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">2</div>
+                            <div  style="float:left;margin:3px;">4</div>
+                            <div  style="float:left;margin:3px;">12</div>
+                            <div  style="float:left;margin:3px;">152</div>
+                        </div>
+                    </div>
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_SkorneWO.png" alt="Skorne" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Skorne">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Orion Strehlow">Orion Strehlow</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">1</div>
+                            <div  style="float:left;margin:3px;">7</div>
+                            <div  style="float:left;margin:3px;">7</div>
+                            <div  style="float:left;margin:3px;">137</div>
+                        </div>
+                    </div>
+            
+        </div>
+    </div>
+    <div>
+        <div id="MatchupBar" class="ShadowBox " style="width:500px; height:55px; margin-top:15px;">
+
+
+
+            <div id="Team1" class="Box BlankBackground" onclick="toggle_visibility('14');">
+                <div id="Team1Flag" style="float:left;margin:10px;">
+                    <img src="https://scontent-lga3-1.xx.fbcdn.net/v/t1.0-9/21034434_10154946083852194_8787855314766969771_n.jpg?oh=927a027047704e03759db089626a8004&amp;oe=5A2CB1FA" alt="Barney&#39;s Cutthroats" style="width:auto; height:33px">
+                </div>
+
+                <div style="margin:1px 27px 3px 0px;float:right;">
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:23px;">
+                        <span style="font-size:8pt;">Wins</span>
+                        <span style="font-size:30px;">1 </span>
+                    </div>
+                    <div style="float:left; min-width:20px; margin:2px 5px 0px 5px;">
+<div id="chevron"></div>                     </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">TP</span>
+                        <span style="font-size:20px;line-height:31px;">4 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">SoS</span>
+                        <span style="font-size:20px;line-height:31px;">10 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">CP</span>
+                        <span style="font-size:20px;line-height:31px;">31 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">APD</span>
+                        <span style="font-size:20px;line-height:31px;">358 </span>
+                    </div>
+                </div>
+                <div id="TeamName" style="margin:18px 0px 0px 0px;font-weight:bold; color:#eeeeee; text-shadow: 0px 0px 3px #000000;max-width:180px; max-height:24px; overflow:hidden;">
+                    Barney&#39;s Cutthroats
+                </div>
+            </div>
+        </div>
+
+        <div id="14" style="clear:both;
+									  width:350px;
+									  margin: 5px 0px 0px 75px;
+									  display:none">
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_CryxWO.png" alt="Cryx" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Cryx">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Andrew Barney">Andrew Barney</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">2</div>
+                            <div  style="float:left;margin:3px;">9</div>
+                            <div  style="float:left;margin:3px;">21</div>
+                            <div  style="float:left;margin:3px;">121</div>
+                        </div>
+                    </div>
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_LegionWO.png" alt="Legion" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Legion">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Tommy Hubbell">Tommy Hubbell</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">2</div>
+                            <div  style="float:left;margin:3px;">7</div>
+                            <div  style="float:left;margin:3px;">10</div>
+                            <div  style="float:left;margin:3px;">168</div>
+                        </div>
+                    </div>
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_MercenariesWO.png" alt="Mercenaries" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Mercenaries">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Justin Wichman">Justin Wichman</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">0</div>
+                            <div  style="float:left;margin:3px;">11</div>
+                            <div  style="float:left;margin:3px;">0</div>
+                            <div  style="float:left;margin:3px;">69</div>
+                        </div>
+                    </div>
+            
+        </div>
+    </div>
+    <div>
+        <div id="MatchupBar" class="ShadowBox " style="width:500px; height:55px; margin-top:15px;">
+
+
+
+            <div id="Team1" class="Box BlankBackground" onclick="toggle_visibility('15');">
+                <div id="Team1Flag" style="float:left;margin:10px;">
+                    <img src="./../content/blank.png" alt="Kofoot, Kofoot, &amp; Rosenthal: Attorneys at War" style="width:auto; height:33px">
+                </div>
+
+                <div style="margin:1px 27px 3px 0px;float:right;">
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:23px;">
+                        <span style="font-size:8pt;">Wins</span>
+                        <span style="font-size:30px;">1 </span>
+                    </div>
+                    <div style="float:left; min-width:20px; margin:2px 5px 0px 5px;">
+<div id="chevron"></div>                     </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">TP</span>
+                        <span style="font-size:20px;line-height:31px;">4 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">SoS</span>
+                        <span style="font-size:20px;line-height:31px;">9 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">CP</span>
+                        <span style="font-size:20px;line-height:31px;">31 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">APD</span>
+                        <span style="font-size:20px;line-height:31px;">228 </span>
+                    </div>
+                </div>
+                <div id="TeamName" style="margin:18px 0px 0px 0px;font-weight:bold; color:#eeeeee; text-shadow: 0px 0px 3px #000000;max-width:180px; max-height:24px; overflow:hidden;">
+                    Kofoot, Kofoot, &amp; Rosenthal: Attorneys at War
+                </div>
+            </div>
+        </div>
+
+        <div id="15" style="clear:both;
+									  width:350px;
+									  margin: 5px 0px 0px 75px;
+									  display:none">
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_MercenariesWO.png" alt="Mercenaries" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Mercenaries">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Josh Rosenthal">Josh Rosenthal</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">3</div>
+                            <div  style="float:left;margin:3px;">7</div>
+                            <div  style="float:left;margin:3px;">7</div>
+                            <div  style="float:left;margin:3px;">69</div>
+                        </div>
+                    </div>
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_CircleWO.png" alt="Circle" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Circle">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Josh Kofoot">Josh Kofoot</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">1</div>
+                            <div  style="float:left;margin:3px;">9</div>
+                            <div  style="float:left;margin:3px;">19</div>
+                            <div  style="float:left;margin:3px;">126</div>
+                        </div>
+                    </div>
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_SkorneWO.png" alt="Skorne" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Skorne">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Jeremy Kofoot">Jeremy Kofoot</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">0</div>
+                            <div  style="float:left;margin:3px;">14</div>
+                            <div  style="float:left;margin:3px;">5</div>
+                            <div  style="float:left;margin:3px;">33</div>
+                        </div>
+                    </div>
+            
+        </div>
+    </div>
+    <div>
+        <div id="MatchupBar" class="ShadowBox " style="width:500px; height:55px; margin-top:15px;">
+
+
+
+            <div id="Team1" class="Box BlankBackground" onclick="toggle_visibility('16');">
+                <div id="Team1Flag" style="float:left;margin:10px;">
+                    <img src="./../content/blank.png" alt="Team Mayhem" style="width:auto; height:33px">
+                </div>
+
+                <div style="margin:1px 27px 3px 0px;float:right;">
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:23px;">
+                        <span style="font-size:8pt;">Wins</span>
+                        <span style="font-size:30px;">1 </span>
+                    </div>
+                    <div style="float:left; min-width:20px; margin:2px 5px 0px 5px;">
+<div id="chevron"></div>                     </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">TP</span>
+                        <span style="font-size:20px;line-height:31px;">4 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">SoS</span>
+                        <span style="font-size:20px;line-height:31px;">7 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">CP</span>
+                        <span style="font-size:20px;line-height:31px;">25 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">APD</span>
+                        <span style="font-size:20px;line-height:31px;">349 </span>
+                    </div>
+                </div>
+                <div id="TeamName" style="margin:18px 0px 0px 0px;font-weight:bold; color:#eeeeee; text-shadow: 0px 0px 3px #000000;max-width:180px; max-height:24px; overflow:hidden;">
+                    Team Mayhem
+                </div>
+            </div>
+        </div>
+
+        <div id="16" style="clear:both;
+									  width:350px;
+									  margin: 5px 0px 0px 75px;
+									  display:none">
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_ProtectorateWO.png" alt="Protectorate" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Protectorate">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Tim Polson">Tim Polson</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">2</div>
+                            <div  style="float:left;margin:3px;">7</div>
+                            <div  style="float:left;margin:3px;">2</div>
+                            <div  style="float:left;margin:3px;">124</div>
+                        </div>
+                    </div>
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_RetributionWO.png" alt="Retribution" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Retribution">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Elias Thury">Elias Thury</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">1</div>
+                            <div  style="float:left;margin:3px;">8</div>
+                            <div  style="float:left;margin:3px;">13</div>
+                            <div  style="float:left;margin:3px;">103</div>
+                        </div>
+                    </div>
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_KhadorWO.png" alt="Khador" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Khador">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="Matthew Jarvis-Quillen">Matthew Jarvis-Quillen</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">1</div>
+                            <div  style="float:left;margin:3px;">8</div>
+                            <div  style="float:left;margin:3px;">10</div>
+                            <div  style="float:left;margin:3px;">122</div>
+                        </div>
+                    </div>
+            
+        </div>
+    </div>
+    <div>
+        <div id="MatchupBar" class="ShadowBox " style="width:500px; height:55px; margin-top:15px;">
+
+
+
+            <div id="Team1" class="Box BlankBackground" onclick="toggle_visibility('17');">
+                <div id="Team1Flag" style="float:left;margin:10px;">
+                    <img src="./../content/blank.png" alt="Team Bye" style="width:auto; height:33px">
+                </div>
+
+                <div style="margin:1px 27px 3px 0px;float:right;">
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:23px;">
+                        <span style="font-size:8pt;">Wins</span>
+                        <span style="font-size:30px;">0 </span>
+                    </div>
+                    <div style="float:left; min-width:20px; margin:2px 5px 0px 5px;">
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">TP</span>
+                        <span style="font-size:20px;line-height:31px;">0 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">SoS</span>
+                        <span style="font-size:20px;line-height:31px;">8 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">CP</span>
+                        <span style="font-size:20px;line-height:31px;">0 </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">APD</span>
+                        <span style="font-size:20px;line-height:31px;">0 </span>
+                    </div>
+                </div>
+                <div id="TeamName" style="margin:18px 0px 0px 0px;font-weight:bold; color:#eeeeee; text-shadow: 0px 0px 3px #000000;max-width:180px; max-height:24px; overflow:hidden;">
+                    Team Bye
+                </div>
+            </div>
+        </div>
+
+        <div id="17" style="clear:both;
+									  width:350px;
+									  margin: 5px 0px 0px 75px;
+									  display:none">
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_CygnarWO.png" alt="Cygnar" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Cygnar">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="NA2">NA2</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">0</div>
+                            <div  style="float:left;margin:3px;">11</div>
+                            <div  style="float:left;margin:3px;">0</div>
+                            <div  style="float:left;margin:3px;">0</div>
+                        </div>
+                    </div>
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_CygnarWO.png" alt="Cygnar" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Cygnar">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="NA1">NA1</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">0</div>
+                            <div  style="float:left;margin:3px;">10</div>
+                            <div  style="float:left;margin:3px;">0</div>
+                            <div  style="float:left;margin:3px;">0</div>
+                        </div>
+                    </div>
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_CygnarWO.png" alt="Cygnar" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="Cygnar">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                            <div class="PlayerName" data-toggle="tooltip" title="NA3">NA3</div>
+                        </div>
+                        <div style="float:right;">
+                            <div  style="float:left;margin:3px;">0</div>
+                            <div  style="float:left;margin:3px;">8</div>
+                            <div  style="float:left;margin:3px;">0</div>
+                            <div  style="float:left;margin:3px;">0</div>
+                        </div>
+                    </div>
+            
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

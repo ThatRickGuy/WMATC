@@ -168,7 +168,7 @@
     string TeamBackground = "";
     int iTeamList = 0;
 }
-@foreach (var team in (from p in Model.Teams orderby p.TeamWins descending, p.StrengthOfSchedule descending, p.TP descending, p.CP descending, p.APD descending select p))
+@foreach (var team in (from p in Model.Teams orderby p.TeamWins descending, p.TP descending, p.StrengthOfSchedule descending, p.CP descending, p.APD descending select p))
 {
     <div>
         <div id="MatchupBar" class="ShadowBox " style="width:500px; height:55px; margin-top:15px;">
@@ -194,12 +194,12 @@
                         {<div id="chevron"></div> }
                     </div>
                     <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
-                        <span style="font-size:8pt;">SoS</span>
-                        <span style="font-size:20px;line-height:31px;">@team.StrengthOfSchedule </span>
-                    </div>
-                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
                         <span style="font-size:8pt;">TP</span>
                         <span style="font-size:20px;line-height:31px;">@team.TP </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                        <span style="font-size:8pt;">SoS</span>
+                        <span style="font-size:20px;line-height:31px;">@team.StrengthOfSchedule </span>
                     </div>
                     <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
                         <span style="font-size:8pt;">CP</span>

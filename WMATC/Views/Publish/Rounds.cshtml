@@ -2,6 +2,7 @@
 
 @Styles.Render("~/Content/css")
 @Scripts.Render("~/bundles/modernizr")
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 @{
     ViewBag.Title = "Index";
@@ -278,9 +279,13 @@
 <script src="@ListsScript"></script>
 <script type="text/javascript">
 		<!--
+    function htmlDecode(value) {
+        return $('<div />').html(value).text();
+    }
+
     function listClick(event, title, list) {
         
-        document.getElementById('popupContent').innerHTML = list.replace(/\n/g, "<br />");
+        document.getElementById('popupContent').innerHTML = htmlDecode(list);
         document.getElementById('popupTitle').innerText = title;
         pu = document.getElementById('popup1');
         pu.style.display = 'inline-block';

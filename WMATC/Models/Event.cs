@@ -20,12 +20,16 @@ namespace WMATC.Models
         public int EventId { get; set; }
         public string Title { get; set; }
         
+        public Guid Owner { get; set; }
+
         [DataType(DataType.Date)]
         public DateTime EventDate { get; set; }
         
         [DataType(DataType.Date)]
         public DateTime ListLockDate { get; set; }
         public string ImageURL { get; set; }
+
+        public string JSONDump { get; set; }
     }
 }
 

@@ -1,0 +1,26 @@
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="WiTC II.js"></script>
+
+    <script>
+            function htmlEncode(value){
+                //create a in-memory div, set it's inner text(which jQuery automatically encodes)
+                //then grab the encoded contents back out.  The div never exists on the page.
+                return $('<div />').text(value).html();
+            }
+
+            function htmlDecode(value){
+                return $('<div />').html(value).text();
+            }
+    </script>
+</head>
+
+<script>
+    var t1 = 'Irusk 2<br />Destroyer<br />Destroyer<br />Iron Fang Kovnik<br />Iron Fang Kovnik<br />Uhlan Kovnik Markov<br />Black Dragons (max)<br />Black Dragon Officer & Standard<br />Iron Fang Pikemen (max)<br />Iron Fang Pikemen (max)<br />Iron Fang Uhlans (max)<br />';
+</script>
+
+<body id="body" name="body" onload="alert(htmlDecode(l708_1));">
+
+</body>
+</html>

@@ -235,6 +235,14 @@
     <Compile Include="Migrations\201606040508223_update3.Designer.cs">
       <DependentUpon>201606040508223_update3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708210041228_JSONDump.cs" />
+    <Compile Include="Migrations\201708210041228_JSONDump.Designer.cs">
+      <DependentUpon>201708210041228_JSONDump.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710141725479_eventowner.cs" />
+    <Compile Include="Migrations\201710141725479_eventowner.Designer.cs">
+      <DependentUpon>201710141725479_eventowner.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AspNetUserRole.cs">
@@ -267,6 +275,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\GameReport.cs" />
+    <Compile Include="ViewModels\JSONDump.cs" />
     <Compile Include="ViewModels\Publish.cs" />
     <Compile Include="ViewModels\RoundTeamMatchupPrint.cs" />
     <Compile Include="ViewModels\Rounds.cs" />
@@ -428,6 +437,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201606040508223_update3.resx">
       <DependentUpon>201606040508223_update3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708210041228_JSONDump.resx">
+      <DependentUpon>201708210041228_JSONDump.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710141725479_eventowner.resx">
+      <DependentUpon>201710141725479_eventowner.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
 <link rel="stylesheet" href="~/resources/demos/style.css">
 
 @{
@@ -10,6 +11,11 @@
 }
 <script src="@ListsScript"></script>
 
+<script>
+    function htmlDecode(value) {
+        return $('<div />').html(value).text();
+    }
+</script>
 
 <style>
     img.teamLogo {
@@ -69,8 +75,10 @@
                                 <tr>
                                     @{  var listID1 = "l" + player.PlayerId + "_1";
                                         var listID2 = "l" + player.PlayerId + "_2";
-                                        JSToLoadLists += "document.getElementById('" + listID1 + "').innerHTML = " + listID1 + ".split('\\n').join('<br/>');;";
-                                        JSToLoadLists += "document.getElementById('" + listID2 + "').innerHTML = " + listID2 + ".split('\\n').join('<br/>');;";
+
+                                        JSToLoadLists += "$('#" + listID1 + "').html(htmlDecode(" + listID1 + "));"; //document.getElementById('" + listID1 + "').innerHTML = " + listID1 + ";";
+                                        JSToLoadLists += "$('#" + listID2 + "').html(htmlDecode(" + listID2 + "));";
+                                        //JSToLoadLists += "document.getElementById('" + listID2 + "').innerHTML = " + listID2 + ".split('\\n').join('<br/>');;";
                                     }
                                     <td valign="top">
                                         <div id="@listID1"></div>
