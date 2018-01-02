@@ -26,7 +26,7 @@ namespace WMATC.Controllers
             if (id != null)
             {
                 Session["SelectedEventId"] = id;
-                Session["SelectedEvent"] = (from p in db.Events where p.EventId == id select p.Title).FirstOrDefault() ;
+                Session["SelectedEvent"] = (from p in db.Events where p.EventId == id select p.Title).FirstOrDefault();
 
                 //Clear the SelectedTeam if we've selected a new Event
                 if (Session["SelectedTeam"] != null)
@@ -128,46 +128,75 @@ namespace WMATC.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(@event).State = EntityState.Modified;
+                var JSON_IsDirty = false;
+                var dbEvent = (from p in db.Events where p.EventId == @event.EventId select p).FirstOrDefault();
+                if (dbEvent.JSONDump != @event.JSONDump) JSON_IsDirty = true;
                 db.SaveChanges();
-                if (db.Entry(@event).Entity.JSONDump != "")
+
+
+                var q = from p in db.Teams where p.EventId == @event.EventId select p;
+                if (q.Count() > 0) db.Teams.RemoveRange(q);
+                db.SaveChanges();
+                if (@event.JSONDump.Trim() != "")
                 {
                     //parse json
                     string JSON = db.Entry(@event).Entity.JSONDump;
-                    JSONDump AllLists = new JavaScriptSerializer().Deserialize<JSONDump>(JSON);
-                    
-                    foreach (var List in AllLists.data)
+                    List<JSONDump> AllTeams = new JavaScriptSerializer().Deserialize<List<JSONDump>>(JSON);
+
+                    foreach (var Team in AllTeams)
                     {
-                        var q = (from p in db.Players where p.Name == List.Name orderby p.TeamId descending select p).FirstOrDefault() ;
-                        if (q == null)
+                        var dbTeam = (from p in db.Teams where p.Name == Team.Name && p.EventId == @event.EventId select p).FirstOrDefault();
+                        if (dbTeam == null)
                         {
-                            var x = 1;
+                            dbTeam = new Team();
+                            dbTeam.Name = Team.Name;
+                            dbTeam.EventId = @event.EventId;
+                            db.Teams.Add(dbTeam);
+                            db.SaveChanges();
                         }
-                        else
+
+                        foreach (var Player in Team.Players)
                         {
-                            var f = List.Faction;
+                            var dbPlayer = (from p in db.Players where p.TeamId == dbTeam.TeamId && p.Name == Player.Name select p).FirstOrDefault();
+                            if (dbPlayer == null)
+                            {
+                                dbPlayer = new Player();
+                                db.Players.Add(dbPlayer);
+                            }
+                            dbPlayer.TeamId = dbTeam.TeamId;
+                            dbPlayer.Team = dbTeam;
+                            dbPlayer.Name = Player.Name;
+
+                            //Faction translation
+                            var f = Player.Faction;
                             if (f == "Legion of Everblight") f = "Legion";
                             if (f == "Retribution of Scyrah") f = "Retribution";
                             if (f == "Circle Orboros") f = "Circle";
                             if (f == "Convergence of Cyriss") f = "Convergence";
                             if (f == "Protectorate of Menoth") f = "Protectorate";
+                            dbPlayer.Faction = (from p in db.Faction where p.Title == f select p).FirstOrDefault();
 
-                            q.Faction = (from p in db.Faction where p.Title == f select p ).FirstOrDefault ();
-                            if (q.Faction == null)
+
+                            //Lists & Casters
+                            dbPlayer.List1 = string.Empty;
+                            if (Player.List1 != null)
                             {
-                                var x2 = 1;
+                                dbPlayer.Caster1 = Player.List1.List.FirstOrDefault();
+                                foreach (string s in Player.List1.List)
+                                    dbPlayer.List1 += s + @"<br/>";
                             }
-                            q.List1 = string.Empty;
-                            if (List.List1 != null) foreach (string s in List.List1.List)
-                                q.List1 += s + @"<br/>";
-                            q.List2 = string.Empty;
-                            if (List.List2 != null) foreach (string s in List.List2.List)
-                                q.List2 += s + @"<br/>";
-                            q.Caster1 = List.List1.List.FirstOrDefault();
-                            q.Caster2 = List.List2.List.FirstOrDefault();
-                            db.SaveChanges();
+                            dbPlayer.List2 = string.Empty;
+                            if (Player.List2 != null)
+                            {
+                                dbPlayer.Caster2 = Player.List2.List.FirstOrDefault();
+                                foreach (string s in Player.List2.List)
+                                    dbPlayer.List2 += s + @"<br/>";
+                            }
                         }
 
+                        db.SaveChanges();
                     }
+
                 }
                 return RedirectToAction("Index");
             }

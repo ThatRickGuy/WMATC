@@ -58,7 +58,12 @@
                         <h4>
                             <table width="100%">
                                 <tr>
-                                    <td width="30px"><img src="@player.Faction.ImageURL" style="width:auto; height:28px; margin-right:5px; " /></td>
+                                    <td width="30px">
+                                    @if (player.Faction != null)
+                                    {
+                                        <img src="@player.Faction.ImageURL" style="width:auto; height:28px; margin-right:5px; " />
+                                    }
+                                    </td>
                                     <td width="15%">@player.Name </td>
                                     <td width="30%"><span style="overflow-wrap: break-word;overflow: hidden; height: 22px;">@player.Caster1 </span></td>
                                     <td width="30%"><span style="overflow-wrap: break-word;overflow: hidden; height: 22px;">@player.Caster2</span></td>
