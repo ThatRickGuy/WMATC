@@ -48,7 +48,7 @@
         background: -webkit-linear-gradient(45deg, #e5e5e5 0%,#aaaaaa 59%,#777777 59%,#444444 100%); /* Chrome10-25,Safari5.1-6 */
         background: linear-gradient(225deg, #e5e5e5 0%,#aaaaaa 59%,#777777 59%,#444444 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5e5e5', endColorstr='#ff3232',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-        width: 500px;
+        width: 100%;
         height: 55px;
     }
 
@@ -58,7 +58,7 @@
         background: -webkit-linear-gradient(45deg, #e5f5e5 0%,#aabaaa 59%,#778777 59%,#445444 100%); /* Chrome10-25,Safari5.1-6 */
         background: linear-gradient(225deg, #e5f5e5 0%,#aabaaa 59%,#778777 59%,#445444 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5e5e5', endColorstr='#ff3232',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-        width: 500px;
+        width: 100%;
         height: 55px;
     }
 
@@ -68,7 +68,7 @@
         background: -webkit-linear-gradient(45deg, #e5e5e5 0%,#9dff96 59%,#63ff75 59%,#4eff32 100%); /* Chrome10-25,Safari5.1-6 */
         background: linear-gradient(225deg, #e5e5e5 0%,#9dff96 59%,#63ff75 59%,#4eff32 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5e5e5', endColorstr='#4eff32',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-        width: 500px;
+        width: 100%;
         height: 55px;
     }
 
@@ -168,10 +168,10 @@
     string TeamBackground = "";
     int iTeamList = 0;
 }
-@foreach (var team in (from p in Model.Teams orderby p.TeamWins descending, p.TP descending, p.StrengthOfSchedule descending, p.CP descending, p.APD descending select p))
+@foreach (var team in (from p in Model.Teams orderby p.TeamWins descending, p.StrengthOfSchedule descending, p.TP descending, p.CP descending, p.APD descending select p))
 {
     <div>
-        <div id="MatchupBar" class="ShadowBox " style="width:500px; height:55px; margin-top:15px;">
+        <div id="MatchupBar" class="ShadowBox " style="width:95%; height:55px; margin-top:15px;">
 
             @{TeamBackground = "BlankBackground";
 
@@ -186,50 +186,50 @@
 
                 <div style="margin:1px 27px 3px 0px;float:right;">
                     <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:23px;">
-                        <span style="font-size:8pt;">Wins</span>
-                        <span style="font-size:30px;">@team.TeamWins </span>
+                        <div style="font-size:8pt;">Wins</div>
+                        <div style="font-size:30px; vertical-align: top;margin-top:-5px;">@team.TeamWins </div>
                     </div>
                     <div style="float:left; min-width:20px; margin:2px 5px 0px 5px;">
                         @for (var i = 0; i < team.TeamWins; i++)
                         {<div id="chevron"></div> }
                     </div>
-                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:27px;">
+                        <span style="font-size:8pt;">SOS</span>
+                        <span style="font-size:20px;line-height:31px;">@team.StrengthOfSchedule </span>
+                    </div>
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:27px;">
                         <span style="font-size:8pt;">TP</span>
                         <span style="font-size:20px;line-height:31px;">@team.TP </span>
                     </div>
-                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
-                        <span style="font-size:8pt;">SoS</span>
-                        <span style="font-size:20px;line-height:31px;">@team.StrengthOfSchedule </span>
-                    </div>
-                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:27px;">
                         <span style="font-size:8pt;">CP</span>
                         <span style="font-size:20px;line-height:31px;">@team.CP </span>
                     </div>
-                    <div style="float:left; margin:0px 5px 0px 5px; vertical-align:top; width:20px;">
+                    <div style="float:left; margin:0px 0px 0px 5px; vertical-align:top; width:27px;">
                         <span style="font-size:8pt;">APD</span>
                         <span style="font-size:20px;line-height:31px;">@team.APD </span>
                     </div>
                 </div>
-                <div id="TeamName" style="margin:18px 0px 0px 0px;font-weight:bold; color:#eeeeee; text-shadow: 0px 0px 3px #000000;max-width:180px; max-height:24px; overflow:hidden;">
+                <div id="TeamName" style="margin:10px 0px 0px 0px;font-weight:bold; color:#eeeeee; text-shadow: 0px 0px 3px #000000;max-width:50%; font-size:20px; max-height:24px; overflow:hidden;">
                     @team.TeamName
                 </div>
             </div>
         </div>
 
         <div id="@iTeamList" style="clear:both;
-									  width:350px;
-									  margin: 5px 0px 0px 75px;
+									  width:50%;
+									  margin: 5px 0px 0px 25%;
 									  display:none">
             @if (team.Players != null)
             {
                 foreach (var player in (from p in team.Players orderby p.TP descending, p.StrengthOfSchedule descending, p.CP descending, p.APD descending select p).ToList())
                 {
-                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:350px; margin-bottom:4px;">
+                    <div class="littleShadow Box BlankBackgroundPlayer" style="height:43px; width:100%; margin-bottom:4px;">
                         <img src="@player.FactionImageURL" alt="@player.Faction" style="float:left; width:32px; height:32px; margin:3px;" data-toggle="tooltip" title="@player.Faction">
-                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;">
+                        <div style="float:left; color:#eeeeee; text-shadow: 0px 0px 3px #000000;font-size:18px; margin: 7px 0px 0px 0px;">
                             <div class="PlayerName" data-toggle="tooltip" title="@player.Name">@player.Name</div>
                         </div>
-                        <div style="float:right;">
+                        <div style="float:right;font-size:16px;">
                             <div  style="float:left;margin:3px;">@player.TP</div>
                             <div  style="float:left;margin:3px;">@player.StrengthOfSchedule</div>
                             <div  style="float:left;margin:3px;">@player.CP</div>

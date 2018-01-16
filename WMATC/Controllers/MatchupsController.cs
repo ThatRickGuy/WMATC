@@ -58,19 +58,23 @@ namespace WMATC.Controllers
             if (Session["SelectedEventId"] == null) return Redirect("Events");
             if (Session["SelectedRoundId"] == null) return Redirect("Rounds");
             int SelectedRoundTeamMatchupId = -1;
+            int EventID = -1;
+            int.TryParse(Session["SelectedEventId"].ToString(), out EventID);
             int.TryParse(Session["SelectedRoundTeamMatchupId"].ToString(), out SelectedRoundTeamMatchupId);
             var Team1Id = (from p in db.RoundTeamMatchups where p.RoundTeamMatchupId == SelectedRoundTeamMatchupId select p.Team1.TeamId).FirstOrDefault();
             var Team2Id = (from p in db.RoundTeamMatchups where p.RoundTeamMatchupId == SelectedRoundTeamMatchupId select p.Team2.TeamId).FirstOrDefault();
             var RoundID = (from p in db.RoundTeamMatchups where p.RoundTeamMatchupId == SelectedRoundTeamMatchupId select p.RoundId).FirstOrDefault();
 
-            var AvailavlePlayers = from p in db.Players where p.TeamId == Team1Id select p;
+            var bye = (from p in db.Players where p.Name == "Bye" && p.Team.EventId == EventID select p).FirstOrDefault();
+            var AvailablePlayers = (from p in db.Players where p.TeamId == Team1Id select p).ToList();
             var UnavailablePlayers = (from p in db.Matchups where p.RoundTeamMatchupId == SelectedRoundTeamMatchupId select p.Player1Id).ToList();
-            AvailavlePlayers = from p in AvailavlePlayers where !UnavailablePlayers.Contains(p.PlayerId) select p;
-            ViewBag.Player1Id = new SelectList(AvailavlePlayers.ToList(), "PlayerId", "Name");
+            AvailablePlayers = (from p in AvailablePlayers where !UnavailablePlayers.Contains(p.PlayerId) select p).ToList();
+            AvailablePlayers.Add(bye);
+            ViewBag.Player1Id = new SelectList(AvailablePlayers, "PlayerId", "Name");
 
             List<PlayerList> Lists = new List<PlayerList>();
             //Lists.Add(new PlayerList() { Key = null, PlayerName = "", Value = "" });
-            foreach (var Player in AvailavlePlayers)
+            foreach (var Player in AvailablePlayers)
             {
                 Lists.Add(new PlayerList() { Key = 1, PlayerName = HttpUtility.HtmlEncode(Player.Name), Value = "1. " + HttpUtility.HtmlEncode(Player.Caster1) });
                 Lists.Add(new PlayerList() { Key = 2, PlayerName = HttpUtility.HtmlEncode(Player.Name), Value = "2. " + HttpUtility.HtmlEncode(Player.Caster2) });
@@ -80,15 +84,16 @@ namespace WMATC.Controllers
 
 
 
-            AvailavlePlayers = from p in db.Players where p.TeamId == Team2Id select p;
+            AvailablePlayers = (from p in db.Players where p.TeamId == Team2Id select p).ToList();
             UnavailablePlayers = (from p in db.Matchups where p.RoundTeamMatchupId == SelectedRoundTeamMatchupId select p.Player2Id).ToList();
-            AvailavlePlayers = from p in AvailavlePlayers where !UnavailablePlayers.Contains(p.PlayerId) select p;
-            ViewBag.Player2Id = new SelectList(AvailavlePlayers.ToList(), "PlayerId", "Name");
+            AvailablePlayers = (from p in AvailablePlayers where !UnavailablePlayers.Contains(p.PlayerId) select p).ToList();
+            AvailablePlayers.Add(bye);
+            ViewBag.Player2Id = new SelectList(AvailablePlayers.ToList(), "PlayerId", "Name");
 
             ViewBag.WinnerId = new SelectList(new List<Player>(), "PlayerId", "Name");
 
             
-            foreach (var Player in AvailavlePlayers)
+            foreach (var Player in AvailablePlayers)
             {
                 Lists.Add(new PlayerList() { Key = 1, PlayerName = HttpUtility.HtmlEncode(Player.Name), Value = "1. " + HttpUtility.HtmlEncode(Player.Caster1) });
                 Lists.Add(new PlayerList() { Key = 2, PlayerName = HttpUtility.HtmlEncode(Player.Name), Value = "2. " + HttpUtility.HtmlEncode(Player.Caster2) });

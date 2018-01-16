@@ -213,6 +213,11 @@ namespace WMATC.Controllers
 
                             // Get all tables not currently in use
                             AvailableTables = (from p in AvailableTables where !UsedTables.Contains(p) select p).ToList();
+                            if (TeamWins.Count()%2==0 && (from p in TeamWins where p.Key.Name == "BYE" select p ).Count() ==1)
+                            {
+                                //even number of teams, and the bye player exists, hide the max table 
+                                AvailableTables.Remove(MaxTableZoneNumber);
+                            }
 
                             var FreshTables = (from p in AvailableTables where !PreviousTables.Contains(p) select p).ToList();
                             if (FreshTables.Count() == 0)
@@ -226,8 +231,10 @@ namespace WMATC.Controllers
                                 throw new Exception("No valid tables.");
                             }
 
-                            var Table = FreshTables.ElementAt(rand.Next(FreshTables.Count()));
-
+                            var Table = MaxTableZoneNumber;
+                            if (Team1.Key.Name != "BYE" && Team2.Key.Name != "BYE")
+                                Table= FreshTables.ElementAt(rand.Next(FreshTables.Count()));
+                            
                             // save the pairing
                             var RoundTeamMatchup = new RoundTeamMatchup();
                             RoundTeamMatchup.RoundId = RoundID;
