@@ -128,9 +128,7 @@ namespace WMATC.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(@event).State = EntityState.Modified;
-                var JSON_IsDirty = false;
                 var dbEvent = (from p in db.Events where p.EventId == @event.EventId select p).FirstOrDefault();
-                if (dbEvent.JSONDump != @event.JSONDump) JSON_IsDirty = true;
                 db.SaveChanges();
 
 
@@ -182,6 +180,7 @@ namespace WMATC.Controllers
                             if (Player.List1 != null)
                             {
                                 dbPlayer.Caster1 = Player.List1.List.FirstOrDefault();
+                                dbPlayer.Theme1 = Player.List1.Theme;
                                 foreach (string s in Player.List1.List)
                                     dbPlayer.List1 += s + @"<br/>";
                             }
@@ -189,6 +188,7 @@ namespace WMATC.Controllers
                             if (Player.List2 != null)
                             {
                                 dbPlayer.Caster2 = Player.List2.List.FirstOrDefault();
+                                dbPlayer.Theme2 = Player.List2.Theme;
                                 foreach (string s in Player.List2.List)
                                     dbPlayer.List2 += s + @"<br/>";
                             }
@@ -203,6 +203,7 @@ namespace WMATC.Controllers
             return View(@event);
         }
 
+       
         // GET: Events/Delete/5
         [Authorize(Roles = "canEdit")]
         public ActionResult Delete(int? id)

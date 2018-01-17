@@ -94,7 +94,7 @@ namespace WMATC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "canEdit")]
-        public ActionResult Create([Bind(Include = "PlayerId,Name,FactionId,Caster1,List1,Caster2,List2,TeamId")] Player player)
+        public ActionResult Create([Bind(Include = "PlayerId,Name,FactionId,Caster1,List1,Theme1,Caster2,List2,Theme2,TeamId")] Player player)
         {
             if (ModelState.IsValid)
             {
@@ -162,7 +162,7 @@ namespace WMATC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "canEdit")]
-        public ActionResult Edit([Bind(Include = "PlayerId,Name,FactionId,Caster1,List1,Caster2,List2,TeamId")] Player player)
+        public ActionResult Edit([Bind(Include = "PlayerId,Name,FactionId,Caster1,List1,Theme1,Caster2,List2,Theme2,TeamId")] Player player)
         {
             if (ModelState.IsValid)
             {

@@ -243,6 +243,10 @@
     <Compile Include="Migrations\201710141725479_eventowner.Designer.cs">
       <DependentUpon>201710141725479_eventowner.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201801170133287_themes.cs" />
+    <Compile Include="Migrations\201801170133287_themes.Designer.cs">
+      <DependentUpon>201801170133287_themes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AspNetUserRole.cs">
@@ -443,6 +447,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710141725479_eventowner.resx">
       <DependentUpon>201710141725479_eventowner.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801170133287_themes.resx">
+      <DependentUpon>201801170133287_themes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -27,10 +27,16 @@
             @Html.DisplayNameFor(model => model.List1)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Theme1)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Caster2)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.List2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Theme2)
         </th>
         <th></th>
     </tr>
@@ -55,12 +61,18 @@
             </div>
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.Theme1)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Caster2)
         </td>
         <td>
             <div style="height:100px;overflow: scroll;">
                 @Html.DisplayFor(modelItem => item.List2)
             </div>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Theme2)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.PlayerId }) |
