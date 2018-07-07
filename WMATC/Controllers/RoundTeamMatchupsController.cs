@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -16,12 +17,15 @@ namespace WMATC.Controllers
 
 
         // GET: RoundTeamMatchups
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         public ActionResult Index(int? id)
         {
 
             if (Session["SelectedEventId"] == null) return Redirect("Events");
             if (Session["SelectedRoundId"] == null && id == null ) return Redirect("Rounds");
+            Event @event = db.Events.Find(Session["SelectedEventId"]);
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
 
             if (id != null)
             {
@@ -40,9 +44,12 @@ namespace WMATC.Controllers
         }
 
         // GET: RoundTeamMatchups/Details/5
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         public ActionResult Details(int? id)
         {
+            Event @event = db.Events.Find(Session["SelectedEventId"]);
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -56,11 +63,15 @@ namespace WMATC.Controllers
         }
 
         // GET: RoundTeamMatchups/Create
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         public ActionResult Create()
         {
             if (Session["SelectedEventId"] == null) return Redirect("Events");
             if (Session["SelectedRoundId"] == null) return Redirect("Rounds");
+
+            Event @event = db.Events.Find(Session["SelectedEventId"]);
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
 
             int RoundID = 0;
             int.TryParse(Session["SelectedRoundId"].ToString(), out RoundID);
@@ -82,11 +93,14 @@ namespace WMATC.Controllers
         // POST: RoundTeamMatchups/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "RoundTeamMatchupId,RoundId,Team1Id,Team2Id,TableZone")] RoundTeamMatchup roundTeamMatchup, string command)
         {
+            Event @event = db.Events.Find(Session["SelectedEventId"]);
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
             if (ModelState.IsValid)
             {
                 db.RoundTeamMatchups.Add(roundTeamMatchup);
@@ -100,9 +114,12 @@ namespace WMATC.Controllers
         }
 
         // GET: RoundTeamMatchups/Edit/5
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         public ActionResult Edit(int? id)
         {
+            Event @event = db.Events.Find(Session["SelectedEventId"]);
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -133,11 +150,14 @@ namespace WMATC.Controllers
         // POST: RoundTeamMatchups/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "RoundTeamMatchupId,RoundId,Team1Id,Team2Id,TableZone")] RoundTeamMatchup roundTeamMatchup)
         {
+            Event @event = db.Events.Find(Session["SelectedEventId"]);
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
             if (ModelState.IsValid)
             {
                 db.Entry(roundTeamMatchup).State = EntityState.Modified;
@@ -148,9 +168,12 @@ namespace WMATC.Controllers
         }
 
         // GET: RoundTeamMatchups/Delete/5
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         public ActionResult Delete(int? id)
         {
+            Event @event = db.Events.Find(Session["SelectedEventId"]);
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -164,11 +187,14 @@ namespace WMATC.Controllers
         }
 
         // POST: RoundTeamMatchups/Delete/5
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            Event @event = db.Events.Find(Session["SelectedEventId"]);
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest,"Users may only modify their own events");
             RoundTeamMatchup roundTeamMatchup = db.RoundTeamMatchups.Find(id);
             db.RoundTeamMatchups.Remove(roundTeamMatchup);
             db.SaveChanges();

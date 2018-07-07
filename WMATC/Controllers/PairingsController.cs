@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -17,11 +18,15 @@ namespace WMATC.Controllers
 
 
         // GET: Pairings
-        [Authorize(Roles = "canEdit")]
+       // [Authorize(Roles = "canEdit")]
         public ActionResult PrintLanding()
         {
             if (Session["SelectedEventId"] == null) return Redirect("Events");
             if (Session["SelectedRoundId"] == null) return Redirect("Rounds");
+
+            Event @event = db.Events.Find(Session["SelectedEventId"]);
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
 
             int RoundID = 0;
             int.TryParse(Session["SelectedRoundId"].ToString(), out RoundID);
@@ -68,11 +73,15 @@ namespace WMATC.Controllers
 
 
         // GET: Pairings
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         public ActionResult Generate()
         {
             if (Session["SelectedEventId"] == null) return Redirect("Events");
             if (Session["SelectedRoundId"] == null) return Redirect("Rounds");
+
+            Event @event = db.Events.Find(Session["SelectedEventId"]);
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
 
             int RoundID = 0;
             int.TryParse(Session["SelectedRoundId"].ToString(), out RoundID);
@@ -84,13 +93,17 @@ namespace WMATC.Controllers
         }
 
         // GET: Pairings
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         [HttpPost, ActionName("Generate")]
         [ValidateAntiForgeryToken]
         public ActionResult GenerateConfirmed()
         {
             if (Session["SelectedEventId"] == null) return Redirect("Events");
             if (Session["SelectedRoundId"] == null) return Redirect("Rounds");
+
+            Event @event = db.Events.Find(Session["SelectedEventId"]);
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
 
             int RoundID = 0;
             int.TryParse(Session["SelectedRoundId"].ToString(), out RoundID);

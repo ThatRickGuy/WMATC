@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -15,12 +16,15 @@ namespace WMATC.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Teams
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         public ActionResult Index(int? id)
         {
 
             if (Session["SelectedEventId"] == null) return Redirect("Events");
             var teams = db.Teams.Include(t => t.Event);
+            Event @event = db.Events.Find(Session["SelectedEventId"]);
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
 
             if (id != null) 
             {
@@ -41,9 +45,12 @@ namespace WMATC.Controllers
         }
 
         // GET: Teams/Details/5
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         public ActionResult Details(int? id)
         {
+            Event @event = db.Events.Find(Session["SelectedEventId"]);
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -57,9 +64,13 @@ namespace WMATC.Controllers
         }
 
         // GET: Teams/Create
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         public ActionResult Create()
         {
+            Event @event = db.Events.Find(Session["SelectedEventId"]);
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
+
             var events = (from p in db.Events select p);
             if (Session["SelectedEventId"] != null)
             {
@@ -74,11 +85,14 @@ namespace WMATC.Controllers
         // POST: Teams/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "TeamId,Name,ImgURL,EventId,PairedDownRound,ByeRound")] Team team)
         {
+            Event @event = db.Events.Find(Session["SelectedEventId"]);
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
             if (ModelState.IsValid)
             {
                 db.Teams.Add(team);
@@ -97,9 +111,12 @@ namespace WMATC.Controllers
         }
 
         // GET: Teams/Edit/5
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         public ActionResult Edit(int? id)
         {
+            Event @event = db.Events.Find(Session["SelectedEventId"]);
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -123,11 +140,14 @@ namespace WMATC.Controllers
         // POST: Teams/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "TeamId,Name,ImgURL,EventId,PairedDownRound,ByeRound,DropRound")] Team team)
         {
+            Event @event = db.Events.Find(Session["SelectedEventId"]);
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
             if (ModelState.IsValid)
             {
                 db.Entry(team).State = EntityState.Modified;
@@ -146,9 +166,12 @@ namespace WMATC.Controllers
         }
 
         // GET: Teams/Delete/5
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         public ActionResult Delete(int? id)
         {
+            Event @event = db.Events.Find(Session["SelectedEventId"]);
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -162,11 +185,14 @@ namespace WMATC.Controllers
         }
 
         // POST: Teams/Delete/5
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            Event @event = db.Events.Find(Session["SelectedEventId"]);
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
             Team team = db.Teams.Find(id);
             var q = from p in db.Players where p.TeamId == team.TeamId select 1;
             if (q.Count() > 0)

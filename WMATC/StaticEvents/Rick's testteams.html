@@ -1,11 +1,28 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
 <link rel="stylesheet" href="/resources/demos/style.css">
 
 
-<script src="/StaticEvents/Rick&#39;s test.js"></script>
+<script src="./Rick&#39;s test.js"></script>
 
+<script>
+    function htmlDecode(value) {
+        return $('<div />').html(value).text();
+    }
+</script>
+
+<style>
+    img.teamLogo {
+        height: auto; 
+        width: auto; 
+        max-width: 60px; 
+        max-height: 60px;
+    }
+
+
+</style>
 
 <table>
     <tr>
@@ -13,7 +30,7 @@
         <td>
             <h1 style="line-height: .125; margin-top:10px;">Rick&#39;s test</h1>
             <hr />
-            <h3 style="line-height: .125;">1/1/2017</h3>
+            <h3 style="line-height: .125;">6/11/2016</h3>
         </td>
     </tr>
 </table>
@@ -21,24 +38,306 @@
 
 
 <div class="accordion">
-        <h3><img src="http://icons.iconarchive.com/icons/hopstarter/face-avatars/256/Male-Face-H5-icon.png" style="margin-right:5px;"></img>team 1 </h3>
-        <div class="accordion">
-        </div>
-        <h3><img src="http://icons.iconarchive.com/icons/hopstarter/face-avatars/256/Male-Face-F5-icon.png" style="margin-right:5px;"></img>team 2 </h3>
-        <div class="accordion">
-        </div>
-        <h3><img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTuu2mTi-0lSfD_17AkpbdBAYVwUGEZONYHOTRETeAkd-Bd4sB_" style="margin-right:5px;"></img>team 3 </h3>
-        <div class="accordion">
-        </div>
-        <h3><img style="margin-right:5px;"></img>BYE </h3>
-        <div class="accordion">
-        </div>
+        <h3><img src="http://icons.iconarchive.com/icons/hopstarter/face-avatars/256/Male-Face-H5-icon.png" class="teamLogo" style="margin-right:5px;"></img>
+            <span style="VERTICAL-ALIGN:TOP;">team 1</span> 
+        </h3>
+            <div class="accordion">
+                        <h4>
+                            <table width="100%">
+                                <tr>
+                                    <td width="30px">
+                                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_CygnarWO.png" style="width:auto; height:28px; margin-right:5px; " />
+                                    </td>
+                                    <td width="15%">Jimmy </td>
+                                    <td width="30%"><span style="overflow-wrap: break-word;overflow: hidden; height: 22px;">Sloan </span></td>
+                                    <td width="30%"><span style="overflow-wrap: break-word;overflow: hidden; height: 22px;">Caine2</span></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+
+
+
+
+                        </h4>
+                        <div>
+                            <table>
+                                <tr>
+
+                                    <td valign="top">
+                                        <div id="l1_1"></div>
+                                    </td>
+                                    <td style="width:25px;"></td>
+                                    <td valign="top">
+                                        <div id="l1_2"></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <h4>
+                            <table width="100%">
+                                <tr>
+                                    <td width="30px">
+                                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_KhadorWO.png" style="width:auto; height:28px; margin-right:5px; " />
+                                    </td>
+                                    <td width="15%">Pauly </td>
+                                    <td width="30%"><span style="overflow-wrap: break-word;overflow: hidden; height: 22px;">Sorscha2 </span></td>
+                                    <td width="30%"><span style="overflow-wrap: break-word;overflow: hidden; height: 22px;">Butcher3</span></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+
+
+
+
+                        </h4>
+                        <div>
+                            <table>
+                                <tr>
+
+                                    <td valign="top">
+                                        <div id="l2_1"></div>
+                                    </td>
+                                    <td style="width:25px;"></td>
+                                    <td valign="top">
+                                        <div id="l2_2"></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <h4>
+                            <table width="100%">
+                                <tr>
+                                    <td width="30px">
+                                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_CircleWO.png" style="width:auto; height:28px; margin-right:5px; " />
+                                    </td>
+                                    <td width="15%">Sandy </td>
+                                    <td width="30%"><span style="overflow-wrap: break-word;overflow: hidden; height: 22px;">Morvahna2 </span></td>
+                                    <td width="30%"><span style="overflow-wrap: break-word;overflow: hidden; height: 22px;">Kromac2</span></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+
+
+
+
+                        </h4>
+                        <div>
+                            <table>
+                                <tr>
+
+                                    <td valign="top">
+                                        <div id="l3_1"></div>
+                                    </td>
+                                    <td style="width:25px;"></td>
+                                    <td valign="top">
+                                        <div id="l3_2"></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+            </div>
+        <h3><img src="http://icons.iconarchive.com/icons/hopstarter/face-avatars/256/Male-Face-F5-icon.png" class="teamLogo" style="margin-right:5px;"></img>
+            <span style="VERTICAL-ALIGN:TOP;">team 2</span> 
+        </h3>
+            <div class="accordion">
+                        <h4>
+                            <table width="100%">
+                                <tr>
+                                    <td width="30px">
+                                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_RetributionWO.png" style="width:auto; height:28px; margin-right:5px; " />
+                                    </td>
+                                    <td width="15%">Ed </td>
+                                    <td width="30%"><span style="overflow-wrap: break-word;overflow: hidden; height: 22px;">Vyros </span></td>
+                                    <td width="30%"><span style="overflow-wrap: break-word;overflow: hidden; height: 22px;">Ravyn</span></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+
+
+
+
+                        </h4>
+                        <div>
+                            <table>
+                                <tr>
+
+                                    <td valign="top">
+                                        <div id="l4_1"></div>
+                                    </td>
+                                    <td style="width:25px;"></td>
+                                    <td valign="top">
+                                        <div id="l4_2"></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <h4>
+                            <table width="100%">
+                                <tr>
+                                    <td width="30px">
+                                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_MercenariesWO.png" style="width:auto; height:28px; margin-right:5px; " />
+                                    </td>
+                                    <td width="15%">Fred </td>
+                                    <td width="30%"><span style="overflow-wrap: break-word;overflow: hidden; height: 22px;">Bart </span></td>
+                                    <td width="30%"><span style="overflow-wrap: break-word;overflow: hidden; height: 22px;">Shae</span></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+
+
+
+
+                        </h4>
+                        <div>
+                            <table>
+                                <tr>
+
+                                    <td valign="top">
+                                        <div id="l5_1"></div>
+                                    </td>
+                                    <td style="width:25px;"></td>
+                                    <td valign="top">
+                                        <div id="l5_2"></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <h4>
+                            <table width="100%">
+                                <tr>
+                                    <td width="30px">
+                                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_CryxWO.png" style="width:auto; height:28px; margin-right:5px; " />
+                                    </td>
+                                    <td width="15%">Ned </td>
+                                    <td width="30%"><span style="overflow-wrap: break-word;overflow: hidden; height: 22px;">Mortenebra </span></td>
+                                    <td width="30%"><span style="overflow-wrap: break-word;overflow: hidden; height: 22px;">Asphyxious2</span></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+
+
+
+
+                        </h4>
+                        <div>
+                            <table>
+                                <tr>
+
+                                    <td valign="top">
+                                        <div id="l6_1"></div>
+                                    </td>
+                                    <td style="width:25px;"></td>
+                                    <td valign="top">
+                                        <div id="l6_2"></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+            </div>
+        <h3><img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTuu2mTi-0lSfD_17AkpbdBAYVwUGEZONYHOTRETeAkd-Bd4sB_" class="teamLogo" style="margin-right:5px;"></img>
+            <span style="VERTICAL-ALIGN:TOP;">team 3</span> 
+        </h3>
+            <div class="accordion">
+                        <h4>
+                            <table width="100%">
+                                <tr>
+                                    <td width="30px">
+                                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_MinionsWO.png" style="width:auto; height:28px; margin-right:5px; " />
+                                    </td>
+                                    <td width="15%">Jim </td>
+                                    <td width="30%"><span style="overflow-wrap: break-word;overflow: hidden; height: 22px;">Rask </span></td>
+                                    <td width="30%"><span style="overflow-wrap: break-word;overflow: hidden; height: 22px;">Carver</span></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+
+
+
+
+                        </h4>
+                        <div>
+                            <table>
+                                <tr>
+
+                                    <td valign="top">
+                                        <div id="l8_1"></div>
+                                    </td>
+                                    <td style="width:25px;"></td>
+                                    <td valign="top">
+                                        <div id="l8_2"></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <h4>
+                            <table width="100%">
+                                <tr>
+                                    <td width="30px">
+                                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_CryxWO.png" style="width:auto; height:28px; margin-right:5px; " />
+                                    </td>
+                                    <td width="15%">Slim </td>
+                                    <td width="30%"><span style="overflow-wrap: break-word;overflow: hidden; height: 22px;">Goreshade3 </span></td>
+                                    <td width="30%"><span style="overflow-wrap: break-word;overflow: hidden; height: 22px;">Deneghra</span></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+
+
+
+
+                        </h4>
+                        <div>
+                            <table>
+                                <tr>
+
+                                    <td valign="top">
+                                        <div id="l9_1"></div>
+                                    </td>
+                                    <td style="width:25px;"></td>
+                                    <td valign="top">
+                                        <div id="l9_2"></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <h4>
+                            <table width="100%">
+                                <tr>
+                                    <td width="30px">
+                                        <img src="http://privateerpress.com/files/imagecache/3up_square/pages/SmallLogo_ConvergenceWO.png" style="width:auto; height:28px; margin-right:5px; " />
+                                    </td>
+                                    <td width="15%">Tim </td>
+                                    <td width="30%"><span style="overflow-wrap: break-word;overflow: hidden; height: 22px;">Lucant </span></td>
+                                    <td width="30%"><span style="overflow-wrap: break-word;overflow: hidden; height: 22px;">Iron Father</span></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+
+
+
+
+                        </h4>
+                        <div>
+                            <table>
+                                <tr>
+
+                                    <td valign="top">
+                                        <div id="l7_1"></div>
+                                    </td>
+                                    <td style="width:25px;"></td>
+                                    <td valign="top">
+                                        <div id="l7_2"></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+            </div>
 </div>
 
 
 <script type="text/javascript">
     $(document).ready(function () {
-        
+        $('#l1_1').html(htmlDecode(l1_1));$('#l1_2').html(htmlDecode(l1_2));$('#l2_1').html(htmlDecode(l2_1));$('#l2_2').html(htmlDecode(l2_2));$('#l3_1').html(htmlDecode(l3_1));$('#l3_2').html(htmlDecode(l3_2));$('#l4_1').html(htmlDecode(l4_1));$('#l4_2').html(htmlDecode(l4_2));$('#l5_1').html(htmlDecode(l5_1));$('#l5_2').html(htmlDecode(l5_2));$('#l6_1').html(htmlDecode(l6_1));$('#l6_2').html(htmlDecode(l6_2));$('#l8_1').html(htmlDecode(l8_1));$('#l8_2').html(htmlDecode(l8_2));$('#l9_1').html(htmlDecode(l9_1));$('#l9_2').html(htmlDecode(l9_2));$('#l7_1').html(htmlDecode(l7_1));$('#l7_2').html(htmlDecode(l7_2));
     })
 
     $(".accordion").accordion({

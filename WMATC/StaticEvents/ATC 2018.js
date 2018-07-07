@@ -319,3 +319,5 @@ var l1103_1= 'Madrak 1&lt;br/&gt;Troll Bouncer&lt;br/&gt;Troll Bouncer&lt;br/&gt
 var l1103_2= 'Doomshaper 3&lt;br/&gt;Dire Troll Mauler&lt;br/&gt;Dire Troll Mauler&lt;br/&gt;Earthborn Dire Troll&lt;br/&gt;Mulg the Ancient&lt;br/&gt;Troll Axer&lt;br/&gt;Troll Bouncer&lt;br/&gt;Lanyssa Ryssyl, Nyss Sorceress&lt;br/&gt;Northkin Shaman&lt;br/&gt;Northkin Shaman&lt;br/&gt;Troll Whelps&lt;br/&gt;Krielstone Bearer &amp; Stone Scribes (max)&lt;br/&gt;Stone Scribe Elder&lt;br/&gt; ';
 var l1104_1= ' ';
 var l1104_2= ' ';
+var l1105_1= ' ';
+var l1105_2= ' ';

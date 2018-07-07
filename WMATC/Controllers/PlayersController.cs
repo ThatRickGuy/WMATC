@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -15,11 +16,15 @@ namespace WMATC.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Players
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         public ActionResult Index(int? id)
         {
             if (Session["SelectedEventId"] == null) return Redirect("Events");
             if (Session["SelectedTeamId"] == null && id == null) return Redirect("Teams");
+
+            Event @event = db.Events.Find(Session["SelectedEventId"]);
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
 
             if (id != null)
             {
@@ -47,7 +52,7 @@ namespace WMATC.Controllers
         }
 
         // GET: Players/Details/5
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -59,13 +64,19 @@ namespace WMATC.Controllers
             {
                 return HttpNotFound();
             }
+            Event @event = db.Events.Find(Session["SelectedEventId"]);
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
             return View(player);
         }
 
         // GET: Players/Create
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         public ActionResult Create()
         {
+            Event @event = db.Events.Find(Session["SelectedEventId"]);
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
             var teams = from p in db.Teams select p;
             if (Session["SelectedEvent"] != null)
             {
@@ -93,9 +104,12 @@ namespace WMATC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         public ActionResult Create([Bind(Include = "PlayerId,Name,FactionId,Caster1,List1,Theme1,Caster2,List2,Theme2,TeamId")] Player player)
         {
+            Event @event = db.Events.Find(Session["SelectedEventId"]);
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
             if (ModelState.IsValid)
             {
                 db.Players.Add(player);
@@ -123,9 +137,12 @@ namespace WMATC.Controllers
         }
 
         // GET: Players/Edit/5
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         public ActionResult Edit(int? id)
         {
+            Event @event = db.Events.Find(Session["SelectedEventId"]);
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -161,9 +178,12 @@ namespace WMATC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         public ActionResult Edit([Bind(Include = "PlayerId,Name,FactionId,Caster1,List1,Theme1,Caster2,List2,Theme2,TeamId")] Player player)
         {
+            Event @event = db.Events.Find(Session["SelectedEventId"]);
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
             if (ModelState.IsValid)
             {
                 db.Entry(player).State = EntityState.Modified;
@@ -192,9 +212,12 @@ namespace WMATC.Controllers
         }
 
         // GET: Players/Delete/5
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         public ActionResult Delete(int? id)
         {
+            Event @event = db.Events.Find(Session["SelectedEventId"]);
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -208,11 +231,14 @@ namespace WMATC.Controllers
         }
 
         // POST: Players/Delete/5
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            Event @event = db.Events.Find(Session["SelectedEventId"]);
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
             Player player = db.Players.Find(id);
             db.Players.Remove(player);
             db.SaveChanges();

@@ -168,7 +168,7 @@
     string TeamBackground = "";
     int iTeamList = 0;
 }
-@foreach (var team in (from p in Model.Teams orderby p.TeamWins descending, p.StrengthOfSchedule descending, p.TP descending, p.CP descending, p.APD descending select p))
+@foreach (var team in (from p in Model.Teams orderby p.TeamWins descending, p.TP descending, p.StrengthOfSchedule descending, p.CP descending, p.APD descending select p))
 {
     <div>
         <div id="MatchupBar" class="ShadowBox " style="width:95%; height:55px; margin-top:15px;">

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -15,12 +16,17 @@ namespace WMATC.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Matchups
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         public ActionResult Index(int? id)
         {
             if (Session["SelectedEventId"] == null) return Redirect("Events");
             if (Session["SelectedRoundId"] == null) return Redirect("Rounds");
             if (Session["SelectedRoundTeamMatchupId"] == null && id == null) return Redirect("RoundTeamMatchups");
+
+            Event @event = db.Events.Find(Session["SelectedEventId"]);
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
+
 
             if (id != null)
             {
@@ -36,12 +42,16 @@ namespace WMATC.Controllers
         }
 
         // GET: Matchups/Details/5
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         public ActionResult Details(int? id)
         {
+            Event @event = db.Events.Find(Session["SelectedEventId"]);
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
             }
             Matchup matchup = db.Matchups.Find(id);
             if (matchup == null)
@@ -52,11 +62,15 @@ namespace WMATC.Controllers
         }
 
         // GET: Matchups/Create
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         public ActionResult Create()
         {
             if (Session["SelectedEventId"] == null) return Redirect("Events");
             if (Session["SelectedRoundId"] == null) return Redirect("Rounds");
+            Event @event = db.Events.Find(Session["SelectedEventId"]);
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
+
             int SelectedRoundTeamMatchupId = -1;
             int EventID = -1;
             int.TryParse(Session["SelectedEventId"].ToString(), out EventID);
@@ -117,11 +131,15 @@ namespace WMATC.Controllers
         // POST: Matchups/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "MatchupId,RoundTeamMatchupId,Player1Id,Player2Id,WinnerId,Player1List,Player2List,Player1CP,Player2CP,Player1APD,Player2APD,VictoryCondition,ByeRound,PairDownRound")] Matchup matchup, string Command)
         {
+            Event @event = db.Events.Find(Session["SelectedEventId"]);
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
+
             int SelectedRoundTeamMatchupId = -1;
             int.TryParse(Session["SelectedRoundTeamMatchupId"].ToString(), out SelectedRoundTeamMatchupId);
 
@@ -141,9 +159,13 @@ namespace WMATC.Controllers
         }
 
         // GET: Matchups/Edit/5
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         public ActionResult Edit(int? id)
         {
+            Event @event = db.Events.Find(Session["SelectedEventId"]);
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -188,11 +210,15 @@ namespace WMATC.Controllers
         // POST: Matchups/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "MatchupId,RoundTeamMatchupId,Player1Id,Player2Id,WinnerId,Player1List,Player2List,Player1CP,Player2CP,Player1APD,Player2APD")] Matchup matchup)
         {
+            Event @event = db.Events.Find(Session["SelectedEventId"]);
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
+
             int SelectedRoundTeamMatchupId = -1;
             int.TryParse(Session["SelectedRoundTeamMatchupId"].ToString(), out SelectedRoundTeamMatchupId);
             if (ModelState.IsValid)
@@ -208,7 +234,7 @@ namespace WMATC.Controllers
         }
 
         // GET: Matchups/Delete/5
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -220,15 +246,24 @@ namespace WMATC.Controllers
             {
                 return HttpNotFound();
             }
+
+            Event @event = db.Events.Find(Session["SelectedEventId"]);
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
+
             return View(matchup);
         }
 
         // POST: Matchups/Delete/5
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            Event @event = db.Events.Find(Session["SelectedEventId"]);
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
+
             Matchup matchup = db.Matchups.Find(id);
             db.Matchups.Remove(matchup);
             db.SaveChanges();

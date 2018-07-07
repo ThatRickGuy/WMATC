@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -16,16 +17,21 @@ namespace WMATC.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: GameReport
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         public ActionResult Index()
         {
             if (Session["SelectedEventId"] == null) return Redirect("Events");
             if (Session["SelectedRoundId"] == null) return Redirect("Rounds");
-
+            
             int RoundID = 0;
             int.TryParse(Session["SelectedRoundId"].ToString(), out RoundID);
             int EventID = 0;
             int.TryParse(Session["SelectedEventId"].ToString(), out EventID);
+
+
+            //Event @event = db.Events.Find(EventID);
+            //if (@event.Owner != new Guid(User.Identity.GetUserId()))
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
 
             var GameReports = (from p in db.Matchups
                                where p.RoundTeamMatchup.RoundId == RoundID && p.RoundTeamMatchup.Round.EventId == EventID
@@ -59,6 +65,11 @@ namespace WMATC.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Matchup matchup = db.Matchups.Find(id);
+
+            //Event @event = db.Events.Find(id);
+            //if (@event.Owner != new Guid(User.Identity.GetUserId()))
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
+
 
             var gr = (from p in db.Matchups
                                where p.MatchupId == id.Value 

@@ -57,7 +57,7 @@ namespace WMATC.Controllers
         }
 
         // GET: Events/Details/5
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -65,6 +65,10 @@ namespace WMATC.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Event @event = db.Events.Find(id);
+
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
+
             if (@event == null)
             {
                 return HttpNotFound();
@@ -73,7 +77,7 @@ namespace WMATC.Controllers
         }
 
         // GET: Events/Create
-        [Authorize(Roles = "canEdit")]
+       // [Authorize(Roles = "canEdit")]
         public ActionResult Create()
         {
             Event NewEvent = new Event();
@@ -84,7 +88,7 @@ namespace WMATC.Controllers
         // POST: Events/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "EventId,Title,EventDate,ImageURL,ListLockDate")] Event @event)
@@ -102,7 +106,7 @@ namespace WMATC.Controllers
         }
 
         // GET: Events/Edit/5
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -110,6 +114,10 @@ namespace WMATC.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Event @event = db.Events.Find(id);
+
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
+
             if (@event == null)
             {
                 return HttpNotFound();
@@ -120,22 +128,29 @@ namespace WMATC.Controllers
         // POST: Events/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EventId,Title,EventDate,ImageURL,ListLockDate,JSONDump")] Event @event)
+        public ActionResult Edit([Bind(Include = "Owner,EventId,Title,EventDate,ImageURL,ListLockDate,JSONDump")] Event @event)
         {
+
+
             if (ModelState.IsValid)
             {
                 db.Entry(@event).State = EntityState.Modified;
                 var dbEvent = (from p in db.Events where p.EventId == @event.EventId select p).FirstOrDefault();
+
+                //Event @event = db.Events.Find(id);
+                if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
+
                 db.SaveChanges();
 
 
                 var q = from p in db.Teams where p.EventId == @event.EventId select p;
                 if (q.Count() > 0) db.Teams.RemoveRange(q);
                 db.SaveChanges();
-                if (@event.JSONDump.Trim() != "")
+                if (@event.JSONDump != null && @event.JSONDump != "")
                 {
                     //parse json
                     string JSON = db.Entry(@event).Entity.JSONDump;
@@ -205,7 +220,7 @@ namespace WMATC.Controllers
 
        
         // GET: Events/Delete/5
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -213,6 +228,10 @@ namespace WMATC.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Event @event = db.Events.Find(id);
+
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
+
             if (@event == null)
             {
                 return HttpNotFound();
@@ -221,12 +240,14 @@ namespace WMATC.Controllers
         }
 
         // POST: Events/Delete/5
-        [Authorize(Roles = "canEdit")]
+        //[Authorize(Roles = "canEdit")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             Event @event = db.Events.Find(id);
+            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
             db.Events.Remove(@event);
             db.SaveChanges();
             return RedirectToAction("Index");
