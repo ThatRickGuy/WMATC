@@ -8,47 +8,55 @@
 }
 <div class="form-horizontal">
     <div>
-        <table style="width:1000px; position:fixed;">
-            <tr>
-                <th>
+        <div style="width:1350px; position:fixed;">
+                <div style="float:left;width:200px;">
                     @Html.DisplayNameFor(model => model.WinnerId)
-                </th>
+                </div>
 
-                <th style="width:20px;"></th>
-
-                <th>
+                <div style="float:left;width:183px; margin-left:5px;">
                     Player 1
-                </th>
-                <th>
+                </div>
+
+                <div style="float:left;width:85px; margin-left:5px;">
                     List
-                </th>
-                <th style="width:52px;">
+                </div>
+
+                <div style="float:left;width:52px;margin-left:5px;">
                     CP
-                </th>
-                <th style="width:60px;">
+                </div>
+
+                <div style="float:left;width:60px;margin-left:5px;">
                     APD
-                </th>
+                </div>
 
-                <th style="width:20px;"></th>
-
-                <th>
+                <div style="float:left;width:173px; margin-left:10px;">
                     Player 2
-                </th>
-                <th>
-                    List
-                </th>
-                <th style="width:52px;">
-                    CP
-                </th>
-                <th style="width:60px;">
-                    APD
-                </th>
-                <th></th>
-            </tr>
-            <tr>
+                </div>
 
-            </tr>
-        </table>
+                <div style="float:left;width:85px;margin-left:5px;">
+                    List
+                </div>
+
+                <div style="float:left;width:52px;margin-left:5px;">
+                    CP
+                </div>
+
+                <div style="float:left;width:60px;margin-left:5px;">
+                    APD
+                </div>
+
+                <div style="float:left;width:200px;margin-left:10px;">
+                    First Player
+                </div>
+
+                <div style="float:left;width:60px;margin-left:10px;">
+                    Length
+                </div>
+
+                <div class="form-group" style="float:left;margin-left:5px;">
+                    
+                </div>
+        </div>
         <div id="divEditorsContainer" style="width:1000px; margin-top:24px;">
             <br/>
             @foreach (var item in (from p in Model orderby (p.WinnerId == null) descending  select p))

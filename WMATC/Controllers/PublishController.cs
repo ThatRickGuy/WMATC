@@ -80,12 +80,12 @@ namespace WMATC.Controllers
             Model.EventDate = Event.EventDate ;
             Model.EventTitle = Event.Title;
             Model.EventImageURL = Event.ImageURL;
-            Model.Teams = (from p in db.Teams where p.EventId == EventID && p.Name != "BYE" select new TeamBrowser.Team() { TeamImageURL = p.ImgURL, TeamName = p.Name }).ToList();
+            Model.Teams = (from p in db.Teams where p.EventId == EventID && p.Name != "BYE" select new TeamBrowser.Team() { TeamID = p.TeamId, TeamImageURL = p.ImgURL, TeamName = p.Name }).ToList();
             if (Event.ListLockDate < DateTime.Now)
             {
                 foreach (var team in Model.Teams)
                 {
-                    team.Players = (from p in db.Players where p.Team.Name == team.TeamName orderby p.Name select p).ToList();
+                    team.Players = (from p in db.Players where p.Team.TeamId == team.TeamID orderby p.Name select p).ToList();
                 }
             }
             return Model;

@@ -38,6 +38,9 @@ namespace WMATC.Models
         public int? Player1APD { get; set; }
         public int? Player2APD { get; set; }
 
+        public int? GameLength { get; set; }
+        public int? FirstPlayerID { get; set; }
+
         public string VictoryCondition { get; set; }
 
         [NotMapped]

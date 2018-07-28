@@ -25,6 +25,9 @@ namespace WMATC.ViewModels
         public int Player2CP { get; set; }
         public int Player2APD { get; set; }
 
+        public int? FirstId { get; set; }
+        public int? GameLength { get; set; }
+
         public class SimplePlayer
         {
             [Key]

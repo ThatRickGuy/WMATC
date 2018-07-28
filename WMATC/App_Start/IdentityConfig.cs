@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -19,7 +21,12 @@ namespace WMATC
         public Task SendAsync(IdentityMessage message)
         {
             // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+            SmtpClient client = new SmtpClient("mail.ringdev.com");
+            client.Credentials = new System.Net.NetworkCredential("postmaster@mail.ringdev.com", "postmaster1!");
+            return client.SendMailAsync("noreply@ringdev.com",
+                                        message.Destination,
+                                        message.Subject,
+                                        message.Body);
         }
     }
 

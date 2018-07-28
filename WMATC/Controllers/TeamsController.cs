@@ -23,7 +23,7 @@ namespace WMATC.Controllers
             if (Session["SelectedEventId"] == null) return Redirect("Events");
             var teams = db.Teams.Include(t => t.Event);
             Event @event = db.Events.Find(Session["SelectedEventId"]);
-            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+            if (@event.Owner != new Guid(User.Identity.GetUserId()) && !User.IsInRole("canEdit"))
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
 
             if (id != null) 
@@ -49,7 +49,7 @@ namespace WMATC.Controllers
         public ActionResult Details(int? id)
         {
             Event @event = db.Events.Find(Session["SelectedEventId"]);
-            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+            if (@event.Owner != new Guid(User.Identity.GetUserId()) && !User.IsInRole("canEdit"))
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
             if (id == null)
             {
@@ -68,7 +68,7 @@ namespace WMATC.Controllers
         public ActionResult Create()
         {
             Event @event = db.Events.Find(Session["SelectedEventId"]);
-            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+            if (@event.Owner != new Guid(User.Identity.GetUserId()) && !User.IsInRole("canEdit"))
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
 
             var events = (from p in db.Events select p);
@@ -91,7 +91,7 @@ namespace WMATC.Controllers
         public ActionResult Create([Bind(Include = "TeamId,Name,ImgURL,EventId,PairedDownRound,ByeRound")] Team team)
         {
             Event @event = db.Events.Find(Session["SelectedEventId"]);
-            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+            if (@event.Owner != new Guid(User.Identity.GetUserId()) && !User.IsInRole("canEdit"))
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
             if (ModelState.IsValid)
             {
@@ -115,7 +115,7 @@ namespace WMATC.Controllers
         public ActionResult Edit(int? id)
         {
             Event @event = db.Events.Find(Session["SelectedEventId"]);
-            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+            if (@event.Owner != new Guid(User.Identity.GetUserId()) && !User.IsInRole("canEdit"))
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
             if (id == null)
             {
@@ -146,7 +146,7 @@ namespace WMATC.Controllers
         public ActionResult Edit([Bind(Include = "TeamId,Name,ImgURL,EventId,PairedDownRound,ByeRound,DropRound")] Team team)
         {
             Event @event = db.Events.Find(Session["SelectedEventId"]);
-            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+            if (@event.Owner != new Guid(User.Identity.GetUserId()) && !User.IsInRole("canEdit"))
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
             if (ModelState.IsValid)
             {
@@ -170,7 +170,7 @@ namespace WMATC.Controllers
         public ActionResult Delete(int? id)
         {
             Event @event = db.Events.Find(Session["SelectedEventId"]);
-            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+            if (@event.Owner != new Guid(User.Identity.GetUserId()) && !User.IsInRole("canEdit"))
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
             if (id == null)
             {
@@ -191,7 +191,7 @@ namespace WMATC.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Event @event = db.Events.Find(Session["SelectedEventId"]);
-            if (@event.Owner != new Guid(User.Identity.GetUserId()))
+            if (@event.Owner != new Guid(User.Identity.GetUserId()) && !User.IsInRole("canEdit"))
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Users may only modify their own events");
             Team team = db.Teams.Find(id);
             var q = from p in db.Players where p.TeamId == team.TeamId select 1;

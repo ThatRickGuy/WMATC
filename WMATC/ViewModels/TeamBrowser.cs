@@ -21,6 +21,7 @@ namespace WMATC.ViewModels
 
         public class Team
         {
+            public int TeamID { get; set; }
             public string TeamName { get; set; }
             public string TeamImageURL { get; set; }
             public List<Player> Players { get; set; }

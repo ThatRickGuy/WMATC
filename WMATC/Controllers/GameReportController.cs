@@ -52,6 +52,9 @@ namespace WMATC.Controllers
                                    Player2CP = (p.Player2CP.HasValue) ? p.Player2CP.Value : 0,
                                    Player2ListId = (p.Player2List.HasValue) ? p.Player1List.Value : 0,
                                    Player2Lists = new List<ViewModels.GameReport.SimpleList>() { new ViewModels.GameReport.SimpleList() { ListId = 0, Warnoun = "" }, new ViewModels.GameReport.SimpleList() { ListId = 1, Warnoun = p.Player2.Caster1 }, new ViewModels.GameReport.SimpleList() { ListId = 2, Warnoun = p.Player2.Caster2 } },
+
+                                   FirstId = p.FirstPlayerID,
+                                   GameLength = p.GameLength
                                }).ToList();
             return View(GameReports);
         }
@@ -72,24 +75,28 @@ namespace WMATC.Controllers
 
 
             var gr = (from p in db.Matchups
-                               where p.MatchupId == id.Value 
-                               select new ViewModels.GameReport()
-                               {
-                                   MatchupId = p.MatchupId,
-                                   Players = new List<ViewModels.GameReport.SimplePlayer>() { new ViewModels.GameReport.SimplePlayer() { PlayerId = 0, PlayerName = "" }, new ViewModels.GameReport.SimplePlayer() { PlayerId = p.Player1Id, PlayerName = p.Player1.Name }, new ViewModels.GameReport.SimplePlayer() { PlayerId = p.Player2Id, PlayerName = p.Player2.Name } },
-                                   WinnerId = p.WinnerId,
+                      where p.MatchupId == id.Value
+                      select new ViewModels.GameReport()
+                      {
+                          MatchupId = p.MatchupId,
+                          Players = new List<ViewModels.GameReport.SimplePlayer>() { new ViewModels.GameReport.SimplePlayer() { PlayerId = 0, PlayerName = "" }, new ViewModels.GameReport.SimplePlayer() { PlayerId = p.Player1Id, PlayerName = p.Player1.Name }, new ViewModels.GameReport.SimplePlayer() { PlayerId = p.Player2Id, PlayerName = p.Player2.Name } },
+                          WinnerId = p.WinnerId,
 
-                                   Player1 = new ViewModels.GameReport.SimplePlayer() { PlayerId = p.Player1Id, PlayerName = p.Player1.Name },
-                                   Player1APD = (p.Player1APD.HasValue) ? p.Player1APD.Value : 0,
-                                   Player1CP = (p.Player1CP.HasValue) ? p.Player1CP.Value : 0,
-                                   Player1ListId = (p.Player1List.HasValue) ? p.Player1List.Value : 0,
-                                   Player1Lists = new List<ViewModels.GameReport.SimpleList>() { new ViewModels.GameReport.SimpleList() { ListId = 0, Warnoun = "" }, new ViewModels.GameReport.SimpleList() { ListId = 1, Warnoun = p.Player1.Caster1 }, new ViewModels.GameReport.SimpleList() { ListId = 2, Warnoun = p.Player1.Caster2 } },
+                          Player1 = new ViewModels.GameReport.SimplePlayer() { PlayerId = p.Player1Id, PlayerName = p.Player1.Name },
+                          Player1APD = (p.Player1APD.HasValue) ? p.Player1APD.Value : 0,
+                          Player1CP = (p.Player1CP.HasValue) ? p.Player1CP.Value : 0,
+                          Player1ListId = (p.Player1List.HasValue) ? p.Player1List.Value : 0,
+                          Player1Lists = new List<ViewModels.GameReport.SimpleList>() { new ViewModels.GameReport.SimpleList() { ListId = 0, Warnoun = "" }, new ViewModels.GameReport.SimpleList() { ListId = 1, Warnoun = p.Player1.Caster1 }, new ViewModels.GameReport.SimpleList() { ListId = 2, Warnoun = p.Player1.Caster2 } },
 
-                                   Player2 = new ViewModels.GameReport.SimplePlayer() { PlayerId = p.Player2Id, PlayerName = p.Player2.Name },
-                                   Player2APD = (p.Player2APD.HasValue) ? p.Player2APD.Value : 0,
-                                   Player2CP = (p.Player2CP.HasValue) ? p.Player2CP.Value : 0,
-                                   Player2ListId = (p.Player2List.HasValue) ? p.Player1List.Value : 0,
-                                   Player2Lists = new List<ViewModels.GameReport.SimpleList>() { new ViewModels.GameReport.SimpleList() { ListId = 0, Warnoun = "" }, new ViewModels.GameReport.SimpleList() { ListId = 1, Warnoun = p.Player2.Caster1 }, new ViewModels.GameReport.SimpleList() { ListId = 2, Warnoun = p.Player2.Caster2 } },
+                          Player2 = new ViewModels.GameReport.SimplePlayer() { PlayerId = p.Player2Id, PlayerName = p.Player2.Name },
+                          Player2APD = (p.Player2APD.HasValue) ? p.Player2APD.Value : 0,
+                          Player2CP = (p.Player2CP.HasValue) ? p.Player2CP.Value : 0,
+                          Player2ListId = (p.Player2List.HasValue) ? p.Player1List.Value : 0,
+                          Player2Lists = new List<ViewModels.GameReport.SimpleList>() { new ViewModels.GameReport.SimpleList() { ListId = 0, Warnoun = "" }, new ViewModels.GameReport.SimpleList() { ListId = 1, Warnoun = p.Player2.Caster1 }, new ViewModels.GameReport.SimpleList() { ListId = 2, Warnoun = p.Player2.Caster2 } },
+
+                          FirstId = (p.FirstPlayerID.HasValue) ? p.FirstPlayerID : null,
+                          GameLength = (p.GameLength.HasValue) ? p.GameLength : null
+            
                                }).ToList();
 
             if (gr.FirstOrDefault() == null)
@@ -104,7 +111,7 @@ namespace WMATC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MatchupId,WinnerId,Player1CP,Player1APD,Player1ListId,Player2CP,Player2APD,Player2ListId")] GameReport gameReport)
+        public ActionResult Edit([Bind(Include = "MatchupId,WinnerId,Player1CP,Player1APD,Player1ListId,Player2CP,Player2APD,Player2ListId,FirstId,GameLength")] GameReport gameReport)
         {
             if (ModelState.IsValid)
             {
@@ -116,7 +123,8 @@ namespace WMATC.Controllers
                 m.Player2APD = gameReport.Player2APD;
                 m.Player2CP = gameReport.Player2CP;
                 m.Player2List = gameReport.Player2ListId;
-
+                m.FirstPlayerID = gameReport.FirstId;
+                m.GameLength = gameReport.GameLength;
                 db.Entry(m).State = EntityState.Modified;
                 db.SaveChanges();
                 return null;
