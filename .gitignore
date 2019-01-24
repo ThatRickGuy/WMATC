@@ -7,3 +7,5 @@ obj/
 *.user
 *.exe
 WMATC/bin/Newtonsoft.Json.xml
+/WMATC/StaticEvents
+.vs
